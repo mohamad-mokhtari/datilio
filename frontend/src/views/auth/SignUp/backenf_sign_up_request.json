@@ -1,0 +1,18 @@
+{
+    "endpoint": "http://localhost:8000/api/v1/user/create",
+    "method": "POST",
+    "body": {
+        "email": "user@example.com",
+        "username": "string",
+        "password": "string"
+    },
+    "ok_response": {
+        "id": "a9c1c7a4-a21f-4c37-a388-bef7fb2cf984",
+        "username": "string",
+        "email": "user@example.com",
+        "first_name": null,
+        "last_name": null,
+        "disabled": false
+    },
+    "description": "Backend technology is FastAPI"
+}

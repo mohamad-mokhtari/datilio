@@ -1,0 +1,292 @@
+[
+    {
+        "plot_type": "line",
+        "inputs": [
+            {
+                "label": "x column name",
+                "type": "simple_select",
+                "values_type": ["numeric", "date", "datetime", "time"]
+            },
+            {
+                "label": "y column name",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "bar",
+        "inputs": [
+            {
+                "label": "column names",
+                "type": "multi_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "name column",
+                "type": "simple_select",
+                "values_type": ["string", "date", "datetime", "boolean"]
+            }
+        ]
+    },
+    {
+        "plot_type": "multi_line",
+        "inputs": [
+            {
+                "label": "numeric columns",
+                "type": "multi_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "name column",
+                "type": "simple_select",
+                "values_type": ["string", "date", "datetime", "boolean"]
+            }
+        ]
+    },
+    {
+        "plot_type": "scatter",
+        "inputs": [
+            {
+                "label": "first column name",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "second column name",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "3d_scatter",
+        "inputs": [
+            {
+                "label": "first column name",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "second column name",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "third column name",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "histogram",
+        "inputs": [
+            {
+                "label": "column name",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "box_plot",
+        "inputs": [
+            {
+                "label": "column names",
+                "type": "multi_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "bar_histogram",
+        "inputs": [
+            {
+                "label": "first column name",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "second column name",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "5d_scatter",
+        "inputs": [
+            {
+                "label": "x axis column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "y axis column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "z axis column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "color column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "size column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "3d_surface",
+        "inputs": [
+            {
+                "label": "x axis column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "y axis column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "pie_chart",
+        "inputs": [
+            {
+                "label": "column name",
+                "type": "simple_select",
+                "values_type": ["string", "date", "datetime", "boolean"]
+            }
+        ]
+    },
+    {
+        "plot_type": "stacked_area_chart",
+        "inputs": [
+            {
+                "label": "x axis column",
+                "type": "simple_select",
+                "values_type": ["numeric", "string", "date", "datetime", "time"]
+            },
+            {
+                "label": "y axis columns",
+                "type": "multi_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "radar",
+        "inputs": [
+            {
+                "label": "metric columns",
+                "type": "multi_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "heatmap",
+        "inputs": [
+            {
+                "label": "x axis column",
+                "type": "simple_select",
+                "values_type": ["string", "date", "datetime", "boolean"]
+            },
+            {
+                "label": "y axis column",
+                "type": "simple_select",
+                "values_type": ["string", "date", "datetime", "boolean"]
+            },
+            {
+                "label": "value column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "funnel",
+        "inputs": [
+            {
+                "label": "label column",
+                "type": "simple_select",
+                "values_type": ["string", "date", "datetime", "boolean"]
+            },
+            {
+                "label": "value column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "candlestick",
+        "inputs": [
+            {
+                "label": "date column",
+                "type": "simple_select",
+                "values_type": ["date", "datetime"]
+            },
+            {
+                "label": "open column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "close column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "high column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "low column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    },
+    {
+        "plot_type": "treemap",
+        "inputs": [
+            {
+                "label": "label column",
+                "type": "simple_select",
+                "values_type": ["string", "date", "datetime", "boolean"]
+            },
+            {
+                "label": "value column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            },
+            {
+                "label": "category column (optional)",
+                "type": "simple_select",
+                "values_type": ["string", "date", "datetime", "boolean"]
+            }
+        ]
+    },
+    {
+        "plot_type": "gauge",
+        "inputs": [
+            {
+                "label": "value column",
+                "type": "simple_select",
+                "values_type": ["numeric"]
+            }
+        ]
+    }
+]

@@ -1,0 +1,566 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+<style>
+    .pricing-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+    
+    .pricing-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .pricing-card.featured {
+        border: 3px solid #0d6efd;
+        transform: scale(1.05);
+    }
+    
+    .pricing-card.featured:hover {
+        transform: scale(1.05) translateY(-10px);
+    }
+    
+    .pricing-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        position: relative;
+    }
+    
+    .pricing-card.featured .pricing-header {
+        background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    }
+    
+    .pricing-card.free .pricing-header {
+        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    }
+    
+    .pricing-card.pro .pricing-header {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    }
+    
+    .pricing-card.business .pricing-header {
+        background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+    }
+    
+    .popular-badge {
+        position: absolute;
+        top: -10px;
+        right: 20px;
+        background: #ffc107;
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+    
+    .price {
+        font-size: 3rem;
+        font-weight: bold;
+        margin: 0;
+    }
+    
+    .price-period {
+        font-size: 1rem;
+        opacity: 0.8;
+    }
+    
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .feature-list li {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f8f9fa;
+        display: flex;
+        align-items: center;
+    }
+    
+    .feature-list li:last-child {
+        border-bottom: none;
+    }
+    
+    .feature-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .feature-icon.check {
+        color: #28a745;
+    }
+    
+    .feature-icon.x {
+        color: #dc3545;
+    }
+    
+    .feature-icon.dash {
+        color: #6c757d;
+    }
+    
+    .cta-button {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+    
+    .addon-card {
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    
+    .addon-card:hover {
+        border-color: #0d6efd;
+        transform: translateY(-5px);
+    }
+    
+    .comparison-table {
+        background: white;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .comparison-table th {
+        background: #f8f9fa;
+        border: none;
+        padding: 1rem;
+        font-weight: 600;
+    }
+    
+    .comparison-table td {
+        border: none;
+        padding: 1rem;
+        border-bottom: 1px solid #f8f9fa;
+    }
+    
+    .comparison-table tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .feature-name {
+        font-weight: 600;
+        color: #495057;
+    }
+    
+    .limit-value {
+        font-weight: 600;
+        color: #0d6efd;
+    }
+    
+    .unlimited {
+        color: #28a745;
+        font-weight: bold;
+    }
+    
+    .section-divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #dee2e6, transparent);
+        margin: 3rem 0;
+    }
+    
+    .faq-item {
+        background: white;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .faq-question {
+        background: #f8f9fa;
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem 0.5rem 0 0;
+        font-weight: 600;
+        color: #495057;
+    }
+    
+    .faq-answer {
+        padding: 1rem 1.5rem;
+        color: #6c757d;
+    }
+    
+    /* Blur effects for non-MVP content */
+    .blur-content {
+        filter: blur(8px);
+        pointer-events: none;
+        user-select: none;
+        opacity: 0.3;
+    }
+    
+    .blur-content:hover {
+        filter: blur(8px);
+        pointer-events: none;
+    }
+    
+    /* Star styling for prices */
+    .star-price {
+        font-size: 3rem;
+        font-weight: bold;
+        margin: 0;
+        color: #ffc107;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .star-price-small {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #ffc107;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+    <!-- Header Section -->
+    <section class="bg-dark py-5">
+        <div class="container px-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h1 class="display-4 fw-bolder text-white mb-3">Choose Your Perfect Plan</h1>
+                    <p class="lead text-white-50 mb-4">
+                        Start with our free plan and upgrade as you grow. All plans include our core data analysis features with different limits and capabilities.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Pricing Section -->
+    <section class="py-5">
+        <div class="container px-5">
+            <!-- Pricing Cards -->
+            <div class="row gx-5 justify-content-center">
+                {% for plan in plans.main_plans %}
+                <div class="col-lg-4 col-md-6 mb-5">
+                    <div class="pricing-card card h-100 {% if plan.name == 'Pro' %}featured{% endif %} {{ plan.name.lower() }} {% if plan.name not in ['MVP'] %}blur-content{% endif %}">
+                        <div class="pricing-header">
+                            {% if plan.name == 'Pro' %}
+                            <div class="popular-badge">Most Popular</div>
+                            {% endif %}
+                            <h3 class="mb-2">{{ plan.name }}</h3>
+                            <p class="mb-3 opacity-75">{{ plan.description }}</p>
+                            <div class="star-price">
+                                ★★★
+                                <span class="price-period">/month</span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <ul class="feature-list flex-grow-1">
+                                <li>
+                                    <i class="bi bi-file-earmark-text feature-icon check"></i>
+                                    <span>{{ plan.file_limit if plan.file_limit > 0 else "Unlimited" }} files</span>
+                                </li>
+                                <li>
+                                    <i class="bi bi-hdd feature-icon check"></i>
+                                    <span>{{ "%.1f"|format(plan.storage_limit_gb) }} GB storage</span>
+                                </li>
+                                <li>
+                                    <i class="bi bi-funnel feature-icon check"></i>
+                                    <span>{{ plan.rules_limit if plan.rules_limit > 0 else "Unlimited" }} rules</span>
+                                </li>
+                                <li>
+                                    <i class="bi bi-robot feature-icon check"></i>
+                                    <span>{{ "{:,}".format(plan.ai_tokens_per_month) }} AI tokens/month</span>
+                                </li>
+                                <li>
+                                    <i class="bi bi-graph-up feature-icon check"></i>
+                                    <span>{{ "{:,}".format(plan.synthetic_rows_per_month) }} synthetic rows/month</span>
+                                </li>
+                                <li>
+                                    <i class="bi bi-list-ul feature-icon {% if plan.custom_lists_limit == -1 %}check{% else %}dash{% endif %}"></i>
+                                    <span>{% if plan.custom_lists_limit == -1 %}Unlimited{% else %}{{ plan.custom_lists_limit }}{% endif %} custom lists</span>
+                                </li>
+                                {% if plan.priority_processing %}
+                                <li>
+                                    <i class="bi bi-lightning feature-icon check"></i>
+                                    <span>Priority processing</span>
+                                </li>
+                                {% endif %}
+                                {% if plan.team_sharing %}
+                                <li>
+                                    <i class="bi bi-people feature-icon check"></i>
+                                    <span>Team sharing</span>
+                                </li>
+                                {% endif %}
+                            </ul>
+                            <div class="mt-4">
+                                {% if plan.price_monthly == 0 %}
+                                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary cta-button">
+                                    <i class="bi bi-rocket-takeoff me-2"></i>Get Started Free
+                                </a>
+                                {% else %}
+                                <a href="{{ url_for('dashboard') }}" class="btn btn-primary cta-button">
+                                    <i class="bi bi-credit-card me-2"></i>Start {{ plan.name }} Trial
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Add-ons Section -->
+            {% if plans.addons %}
+            <div class="section-divider"></div>
+            
+            <div class="blur-content">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bolder">Need More? Add These Extras</h2>
+                    <p class="lead text-muted">Pay only for what you need with our flexible add-ons</p>
+                </div>
+
+                <div class="row gx-4 justify-content-center">
+                    {% for addon in plans.addons %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="addon-card">
+                            <div class="mb-3">
+                                <i class="bi bi-plus-circle display-6 text-primary"></i>
+                            </div>
+                            <h4 class="mb-2">{{ addon.name }}</h4>
+                            <p class="text-muted mb-3">{{ addon.description }}</p>
+                            <div class="star-price-small mb-3">
+                                ★★
+                                <span class="price-period">/month</span>
+                            </div>
+                            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary">
+                                Add to Plan
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Feature Comparison Table -->
+            <div class="section-divider"></div>
+            
+            <div class="blur-content">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bolder">Detailed Feature Comparison</h2>
+                    <p class="lead text-muted">See exactly what each plan includes</p>
+                </div>
+
+                <div class="comparison-table">
+                    <table class="table table-borderless mb-0">
+                        <thead>
+                            <tr>
+                                <th class="feature-name">Feature</th>
+                                {% for plan in plans.main_plans %}
+                                <th class="text-center">{{ plan.name }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="feature-name">File Upload Limit</td>
+                                {% for plan in plans.main_plans %}
+                                <td class="text-center limit-value">
+                                    {{ plan.file_limit if plan.file_limit > 0 else "Unlimited" }}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <td class="feature-name">File Size Limit</td>
+                                {% for plan in plans.main_plans %}
+                                <td class="text-center limit-value">
+                                    {{ plan.file_size_limit_mb }} MB
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Storage</td>
+                                {% for plan in plans.main_plans %}
+                                <td class="text-center limit-value">
+                                    {{ "%.1f"|format(plan.storage_limit_gb) }} GB
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <td class="feature-name">AI Tokens/Month</td>
+                                {% for plan in plans.main_plans %}
+                                <td class="text-center limit-value">
+                                    {{ "{:,}".format(plan.ai_tokens_per_month) }}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Synthetic Data Rows</td>
+                                {% for plan in plans.main_plans %}
+                                <td class="text-center limit-value">
+                                    {{ "{:,}".format(plan.synthetic_rows_per_month) }}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Custom Lists</td>
+                                {% for plan in plans.main_plans %}
+                                <td class="text-center">
+                                    {% if plan.custom_lists_limit == -1 %}
+                                    <span class="unlimited">Unlimited</span>
+                                    {% else %}
+                                    <span class="limit-value">{{ plan.custom_lists_limit }}</span>
+                                    {% endif %}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Priority Processing</td>
+                                {% for plan in plans.main_plans %}
+                                <td class="text-center">
+                                    {% if plan.priority_processing %}
+                                    <i class="bi bi-check-circle-fill text-success"></i>
+                                    {% else %}
+                                    <i class="bi bi-x-circle-fill text-muted"></i>
+                                    {% endif %}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Team Sharing</td>
+                                {% for plan in plans.main_plans %}
+                                <td class="text-center">
+                                    {% if plan.team_sharing %}
+                                    <i class="bi bi-check-circle-fill text-success"></i>
+                                    {% else %}
+                                    <i class="bi bi-x-circle-fill text-muted"></i>
+                                    {% endif %}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="section-divider"></div>
+            
+            <div class="blur-content">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bolder">Frequently Asked Questions</h2>
+                    <p class="lead text-muted">Everything you need to know about our pricing</p>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <i class="bi bi-question-circle me-2"></i>
+                                Can I change my plan anytime?
+                            </div>
+                            <div class="faq-answer">
+                                Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately, and we'll prorate any billing adjustments.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <i class="bi bi-question-circle me-2"></i>
+                                What happens if I exceed my limits?
+                            </div>
+                            <div class="faq-answer">
+                                We'll notify you when you're approaching your limits. You can either upgrade your plan or purchase add-ons to continue using the service.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <i class="bi bi-question-circle me-2"></i>
+                                Is there a free trial for paid plans?
+                            </div>
+                            <div class="faq-answer">
+                                Yes! All paid plans come with a 14-day free trial. No credit card required to start your trial.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <i class="bi bi-question-circle me-2"></i>
+                                Can I cancel anytime?
+                            </div>
+                            <div class="faq-answer">
+                                Absolutely. You can cancel your subscription at any time with no cancellation fees. Your data will remain accessible until the end of your billing period.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="section-divider"></div>
+            
+            <div class="text-center py-5">
+                <h2 class="fw-bolder mb-3">Ready to Get Started?</h2>
+                <p class="lead text-muted mb-4">Join thousands of users who trust Datilio for their data analysis needs</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Start Free Trial
+                    </a>
+                    <a href="#" class="btn btn-outline-primary btn-lg disabled" tabindex="-1" aria-disabled="true">
+                        <i class="bi bi-chat-dots me-2"></i>Contact Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Add smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add animation on scroll for pricing cards
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.pricing-card, .addon-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+</script>
+{% endblock %}

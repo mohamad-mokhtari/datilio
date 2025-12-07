@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+<style>
+    .feature-icon {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 0.75rem;
+    }
+    .gradient-custom {
+        background: linear-gradient(45deg, #4158D0, #C850C0, #FFCC70);
+    }
+    .video-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+{% endblock %}
+
+{% block header %}
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center justify-content-center">
+                <div class="col-lg-8 col-xl-7 col-xxl-6">
+                    <div class="my-5 text-center text-xl-start">
+                        <h1 class="display-5 fw-bolder text-white mb-2">
+                            Datilio: Your Smart Data Companion
+                        </h1>
+                        <p class="lead fw-normal text-white-50 mb-4">
+                            Transform your data into actionable insights with our powerful suite of tools. Upload, analyze, visualize, and generate synthetic data - all in one place. Supporting CSV, JSON, and Excel formats.
+                        </p>
+                        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                            <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Explore Features</a>
+                            <a class="btn btn-outline-light btn-lg px-4" href="{{ url_for('dashboard') }}">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
+                    <div class="video-container my-5">
+                        <video autoplay loop muted playsinline>
+                            <source src="{{ url_for('static', path='videos/datilo_4.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block main %}
+    <!-- Features section -->
+    <section class="py-5" id="features">
+        <div class="container px-5 my-5">
+            <div class="row gx-5">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h2 class="fw-bolder mb-0">Powerful Features for Your Data</h2>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row gx-5 row-cols-1 row-cols-md-2">
+                        <div class="col mb-5 h-100">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </div>
+                            <h2 class="h5">Multi-Format Support</h2>
+                            <p class="mb-0">Upload and manage your data in various formats including CSV, JSON, and Excel files. Keep all your datasets organized in one place.</p>
+                        </div>
+                        <div class="col mb-5 h-100">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                                <i class="bi bi-graph-up"></i>
+                            </div>
+                            <h2 class="h5">Data Analysis</h2>
+                            <p class="mb-0">Get comprehensive statistical insights, column information, and row counts for your datasets, regardless of format.</p>
+                        </div>
+                        <div class="col mb-5 h-100">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                                <i class="bi bi-robot"></i>
+                            </div>
+                            <h2 class="h5">AI-Powered Insights</h2>
+                            <p class="mb-0">Chat with advanced LLMs about your data and get intelligent insights and recommendations across all supported formats.</p>
+                        </div>
+                        <div class="col mb-5 h-100">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                                <i class="bi bi-funnel"></i>
+                            </div>
+                            <h2 class="h5">Advanced Filtering</h2>
+                            <p class="mb-0">Apply sophisticated filters to your data and extract exactly what you need, with format-specific optimizations.</p>
+                        </div>
+                        <div class="col mb-5 h-100">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                                <i class="bi bi-bar-chart"></i>
+                            </div>
+                            <h2 class="h5">Data Visualization</h2>
+                            <p class="mb-0">Create beautiful charts and compare up to 4 plots side-by-side to analyze patterns and trends across different visualizations.</p>
+                        </div>
+                        <div class="col mb-5 h-100">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                                <i class="bi bi-database-add"></i>
+                            </div>
+                            <h2 class="h5">Synthetic Data</h2>
+                            <p class="mb-0">Generate synthetic data in your preferred format or append to existing datasets for testing and development.</p>
+                        </div>
+                        <div class="col mb-5 h-100">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                                <i class="bi bi-file-earmark-pdf"></i>
+                            </div>
+                            <h2 class="h5">PDF Reports</h2>
+                            <p class="mb-0">Generate comprehensive PDF reports with your data analysis and charts for easy sharing and documentation.</p>
+                        </div>
+                        <div class="col mb-5 h-100">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                                <i class="bi bi-columns-gap"></i>
+                            </div>
+                            <h2 class="h5">Plot Comparison</h2>
+                            <p class="mb-0">Compare multiple plots side-by-side (up to 4) to identify patterns, correlations, and insights across different views of your data.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works section -->
+    <section class="py-5 bg-light">
+        <div class="container px-5 my-5">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-8 col-xl-6">
+                    <div class="text-center">
+                        <h2 class="fw-bolder">How It Works</h2>
+                        <p class="lead fw-normal text-muted mb-5">                            Get started with Datilio in three simple steps
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row gx-5">
+                <div class="col-lg-4 mb-5">
+                    <div class="card h-100 shadow border-0">
+                        <div class="card-body p-4">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                                <i class="bi bi-1-circle"></i>
+                            </div>
+                            <h5 class="card-title mb-3">Upload Your Data</h5>
+                            <p class="card-text mb-0">Start by uploading your data files. Our system supports CSV, JSON, and Excel formats with more coming soon.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-5">
+                    <div class="card h-100 shadow border-0">
+                        <div class="card-body p-4">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                                <i class="bi bi-2-circle"></i>
+                            </div>
+                            <h5 class="card-title mb-3">Analyze & Visualize</h5>
+                            <p class="card-text mb-0">Use our tools to analyze your data, create visualizations, and get AI-powered insights across all supported formats.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-5">
+                    <div class="card h-100 shadow border-0">
+                        <div class="card-body p-4">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                                <i class="bi bi-3-circle"></i>
+                            </div>
+                            <h5 class="card-title mb-3">Generate & Export</h5>
+                            <p class="card-text mb-0">Create synthetic data, compare plots, generate PDF reports, and export your results in your preferred format.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to action -->
+    <aside class="bg-primary bg-gradient p-4 p-sm-5">
+        <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
+            <div class="mb-4 mb-xl-0">
+                <div class="fs-3 fw-bold text-white">Ready to transform your data?</div>
+                <div class="text-white-50">Start using Datilio today and unlock the full potential of your data, regardless of format.</div>
+            </div>
+            <div class="ms-xl-4">
+                <a class="btn btn-light btn-lg" href="{{ url_for('dashboard') }}">Get Started Now</a>
+            </div>
+        </div>
+    </aside>
+{% endblock %}
+
+{% block extra_scripts %}{% endblock %}

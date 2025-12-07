@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+internal_venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+*.ipynb
+.ipynb_checkpoints/
+
+# Documentation
+*.md
+md_files/
+txt_files/
+
+# Scripts
+*.bat
+*.sh
+
+# Sample data
+inputs_sample/
+input_samples/
+users_data_files/
+
+# Misc
+*.log
+*.csv
+*.json
+!requirements.txt
+!package.json
+!alembic.ini
+

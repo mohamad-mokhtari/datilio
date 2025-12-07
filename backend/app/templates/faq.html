@@ -1,0 +1,513 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+<style>
+    .faq-section {
+        background: #f8f9fa;
+        border-radius: 1rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .faq-item {
+        background: white;
+        border-radius: 0.75rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+    
+    .faq-item:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    .faq-question {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 0.75rem 0.75rem 0 0;
+        font-weight: 600;
+        color: #495057;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: none;
+        width: 100%;
+        text-align: left;
+    }
+    
+    .faq-question:hover {
+        background: #e9ecef;
+    }
+    
+    .faq-question:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+    }
+    
+    .faq-answer {
+        padding: 1.5rem;
+        color: #6c757d;
+        line-height: 1.6;
+        border-top: 1px solid #e9ecef;
+    }
+    
+    .faq-icon {
+        color: #0d6efd;
+        font-size: 1.2rem;
+        margin-right: 0.75rem;
+    }
+    
+    .faq-toggle {
+        color: #6c757d;
+        font-size: 1.2rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .faq-toggle.rotated {
+        transform: rotate(180deg);
+    }
+    
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .section-title {
+        color: #495057;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    
+    .contact-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        margin-top: 2rem;
+    }
+    
+    .contact-card h4 {
+        margin-bottom: 1rem;
+    }
+    
+    .contact-card a {
+        color: white;
+        text-decoration: none;
+    }
+    
+    .contact-card a:hover {
+        text-decoration: underline;
+    }
+    
+    .social-links a {
+        color: white;
+        font-size: 1.5rem;
+        margin: 0 0.5rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .social-links a:hover {
+        transform: translateY(-3px);
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+    <!-- Header Section -->
+    <section class="bg-dark py-5">
+        <div class="container px-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h1 class="display-4 fw-bolder text-white mb-3">Frequently Asked Questions</h1>
+                    <p class="lead text-white-50 mb-4">
+                        Find answers to common questions about Datilio's AI-powered data analysis platform (MVP). 
+                        Can't find what you're looking for? <a href="{{ url_for('contact') }}" class="text-white">Contact us</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="py-5">
+                <div class="container px-5">
+            <div class="row gx-5">
+                <div class="col-xl-8">
+                    <!-- Getting Started Section -->
+                    <div class="faq-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="bi bi-rocket-takeoff me-2"></i>Getting Started
+                            </h2>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-question-circle faq-icon"></i>What is Datilio and how does it work?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p><strong>Currently in MVP stage</strong> - Datilio is an AI-powered data analysis platform that helps you analyze and visualize your datasets. Upload your data files (CSV, JSON, or Excel), generate charts and visualizations, chat with AI to ask questions about your data, and create synthetic datasets. We're actively developing and improving based on user feedback.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-upload faq-icon"></i>What file formats do you support?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>We support the most common data formats:</p>
+                                <ul>
+                                    <li><strong>CSV files</strong> - Comma-separated values</li>
+                                    <li><strong>JSON files</strong> - JavaScript Object Notation</li>
+                                    <li><strong>Excel files</strong> - .xlsx and .xls formats</li>
+                                </ul>
+                                <p><strong>File limits:</strong> Maximum file size is 5MB for MPV. Storage and file count limits vary by plan.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-shield-check faq-icon"></i>Is my data secure and private?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Yes! Data security matters to us. As an MVP platform, we currently implement several security measures:</p>
+                                <ul>
+                                    <li>Bcrypt password encryption for user accounts</li>
+                                    <li>JWT-based authentication with email verification</li>
+                                    <li>User-isolated file storage (each user has separate directories)</li>
+                                    <li>Rate limiting on authentication endpoints to prevent abuse</li>
+                                    <li>File size and type validation (max 5MB, CSV/Excel/JSON only)</li>
+                                    <li>Secure CORS configuration</li>
+                                    <li>No sharing of your data with third parties</li>
+                                </ul>
+                                <p>As we grow beyond MVP, we're planning to add HTTPS enforcement, advanced encryption, and pursue formal security certifications.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-person-plus faq-icon"></i>How do I create an account?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Creating an account is quick and easy:</p>
+                                <ol>
+                                    <li>Click "Get Started" or "Dashboard" from the homepage</li>
+                                    <li>Enter your email address and create a password</li>
+                                    <li>Verify your email address (check your inbox)</li>
+                                    <li>Start analyzing your data immediately with our free MVP plan!</li>
+                                </ol>
+                                <p><strong>No credit card required</strong> for the free plan.</p>
+                                <p class="mt-3 small text-muted"><strong>Coming after MVP:</strong> We're planning to add sign-up options via Google, LinkedIn, and GitHub for faster and easier account creation.</p>
+                    </div>
+                </div>
+                    </div>
+
+                    <!-- Features & Functionality Section -->
+                    <div class="faq-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="bi bi-gear faq-icon"></i>Features & Functionality
+                            </h2>
+                                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-robot faq-icon"></i>What can I do with the AI chat feature?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Our AI chat feature allows you to:</p>
+                                <ul>
+                                    <li>Ask natural language questions about your uploaded data</li>
+                                    <li>Get statistical summaries and insights</li>
+                                    <li>Request specific data analysis</li>
+                                    <li>View your question and answer history</li>
+                                </ul>
+                                <p><strong>Note:</strong> AI features consume tokens based on your plan limits.</p>
+                                    </div>
+                                </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-graph-up faq-icon"></i>What kind of charts can I create?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>We offer 18 different chart types to visualize your data:</p>
+                                <ul>
+                                    <li><strong>Line chart</strong> - Track trends over time with single variable</li>
+                                    <li><strong>Multi-line chart</strong> - Compare multiple trends on the same graph</li>
+                                    <li><strong>Bar chart</strong> - Compare categorical data values</li>
+                                    <li><strong>Scatter plot (2D)</strong> - Explore relationships between two variables</li>
+                                    <li><strong>3D scatter plot</strong> - Analyze three-dimensional data relationships</li>
+                                    <li><strong>5D scatter plot</strong> - Advanced visualization with x, y, z axes plus color and size dimensions</li>
+                                    <li><strong>Histogram</strong> - Visualize data distribution and frequency</li>
+                                    <li><strong>Scatter histogram</strong> - Combined scatter plot with distribution histograms</li>
+                                    <li><strong>Box plot</strong> - Display statistical quartiles and outliers</li>
+                                    <li><strong>Pie chart</strong> - Show proportional data breakdown</li>
+                                    <li><strong>Stacked area chart</strong> - Visualize cumulative trends over time</li>
+                                    <li><strong>3D surface plot</strong> - Three-dimensional surface visualization</li>
+                                    <li><strong>Radar chart</strong> - Compare multiple metrics across categories in a circular format</li>
+                                    <li><strong>Heatmap</strong> - Display data intensity using color gradients across two dimensions</li>
+                                    <li><strong>Funnel chart</strong> - Visualize progressive data stages (ideal for conversion tracking)</li>
+                                    <li><strong>Candlestick chart</strong> - Show financial data with open, close, high, and low values</li>
+                                    <li><strong>Treemap</strong> - Display hierarchical data as nested rectangles by size</li>
+                                    <li><strong>Gauge chart</strong> - Show single metric values with visual indicators</li>
+                                </ul>
+                                <p><strong>Smart sampling:</strong> Large datasets are automatically sampled for faster chart rendering (up to 10,000 points).</p>
+                                <p><strong>Plot comparison:</strong> Compare up to 4 plots side-by-side to analyze patterns and trends across different visualizations.</p>
+                                        </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-columns-gap faq-icon"></i>Can I compare multiple plots?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Yes! Our plot comparison feature allows you to:</p>
+                                <ul>
+                                    <li>View up to <strong>4 plots side-by-side</strong> simultaneously</li>
+                                    <li>Compare different chart types (line vs bar, scatter vs histogram, etc.)</li>
+                                    <li>Analyze patterns across multiple visualizations</li>
+                                    <li>Identify correlations between different data views</li>
+                                </ul>
+                                <p>This helps you gain deeper insights by seeing multiple perspectives of your data at once.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-magic faq-icon"></i>What is synthetic data generation?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Synthetic data generation creates artificial datasets that maintain the statistical properties of your original data while protecting privacy. This is useful for:</p>
+                                <ul>
+                                    <li>Testing and development without exposing real data</li>
+                                    <li>Creating larger datasets for training models</li>
+                                    <li>Sharing data insights without privacy concerns</li>
+                                    <li>Generating data for scenarios not present in your original dataset</li>
+                                </ul>
+                                <p>Each plan includes a monthly allowance for synthetic data generation.</p>
+                                    </div>
+                                </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-funnel faq-icon"></i>What are data rules and filters?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Data rules allow you to filter and process your uploaded data:</p>
+                                <ul>
+                                    <li>Create custom filters for your datasets</li>
+                                    <li>Apply conditions to extract specific data</li>
+                                    <li>Save rules for reuse across files</li>
+                                    <li>Each plan has limits on the number of rules you can create</li>
+                                </ul>
+                                <p><strong>MVP Plan:</strong> 10 data rules included.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                    <!-- Plans & Pricing Section -->
+                    <div class="faq-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="bi bi-credit-card faq-icon"></i>Plans & Pricing
+                            </h2>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-gift faq-icon"></i>What's included in the free MVP plan?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>The free MVP plan includes:</p>
+                                <ul>
+                                    <li>5 file uploads (up to 5MB each)</li>
+                                    <li>20 GB storage</li>
+                                    <li>10 data rules</li>
+                                    <li>5 custom lists</li>
+                                    <li>100,000 AI tokens per month</li>
+                                    <li>200 AI prompts per month</li>
+                                    <li>1,000 synthetic data rows per month</li>
+                                    <li>Basic data analysis and visualization</li>
+                                </ul>
+                                <p>Perfect for getting started with data analysis!</p>
+                            </div>
+                                        </div>
+
+                        <div class="faq-item" style="opacity: 0.6;">
+                            <button class="faq-question" style="cursor: not-allowed; background: #f1f3f5;" disabled>
+                                <span><i class="bi bi-arrow-up-circle faq-icon"></i>Can I upgrade my plan? <span class="badge bg-secondary ms-2">Coming Soon</span></span>
+                                <i class="bi bi-lock-fill faq-toggle"></i>
+                            </button>
+                        </div>
+
+                        <div class="faq-item" style="opacity: 0.6;">
+                            <button class="faq-question" style="cursor: not-allowed; background: #f1f3f5;" disabled>
+                                <span><i class="bi bi-exclamation-triangle faq-icon"></i>What happens if I exceed my plan limits? <span class="badge bg-secondary ms-2">Coming Soon</span></span>
+                                <i class="bi bi-lock-fill faq-toggle"></i>
+                            </button>
+                        </div>
+
+                        <div class="faq-item" style="opacity: 0.6;">
+                            <button class="faq-question" style="cursor: not-allowed; background: #f1f3f5;" disabled>
+                                <span><i class="bi bi-currency-dollar faq-icon"></i>What payment methods do you accept? <span class="badge bg-secondary ms-2">Coming Soon</span></span>
+                                <i class="bi bi-lock-fill faq-toggle"></i>
+                            </button>
+                        </div>
+                                </div>
+
+                    <!-- Technical Support Section -->
+                    <div class="faq-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="bi bi-tools faq-icon"></i>Technical Support
+                            </h2>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-bug faq-icon"></i>What should I do if I encounter an error?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>If you encounter an error, try these steps:</p>
+                                <ol>
+                                    <li><strong>Refresh the page</strong> - Many issues resolve with a simple refresh</li>
+                                    <li><strong>Check your file format</strong> - Ensure your file is CSV, JSON, or Excel</li>
+                                    <li><strong>Verify file size</strong> - Check if your file exceeds plan limits</li>
+                                    <li><strong>Clear browser cache</strong> - Sometimes cached data causes issues</li>
+                                    <li><strong>Contact support</strong> - If the issue persists, reach out to our support team</li>
+                                </ol>
+                                <p>Include error messages and steps to reproduce the issue for faster resolution.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-clock faq-icon"></i>How fast is file processing?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Processing speed depends on file size and complexity:</p>
+                                <ul>
+                                    <li><strong>Upload</strong> - Instant (up to 100MB)</li>
+                                    <li><strong>Data preview</strong> - Usually 1-2 seconds</li>
+                                    <li><strong>Chart generation</strong> - 2-5 seconds (auto-sampled for large files)</li>
+                                    <li><strong>AI analysis</strong> - Depends on query complexity and file size</li>
+                                </ul>
+                                <p><strong>As MVP:</strong> We're continuously optimizing performance. Report slow responses via our contact form!</p>
+                                        </div>
+                                    </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span><i class="bi bi-download faq-icon"></i>Can I download my files?</span>
+                                <i class="bi bi-chevron-down faq-toggle"></i>
+                            </button>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Yes! You can download and export your data:</p>
+                                <ul>
+                                    <li><strong>CSV format</strong> - Download as comma-separated values</li>
+                                    <li><strong>Excel format</strong> - Download as .xlsx spreadsheet</li>
+                                    <li><strong>JSON format</strong> - Download as JSON file</li>
+                                    <li><strong>PDF reports</strong> - Generate comprehensive PDF reports with your data analysis and charts</li>
+                                </ul>
+                                <p><strong>Coming soon:</strong> Individual chart image exports (PNG, SVG) and custom report templates.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Card -->
+                <div class="col-xl-4">
+                    <div class="contact-card">
+                        <h4><i class="bi bi-headset me-2"></i>Still Have Questions?</h4>
+                        <p class="mb-4">We're building Datilio in the open and love hearing from our users!</p>
+                        <div class="mb-4">
+                            <p><strong>Get in Touch:</strong><br>
+                            Use our contact form below</p>
+                            <p class="small"><strong>MVP Status:</strong><br>
+                            We typically respond within 1-2 business days. Thanks for your patience as we grow!</p>
+                        </div>
+                        <div class="mb-4">
+                            <a href="{{ url_for('contact') }}" class="btn btn-light btn-lg text-dark">
+                                <i class="bi bi-envelope me-2"></i>Contact Us
+                            </a>
+                        </div>
+                        <div class="small">
+                            <p><strong>Found a bug or have a feature request?</strong><br>
+                            We'd love to hear your feedback through the contact form!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function toggleFAQ(button) {
+        const answer = button.nextElementSibling;
+        const toggle = button.querySelector('.faq-toggle');
+        
+        if (answer.style.display === 'none' || answer.style.display === '') {
+            answer.style.display = 'block';
+            toggle.classList.add('rotated');
+        } else {
+            answer.style.display = 'none';
+            toggle.classList.remove('rotated');
+        }
+    }
+
+    // Add smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add animation on scroll for FAQ items
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(item);
+    });
+</script>
+{% endblock %}

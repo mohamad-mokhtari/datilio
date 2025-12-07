@@ -1,0 +1,420 @@
+/* Failed Tasks Styling */
+
+/* Failed Task Card */
+.failed-task-card {
+  background: white;
+  border: 1px solid #fecaca;
+  border-left: 4px solid #ef4444;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.failed-task-card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.failed-task-card.success-retry {
+  border-left-color: #10b981;
+  border-color: #a7f3d0;
+  background: #f0fdf4;
+}
+
+.failed-task-card.success-retry:hover {
+  box-shadow: 0 4px 6px rgba(16, 185, 129, 0.1);
+}
+
+/* Card Header */
+.card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #fee2e2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #fefefe;
+}
+
+.failed-task-card.success-retry .card-header {
+  border-bottom-color: #d1fae5;
+  background: #f0fdf4;
+}
+
+.task-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.task-info h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-badge.error {
+  background: #fecaca;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+.status-badge.resolved {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.created-date {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Card Body */
+.card-body {
+  padding: 24px;
+}
+
+.error-message {
+  font-size: 14px;
+  color: #7f1d1d;
+  margin-bottom: 16px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  background: #fee2e2;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+  line-height: 1.5;
+}
+
+.help-box {
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.help-box.service_unavailable {
+  background: #fffbeb;
+  border-left-color: #f59e0b;
+}
+
+.help-box.worker_timeout {
+  background: #fef3c7;
+  border-left-color: #f59e0b;
+}
+
+.help-box.processing_error {
+  background: #fee2e2;
+  border-left-color: #ef4444;
+}
+
+.help-icon {
+  color: #f59e0b;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.help-box.processing_error .help-icon {
+  color: #ef4444;
+}
+
+.help-content {
+  flex: 1;
+}
+
+.help-content p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #78350f;
+}
+
+.help-content .retry-info {
+  color: #92400e;
+  font-weight: 600;
+  background: #fef3c7;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #f59e0b;
+}
+
+.help-content .suggestion {
+  color: #92400e;
+  font-weight: 500;
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: #fef3c7;
+  border-radius: 6px;
+  border: 1px solid #f59e0b;
+}
+
+/* Success Box */
+.success-box {
+  background: #d1fae5;
+  border-left: 4px solid #10b981;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.success-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #065f46;
+  font-size: 16px;
+}
+
+.success-text {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #047857;
+  line-height: 1.5;
+}
+
+.original-error {
+  margin-bottom: 16px;
+}
+
+.original-error .label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.original-error .error-text {
+  font-size: 13px;
+  color: #7f1d1d;
+  background: #fee2e2;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  border: 1px solid #fecaca;
+  line-height: 1.4;
+}
+
+/* Card Actions */
+.card-actions {
+  padding: 20px 24px;
+  border-top: 1px solid #f3f4f6;
+  display: flex;
+  gap: 12px;
+  background: #f9fafb;
+  flex-wrap: wrap;
+}
+
+.failed-task-card.success-retry .card-actions {
+  border-top-color: #d1fae5;
+  background: #f0fdf4;
+}
+
+/* No Failed Tasks */
+.no-failed-tasks {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f0fdf4;
+  border-radius: 12px;
+  border: 2px dashed #86efac;
+}
+
+.no-failed-tasks h3 {
+  color: #166534;
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.no-failed-tasks p {
+  color: #15803d;
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .failed-task-card {
+    background: #1f2937;
+    border-color: #7f1d1d;
+  }
+
+  .failed-task-card.success-retry {
+    background: #064e3b;
+    border-color: #065f46;
+  }
+
+  .card-header {
+    background: #374151;
+    border-bottom-color: #4b5563;
+  }
+
+  .failed-task-card.success-retry .card-header {
+    background: #064e3b;
+    border-bottom-color: #065f46;
+  }
+
+  .task-info h3 {
+    color: #f9fafb;
+  }
+
+  .created-date {
+    color: #9ca3af;
+  }
+
+  .error-message {
+    background: #7f1d1d;
+    color: #fecaca;
+    border-color: #991b1b;
+  }
+
+  .help-box {
+    background: #451a03;
+  }
+
+  .help-content p {
+    color: #fde68a;
+  }
+
+  .help-content .retry-info {
+    background: #451a03;
+    color: #fbbf24;
+    border-color: #d97706;
+  }
+
+  .help-content .suggestion {
+    background: #451a03;
+    color: #fbbf24;
+    border-color: #d97706;
+  }
+
+  .success-box {
+    background: #064e3b;
+  }
+
+  .success-header {
+    color: #6ee7b7;
+  }
+
+  .success-text {
+    color: #34d399;
+  }
+
+  .original-error .error-text {
+    background: #7f1d1d;
+    color: #fecaca;
+    border-color: #991b1b;
+  }
+
+  .card-actions {
+    background: #374151;
+    border-top-color: #4b5563;
+  }
+
+  .failed-task-card.success-retry .card-actions {
+    background: #064e3b;
+    border-top-color: #065f46;
+  }
+
+  .no-failed-tasks {
+    background: #064e3b;
+    border-color: #065f46;
+  }
+
+  .no-failed-tasks h3 {
+    color: #6ee7b7;
+  }
+
+  .no-failed-tasks p {
+    color: #34d399;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .failed-task-card {
+    margin-bottom: 12px;
+  }
+
+  .card-header {
+    padding: 16px 20px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .card-actions {
+    padding: 16px 20px;
+    flex-direction: column;
+  }
+
+  .card-actions button {
+    width: 100%;
+  }
+
+  .help-box {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .task-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .no-failed-tasks {
+    padding: 40px 16px;
+  }
+}
+
+/* Animation for retry button */
+.failed-task-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.failed-task-card button:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Loading state for retry */
+.failed-task-card .loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

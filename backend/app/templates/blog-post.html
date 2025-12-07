@@ -1,0 +1,488 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+<style>
+    .blog-post-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0 2rem;
+    }
+    
+    .blog-post-meta {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+    
+    .blog-post-meta i {
+        margin-right: 0.25rem;
+    }
+    
+    .blog-post-content {
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+    
+    .blog-post-content h1,
+    .blog-post-content h2,
+    .blog-post-content h3,
+    .blog-post-content h4,
+    .blog-post-content h5,
+    .blog-post-content h6 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        color: #2c3e50;
+    }
+    
+    .blog-post-content h1 { font-size: 2.5rem; }
+    .blog-post-content h2 { font-size: 2rem; }
+    .blog-post-content h3 { font-size: 1.75rem; }
+    .blog-post-content h4 { font-size: 1.5rem; }
+    .blog-post-content h5 { font-size: 1.25rem; }
+    .blog-post-content h6 { font-size: 1.1rem; }
+    
+    .blog-post-content p {
+        margin-bottom: 1.5rem;
+        color: #495057;
+    }
+    
+    .blog-post-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 0.5rem;
+        margin: 2rem 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .blog-post-content .image-caption {
+        text-align: center;
+        font-style: italic;
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .blog-post-content pre {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        overflow-x: auto;
+        font-size: 0.9rem;
+    }
+    
+    .blog-post-content code {
+        background: #f8f9fa;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+        color: #e83e8c;
+    }
+    
+    .blog-post-content pre code {
+        background: transparent;
+        padding: 0;
+        color: #495057;
+    }
+    
+    .blog-post-content blockquote {
+        border-left: 4px solid #667eea;
+        background: #f8f9fa;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 0 0.5rem 0.5rem 0;
+        font-style: italic;
+        position: relative;
+    }
+    
+    .blog-post-content blockquote::before {
+        content: '"';
+        font-size: 4rem;
+        color: #667eea;
+        position: absolute;
+        top: -0.5rem;
+        left: 1rem;
+        opacity: 0.3;
+    }
+    
+    .blog-post-content blockquote p {
+        margin-bottom: 0.5rem;
+        color: #495057;
+    }
+    
+    .blog-post-content blockquote .quote-author {
+        text-align: right;
+        font-weight: 600;
+        color: #667eea;
+        font-style: normal;
+        margin-top: 1rem;
+    }
+    
+    .blog-post-content ul,
+    .blog-post-content ol {
+        margin: 1.5rem 0;
+        padding-left: 2rem;
+    }
+    
+    .blog-post-content li {
+        margin-bottom: 0.5rem;
+        color: #495057;
+    }
+    
+    .blog-post-tags {
+        margin: 2rem 0;
+    }
+    
+    .blog-post-tag {
+        background: #f8f9fa;
+        color: #495057;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .blog-post-tag:hover {
+        background: #667eea;
+        color: white;
+        text-decoration: none;
+    }
+    
+    .related-posts {
+        background: #f8f9fa;
+        border-radius: 1rem;
+        padding: 2rem;
+        margin: 3rem 0;
+    }
+    
+    .related-post-card {
+        background: white;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+    
+    .related-post-card:hover {
+        transform: translateY(-3px);
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .share-buttons {
+        position: sticky;
+        top: 2rem;
+    }
+    
+    .share-btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5rem;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .share-btn:hover {
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
+    
+    .share-btn.twitter {
+        background: #1da1f2;
+        color: white;
+    }
+    
+    .share-btn.linkedin {
+        background: #0077b5;
+        color: white;
+    }
+    
+    .share-btn.facebook {
+        background: #4267b2;
+        color: white;
+    }
+    
+    .author-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin: 3rem 0;
+    }
+    
+    .author-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+    <!-- Blog Post Header -->
+    <section class="blog-post-header">
+                <div class="container px-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="text-center">
+                        <div class="blog-post-meta">
+                            <i class="bi bi-calendar"></i>
+                            <span class="me-3">{{ blog_post.published_at.strftime('%B %d, %Y') if blog_post.published_at else blog_post.created_at.strftime('%B %d, %Y') }}</span>
+                            <i class="bi bi-clock"></i>
+                            <span class="me-3">{{ blog_post.reading_time_minutes }} min read</span>
+                            <i class="bi bi-eye"></i>
+                            <span>{{ blog_post.view_count }} views</span>
+                        </div>
+                        
+                        <h1 class="display-4 fw-bolder mb-3">{{ blog_post.title }}</h1>
+                        
+                        {% if blog_post.summary %}
+                        <p class="lead mb-4">{{ blog_post.summary }}</p>
+                        {% endif %}
+                        
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="author-avatar me-3">
+                                {{ blog_post.author_name[0].upper() }}
+                            </div>
+                            <div class="text-start">
+                                <div class="fw-bold">{{ blog_post.author_name }}</div>
+                                <small class="opacity-75">{{ blog_post.category }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Post Content -->
+            <section class="py-5">
+        <div class="container px-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="blog-post-content">
+                        {% if blog_post.content and blog_post.content.body %}
+                            {% for item in blog_post.content.body %}
+                                {% if item.type == 'heading' %}
+                                    <h{{ item.get('level', 2) }}>{{ item.get('text', '') }}</h{{ item.get('level', 2) }}>
+                                {% elif item.type == 'paragraph' %}
+                                    <p>{{ item.get('text', '') }}</p>
+                                {% elif item.type == 'image' %}
+                                    <div class="text-center">
+                                        {% set image_url = item.get('url', '') %}
+                                        {% if image_url.startswith('/static/') %}
+                                            <img src="{{ image_url }}" alt="{{ item.get('alt', '') }}" class="img-fluid">
+                                        {% else %}
+                                            <img src="{{ image_url }}" alt="{{ item.get('alt', '') }}" class="img-fluid">
+                                        {% endif %}
+                                        {% if item.get('caption') %}
+                                        <div class="image-caption">{{ item.get('caption') }}</div>
+                                        {% endif %}
+                                    </div>
+                                {% elif item.type == 'code' %}
+                                    <pre><code class="language-{{ item.get('language', '') }}">{{ item.get('content', '') }}</code></pre>
+                                {% elif item.type == 'quote' %}
+                                    <blockquote>
+                                        <p>{{ item.get('text', '') }}</p>
+                                        {% if item.get('author') %}
+                                        <div class="quote-author">— {{ item.get('author') }}</div>
+                                        {% endif %}
+                                    </blockquote>
+                                {% elif item.type == 'list' %}
+                                    {% if item.get('style') == 'ordered' %}
+                                    <ol>
+                                        {% for list_item in item.get('items', []) %}
+                                        <li>{{ list_item }}</li>
+                                        {% endfor %}
+                                    </ol>
+                                    {% else %}
+                                    <ul>
+                                        {% for list_item in item.get('items', []) %}
+                                        <li>{{ list_item }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted">No content available for this blog post.</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Tags -->
+                    {% if blog_post.tags %}
+                    <div class="blog-post-tags">
+                        <h6 class="fw-bold mb-3">Tags:</h6>
+                        {% for tag in blog_post.tags %}
+                        <a href="{{ url_for('blog_home') }}?tag={{ tag }}" class="blog-post-tag">{{ tag }}</a>
+                        {% endfor %}
+                                </div>
+                    {% endif %}
+
+                    <!-- Share Buttons -->
+                    <div class="row mt-5">
+                        <div class="col-md-8">
+                            <h6 class="fw-bold mb-3">Share this post:</h6>
+                            <div class="d-flex gap-2">
+                                <a href="https://twitter.com/intent/tweet?text={{ blog_post.title }}&url={{ request.url }}" 
+                                   class="btn btn-outline-primary btn-sm" target="_blank">
+                                    <i class="bi bi-twitter me-1"></i>Twitter
+                                </a>
+                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" 
+                                   class="btn btn-outline-primary btn-sm" target="_blank">
+                                    <i class="bi bi-linkedin me-1"></i>LinkedIn
+                                </a>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" 
+                                   class="btn btn-outline-primary btn-sm" target="_blank">
+                                    <i class="bi bi-facebook me-1"></i>Facebook
+                                </a>
+                            </div>
+                        </div>
+                                                    </div>
+                                                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <div class="share-buttons">
+                        <h6 class="fw-bold mb-3">Share</h6>
+                        <a href="https://twitter.com/intent/tweet?text={{ blog_post.title }}&url={{ request.url }}" 
+                           class="share-btn twitter" target="_blank">
+                            <i class="bi bi-twitter me-2"></i>Share on Twitter
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" 
+                           class="share-btn linkedin" target="_blank">
+                            <i class="bi bi-linkedin me-2"></i>Share on LinkedIn
+                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" 
+                           class="share-btn facebook" target="_blank">
+                            <i class="bi bi-facebook me-2"></i>Share on Facebook
+                        </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+    <!-- Author Card -->
+    <section class="py-5 bg-light">
+        <div class="container px-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="author-card">
+                        <div class="row align-items-center">
+                            <div class="col-md-3 text-center">
+                                <div class="author-avatar mx-auto mb-3">
+                                    {{ blog_post.author_name[0].upper() }}
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <h5 class="fw-bold mb-2">{{ blog_post.author_name }}</h5>
+                                <p class="text-muted mb-3">
+                                    {% if blog_post.author_email %}
+                                    <i class="bi bi-envelope me-2"></i>{{ blog_post.author_email }}
+                                    {% endif %}
+                                </p>
+                                <p class="mb-0">
+                                    Author of this blog post. Follow for more insights on data science and AI.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+    <!-- Related Posts -->
+    {% if related_posts %}
+    <section class="py-5">
+            <div class="container px-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="related-posts">
+                        <h4 class="fw-bold mb-4">Related Posts</h4>
+                        {% for related_post in related_posts %}
+                        <a href="{{ url_for('blog_post', slug=related_post.slug) }}" class="related-post-card">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h6 class="fw-bold mb-1">{{ related_post.title }}</h6>
+                                    <p class="text-muted mb-0 small">{{ related_post.summary[:100] }}{% if related_post.summary|length > 100 %}...{% endif %}</p>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <small class="text-muted">
+                                        {{ related_post.published_at.strftime('%B %d, %Y') if related_post.published_at else related_post.created_at.strftime('%B %d, %Y') }}
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Add syntax highlighting for code blocks
+    document.addEventListener('DOMContentLoaded', function() {
+        // Simple syntax highlighting for common languages
+        const codeBlocks = document.querySelectorAll('pre code');
+        codeBlocks.forEach(block => {
+            const language = block.className.match(/language-(\w+)/);
+            if (language) {
+                block.setAttribute('data-language', language[1]);
+            }
+        });
+        
+        // Add copy button to code blocks
+        codeBlocks.forEach(block => {
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'btn btn-sm btn-outline-secondary position-absolute';
+            copyBtn.style.top = '0.5rem';
+            copyBtn.style.right = '0.5rem';
+            copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
+            copyBtn.title = 'Copy code';
+            
+            const pre = block.parentElement;
+            pre.style.position = 'relative';
+            pre.appendChild(copyBtn);
+            
+            copyBtn.addEventListener('click', function() {
+                navigator.clipboard.writeText(block.textContent).then(() => {
+                    copyBtn.innerHTML = '<i class="bi bi-check"></i>';
+                    copyBtn.classList.remove('btn-outline-secondary');
+                    copyBtn.classList.add('btn-success');
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
+                        copyBtn.classList.remove('btn-success');
+                        copyBtn.classList.add('btn-outline-secondary');
+                    }, 2000);
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

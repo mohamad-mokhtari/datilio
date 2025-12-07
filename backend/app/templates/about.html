@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+<style>
+    .feature-icon {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 0.75rem;
+    }
+    .gradient-custom {
+        background: linear-gradient(45deg, #4158D0, #C850C0, #FFCC70);
+    }
+    .team-member {
+        transition: transform 0.3s ease;
+    }
+    .team-member:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}
+
+{% block header %}
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xxl-6">
+                    <div class="text-center my-5">
+                        <h1 class="fw-bolder mb-3 text-white">Empowering Data-Driven Decisions</h1>
+                        <p class="lead fw-normal text-white-50 mb-4">At Datilio, we believe that understanding your data shouldn't be complicated. Our mission is to make data analysis effortless — transforming raw information into insights that drive real decisions.</p>
+                        <a class="btn btn-primary btn-lg" href="#scroll-target">Our Story</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block main %}
+<!-- About section one-->
+<section class="py-5 bg-light" id="scroll-target">
+    <div class="container px-5 my-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-lg-6">
+                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3 d-inline-flex align-items-center justify-content-center" style="width: 4rem; height: 4rem;">
+                    <i class="bi bi-graph-up"></i>
+                </div>
+                <h2 class="fw-bolder">Our Vision</h2>
+                <p class="lead fw-normal text-muted mb-0">We founded Datilio with a simple but powerful goal — to democratize data analysis and make it accessible to everyone. Whether you're a small business owner, a researcher, or simply passionate about data, Datilio gives you the tools to uncover insights effortlessly — no coding skills required.</p>
+            </div>
+            <div class="col-lg-6">
+                <div class="row gx-3">
+                    <div class="col-6 mb-3">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-2 mx-auto" style="width: 3rem; height: 3rem;">
+                                    <i class="bi bi-file-earmark-text"></i>
+                                </div>
+                                <h6 class="fw-bold">Multi-Format Support</h6>
+                                <small class="text-muted">CSV, JSON, Excel</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-2 mx-auto" style="width: 3rem; height: 3rem;">
+                                    <i class="bi bi-robot"></i>
+                                </div>
+                                <h6 class="fw-bold">AI-Powered</h6>
+                                <small class="text-muted">Smart Insights</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-2 mx-auto" style="width: 3rem; height: 3rem;">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+                                <h6 class="fw-bold">Secure</h6>
+                                <small class="text-muted">Data Protection</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-2 mx-auto" style="width: 3rem; height: 3rem;">
+                                    <i class="bi bi-lightning"></i>
+                                </div>
+                                <h6 class="fw-bold">Fast</h6>
+                                <small class="text-muted">Real-time Analysis</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About section two-->
+<section class="py-5">
+    <div class="container px-5 my-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-lg-6 order-first order-lg-last">
+                <div class="row gx-3">
+                    <div class="col-12 mb-4">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 me-3" style="width: 3rem; height: 3rem;">
+                                        <i class="bi bi-upload"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Easy Upload</h6>
+                                        <small class="text-muted">Drag & drop your files</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-4">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 me-3" style="width: 3rem; height: 3rem;">
+                                        <i class="bi bi-bar-chart"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Smart Analytics</h6>
+                                        <small class="text-muted">Automatic insights & visualizations</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 me-3" style="width: 3rem; height: 3rem;">
+                                        <i class="bi bi-chat-dots"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">AI Chat</h6>
+                                        <small class="text-muted">Ask questions about your data</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3 d-inline-flex align-items-center justify-content-center" style="width: 4rem; height: 4rem;">
+                    <i class="bi bi-rocket"></i>
+                </div>
+                <h2 class="fw-bolder">Our Journey</h2>
+                <p class="lead fw-normal text-muted mb-4">Starting from a simple idea, we're growing Datilio into a powerful data analysis platform designed to help people unlock insights from their data. Innovation is at the core of everything we do—from AI improvements to seamless user experience.</p>
+                <div class="row gx-4">
+                    <div class="col-12">
+                        <div class="text-center p-3 bg-light rounded">
+                            <p class="fw-bold text-primary mb-2">Currently in MVP Stage</p>
+                            <p class="text-muted mb-0 small">Next milestone: empowering our first 1,000 users to unlock data insights effortlessly</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Team members section-->
+<section class="py-5 bg-light">
+    <div class="container px-5 my-5">
+        <div class="text-center">
+            <h2 class="fw-bolder">Our Mission</h2>
+            <p class="lead fw-normal text-muted mb-5">Empowering users with intelligent data analysis tools</p>
+        </div>
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-8">
+                <div class="row gx-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm team-member">
+                            <div class="card-body text-center p-4">
+                                <div class="feature bg-primary bg-gradient text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center" style="width: 4rem; height: 4rem;">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <h5 class="fw-bolder">User-Centric Design</h5>
+                                <p class="text-muted mb-0">We prioritize user experience and make complex data analysis accessible to everyone, regardless of technical background.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm team-member">
+                            <div class="card-body text-center p-4">
+                                <div class="feature bg-primary bg-gradient text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center" style="width: 4rem; height: 4rem;">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+                                <h5 class="fw-bolder">Data Security & Privacy</h5>
+                                <p class="text-muted mb-0">Your data security matters to us. We implement multiple security layers including: encrypted password storage (bcrypt), JWT authentication, email verification, user-isolated file storage, rate limiting on sensitive endpoints, and secure CORS configuration. As we grow, we're continuously strengthening our security infrastructure.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm team-member">
+                            <div class="card-body text-center p-4">
+                                <div class="feature bg-primary bg-gradient text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center" style="width: 4rem; height: 4rem;">
+                                    <i class="bi bi-lightning"></i>
+                                </div>
+                                <h5 class="fw-bolder">Performance</h5>
+                                <p class="text-muted mb-0">Fast, reliable, and scalable infrastructure ensures your data analysis tasks are completed quickly and efficiently.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm team-member">
+                            <div class="card-body text-center p-4">
+                                <div class="feature bg-primary bg-gradient text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center" style="width: 4rem; height: 4rem;">
+                                    <i class="bi bi-heart"></i>
+                                </div>
+                                <h5 class="fw-bolder">Customer Support</h5>
+                                <p class="text-muted mb-0">Our dedicated support team is here to help you succeed with your data analysis projects and answer any questions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}{% endblock %}
+

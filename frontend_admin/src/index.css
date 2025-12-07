@@ -1,0 +1,17 @@
+@import "./assets/styles/app.css";
+
+/* ********************** START: Custom styles for the rule value list item */
+.rule-value-list-item{
+    background-color: #f0f0f0; /* White background */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-height: 200px; /* Limit height */
+    margin-right: 10px;
+}
+
+.rule-value-list-item:hover {
+    background-color: #ffffff; /* Light gray on hover */
+}
+
+/* ********************** Custom styles for the rule value list item */

@@ -1,0 +1,562 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+<style>
+    .video-card {
+        background: white;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+        cursor: pointer;
+    }
+    
+    .video-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .video-thumbnail {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        overflow: hidden;
+    }
+    
+    .video-thumbnail video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .play-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    
+    .video-card:hover .play-overlay {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    
+    .play-icon {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #667eea;
+        font-size: 2rem;
+        transition: all 0.3s ease;
+    }
+    
+    .video-card:hover .play-icon {
+        background: white;
+        transform: scale(1.1);
+    }
+    
+    .video-info {
+        padding: 1.5rem;
+    }
+    
+    .video-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.75rem;
+    }
+    
+    .video-description {
+        color: #6c757d;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+    
+    .video-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+    
+    .video-meta i {
+        color: #667eea;
+    }
+    
+    /* Modal Styles */
+    .video-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .video-modal-content {
+        position: relative;
+        margin: auto;
+        padding: 20px;
+        width: 90%;
+        max-width: 1200px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .video-player {
+        width: 100%;
+        max-height: 80vh;
+        border-radius: 1rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        color: white;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: none;
+        border: none;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        line-height: 1;
+    }
+    
+    .close-modal:hover {
+        color: #667eea;
+        transform: rotate(90deg);
+    }
+    
+    .modal-video-title {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 1rem;
+        text-align: center;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 1rem;
+        padding: 3rem 2rem;
+        text-align: center;
+        color: white;
+        margin-top: 3rem;
+    }
+    
+    .cta-section h3 {
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    
+    .cta-section p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+    }
+    
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .section-title {
+        color: #495057;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    
+    .section-subtitle {
+        color: #6c757d;
+        font-size: 1.1rem;
+    }
+    
+    .badge-new {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+    <!-- Header Section -->
+    <section class="bg-dark py-5">
+        <div class="container px-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h1 class="display-4 fw-bolder text-white mb-3">
+                        <i class="bi bi-play-circle me-2"></i>Video Tutorials
+                    </h1>
+                    <p class="lead text-white-50 mb-4">
+                        Learn how to use Datilio with our comprehensive video guides. Watch step-by-step tutorials to master data analysis, visualization, and AI-powered insights.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Gallery Section -->
+    <section class="py-5">
+        <div class="container px-5">
+            <!-- Getting Started Videos -->
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="bi bi-rocket-takeoff me-2"></i>Getting Started
+                </h2>
+                <p class="section-subtitle">
+                    New to Datilio? Start here to learn the basics with our 4 beginner-friendly tutorials
+                </p>
+            </div>
+            
+            <div class="row g-4 mb-5">
+                <!-- Video 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="video-card" onclick="openVideo('v_003.mp4', 'Getting Started with Datilio')">
+                        <div class="video-thumbnail">
+                            <video preload="metadata" muted>
+                                <source src="{{ url_for('static', path='videos/v_003.mp4') }}#t=0.1" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <div class="play-icon">
+                                    <i class="bi bi-play-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">Getting Started with Datilio</h3>
+                            <p class="video-description">
+                                Complete introduction to Datilio. Learn the basics of the platform, explore key features, and understand how to get the most out of your data analysis journey.
+                            </p>
+                            <div class="video-meta">
+                                <span><i class="bi bi-clock me-1"></i>Tutorial</span>
+                                <span><i class="bi bi-bar-chart me-1"></i>Beginner</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="video-card" onclick="openVideo('v_part_001.mp4', 'Getting Started with Datilio')">
+                        <div class="video-thumbnail">
+                            <video preload="metadata" muted>
+                                <source src="{{ url_for('static', path='videos/v_part_001.mp4') }}#t=0.1" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <div class="play-icon">
+                                    <i class="bi bi-play-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">Getting Started with Datilio</h3>
+                            <p class="video-description">
+                                Complete introduction to Datilio. Learn the basics of the platform, explore key features, and understand how to get the most out of your data analysis journey.
+                            </p>
+                            <div class="video-meta">
+                                <span><i class="bi bi-clock me-1"></i>Tutorial</span>
+                                <span><i class="bi bi-bar-chart me-1"></i>Beginner</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="video-card" onclick="openVideo('datilo_2.mp4', 'Platform Overview & Dashboard Tour')">
+                        <div class="video-thumbnail">
+                            <video preload="metadata" muted>
+                                <source src="{{ url_for('static', path='videos/datilo_2.mp4') }}#t=0.1" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <div class="play-icon">
+                                    <i class="bi bi-play-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">Platform Overview & Dashboard Tour</h3>
+                            <p class="video-description">
+                                Get a comprehensive tour of the Datilio platform. Learn how to navigate the dashboard, understand the main features, and get started with your first project.
+                            </p>
+                            <div class="video-meta">
+                                <span><i class="bi bi-clock me-1"></i>Tutorial</span>
+                                <span><i class="bi bi-bar-chart me-1"></i>Beginner</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="video-card" onclick="openVideo('datilo_3.mp4', 'Data Upload & File Management')">
+                        <div class="video-thumbnail">
+                            <video preload="metadata" muted>
+                                <source src="{{ url_for('static', path='videos/datilo_3.mp4') }}#t=0.1" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <div class="play-icon">
+                                    <i class="bi bi-play-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">Data Upload & File Management</h3>
+                            <p class="video-description">
+                                Learn how to upload your CSV, JSON, and Excel files. Discover best practices for organizing your datasets and managing multiple files efficiently.
+                            </p>
+                            <div class="video-meta">
+                                <span><i class="bi bi-clock me-1"></i>Tutorial</span>
+                                <span><i class="bi bi-bar-chart me-1"></i>Beginner</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="video-card" onclick="openVideo('datilo_4.mp4', 'Creating Your First Visualization')">
+                        <div class="video-thumbnail">
+                            <video preload="metadata" muted>
+                                <source src="{{ url_for('static', path='videos/datilo_4.mp4') }}#t=0.1" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <div class="play-icon">
+                                    <i class="bi bi-play-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">Creating Your First Visualization</h3>
+                            <p class="video-description">
+                                Step-by-step guide to creating stunning charts and graphs. Explore our 18 chart types including line charts, scatter plots, heatmaps, and more.
+                            </p>
+                            <div class="video-meta">
+                                <span><i class="bi bi-clock me-1"></i>Tutorial</span>
+                                <span><i class="bi bi-bar-chart me-1"></i>Beginner</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coming Soon Section -->
+            <div class="section-header mt-5">
+                <h2 class="section-title">
+                    <i class="bi bi-stars me-2"></i>Advanced Features
+                    <span class="badge-new ms-2">Coming Soon</span>
+                </h2>
+                <p class="section-subtitle">
+                    More tutorials are on the way! Check back soon for advanced guides
+                </p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Placeholder for future videos -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="video-card" style="opacity: 0.6; cursor: not-allowed;" onclick="event.preventDefault()">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #a8b8d8 0%, #9ba4b2 100%);">
+                            <div class="play-overlay">
+                                <div class="play-icon" style="color: #a8b8d8;">
+                                    <i class="bi bi-lock-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">AI Chat & Data Analysis</h3>
+                            <p class="video-description">
+                                Learn how to leverage AI to ask questions about your data and get intelligent insights. Master the art of data-driven conversations.
+                            </p>
+                            <div class="video-meta">
+                                <span><i class="bi bi-clock me-1"></i>Coming Soon</span>
+                                <span><i class="bi bi-bar-chart me-1"></i>Intermediate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="video-card" style="opacity: 0.6; cursor: not-allowed;" onclick="event.preventDefault()">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #a8b8d8 0%, #9ba4b2 100%);">
+                            <div class="play-overlay">
+                                <div class="play-icon" style="color: #a8b8d8;">
+                                    <i class="bi bi-lock-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">Synthetic Data Generation</h3>
+                            <p class="video-description">
+                                Discover how to generate synthetic datasets that maintain statistical properties while protecting privacy. Perfect for testing and development.
+                            </p>
+                            <div class="video-meta">
+                                <span><i class="bi bi-clock me-1"></i>Coming Soon</span>
+                                <span><i class="bi bi-bar-chart me-1"></i>Advanced</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="video-card" style="opacity: 0.6; cursor: not-allowed;" onclick="event.preventDefault()">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #a8b8d8 0%, #9ba4b2 100%);">
+                            <div class="play-overlay">
+                                <div class="play-icon" style="color: #a8b8d8;">
+                                    <i class="bi bi-lock-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">Advanced Plot Comparison</h3>
+                            <p class="video-description">
+                                Master the art of comparing multiple visualizations side-by-side. Learn how to identify patterns and correlations across different chart types.
+                            </p>
+                            <div class="video-meta">
+                                <span><i class="bi bi-clock me-1"></i>Coming Soon</span>
+                                <span><i class="bi bi-bar-chart me-1"></i>Intermediate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <h3><i class="bi bi-rocket-takeoff me-2"></i>Ready to Get Started?</h3>
+                <p>Sign up now and start analyzing your data with Datilio's powerful tools. No credit card required for the free MVP plan!</p>
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-light btn-lg">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Go to Dashboard
+                    </a>
+                    <a href="{{ url_for('faq') }}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-question-circle me-2"></i>View FAQ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="video-modal">
+        <div class="video-modal-content">
+            <button class="close-modal" onclick="closeVideo()">&times;</button>
+            <video id="modalVideo" class="video-player" controls controlsList="nodownload">
+                <source id="modalVideoSource" src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <h3 id="modalVideoTitle" class="modal-video-title"></h3>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function openVideo(videoFile, title) {
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('modalVideo');
+        const source = document.getElementById('modalVideoSource');
+        const titleElement = document.getElementById('modalVideoTitle');
+        
+        // Set video source
+        source.src = "{{ url_for('static', path='videos/') }}" + videoFile;
+        titleElement.textContent = title;
+        
+        // Load and play video
+        video.load();
+        modal.style.display = 'block';
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        // Play video after a short delay to ensure it's loaded
+        setTimeout(() => {
+            video.play().catch(e => console.log('Auto-play prevented:', e));
+        }, 100);
+    }
+    
+    function closeVideo() {
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('modalVideo');
+        
+        // Pause and reset video
+        video.pause();
+        video.currentTime = 0;
+        
+        // Hide modal
+        modal.style.display = 'none';
+        
+        // Restore body scroll
+        document.body.style.overflow = 'auto';
+    }
+    
+    // Close modal when clicking outside the video
+    window.onclick = function(event) {
+        const modal = document.getElementById('videoModal');
+        if (event.target === modal) {
+            closeVideo();
+        }
+    }
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeVideo();
+        }
+    });
+    
+    // Add animation on scroll for video cards
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.video-card').forEach(card => {
+        if (!card.style.opacity || card.style.opacity === '0.6') return; // Skip disabled cards
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,296 @@
+/* ========================================
+   Scenario 1: Service Unavailable
+   ======================================== */
+
+.error-dialog.service-unavailable {
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-left: 4px solid #f59e0b;
+  border-radius: 8px;
+  padding: 24px;
+  margin: 16px 0;
+}
+
+.error-dialog .error-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.error-dialog .error-icon {
+  color: #f59e0b;
+}
+
+.error-dialog h3 {
+  margin: 0;
+  color: #92400e;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.error-dialog .error-body {
+  color: #78350f;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.error-dialog .error-body p {
+  margin: 8px 0;
+}
+
+.error-dialog .error-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ========================================
+   Scenario 2: No Workers
+   ======================================== */
+
+.task-error.no-workers {
+  background: #fee2e2;
+  border-left: 4px solid #ef4444;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.task-error .error-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.task-error .status-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.task-error .status-badge.error {
+  background: #dc2626;
+  color: white;
+}
+
+.task-error .error-reason {
+  color: #991b1b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.task-error .error-message {
+  color: #7f1d1d;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  background: #fef2f2;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #fecaca;
+}
+
+.task-error .help-box {
+  background: white;
+  border-left: 3px solid #ef4444;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 12px;
+}
+
+.task-error .help-box.system-issue {
+  border-left-color: #f59e0b;
+}
+
+.task-error .help-icon {
+  color: #f59e0b;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.task-error .help-content h4 {
+  margin: 0 0 8px 0;
+  color: #7f1d1d;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.task-error .help-content p {
+  margin: 8px 0;
+  color: #991b1b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.task-error .help-content ul {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+  color: #991b1b;
+  font-size: 13px;
+}
+
+.task-error .help-content li {
+  margin: 4px 0;
+}
+
+/* ========================================
+   Scenario 3: Processing Error
+   ======================================== */
+
+.task-error.processing-error {
+  background: #fee2e2;
+  border-left: 4px solid #dc2626;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.task-error .help-box.retry-info {
+  border-left-color: #3b82f6;
+}
+
+.task-error .help-box.retry-info .help-icon {
+  color: #3b82f6;
+}
+
+/* ========================================
+   Pending Task Warning (3-5 min)
+   ======================================== */
+
+.task-pending.has-warning {
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.task-pending .status {
+  color: #92400e;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.task-pending .warning-box {
+  background: #fef3c7;
+  border-left: 3px solid #f59e0b;
+  padding: 12px;
+  border-radius: 4px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.task-pending .warning-icon {
+  font-size: 16px;
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+
+.task-pending .warning-text {
+  color: #92400e;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* ========================================
+   Dark Mode Support
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .error-dialog.service-unavailable {
+    background: #451a03;
+    border-color: #d97706;
+  }
+  
+  .error-dialog h3 {
+    color: #fbbf24;
+  }
+  
+  .error-dialog .error-body {
+    color: #fde68a;
+  }
+  
+  .task-error.no-workers,
+  .task-error.processing-error {
+    background: #7f1d1d;
+    border-left-color: #f87171;
+  }
+  
+  .task-error .error-message {
+    background: #991b1b;
+    border-color: #dc2626;
+    color: #fecaca;
+  }
+  
+  .task-error .help-box {
+    background: #1f2937;
+  }
+  
+  .task-error .help-content h4 {
+    color: #fecaca;
+  }
+  
+  .task-error .help-content p,
+  .task-error .help-content ul {
+    color: #d1d5db;
+  }
+  
+  .task-pending.has-warning {
+    background: #451a03;
+    border-left-color: #d97706;
+  }
+  
+  .task-pending .status {
+    color: #fbbf24;
+  }
+  
+  .task-pending .warning-box {
+    background: #451a03;
+    border-left-color: #d97706;
+  }
+  
+  .task-pending .warning-text {
+    color: #fde68a;
+  }
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+  .error-dialog.service-unavailable,
+  .task-error.no-workers,
+  .task-error.processing-error,
+  .task-pending.has-warning {
+    padding: 12px;
+    margin: 8px 0;
+  }
+  
+  .error-dialog .error-actions,
+  .task-error .error-actions {
+    flex-direction: column;
+  }
+  
+  .error-dialog .error-actions button,
+  .task-error .error-actions button {
+    width: 100%;
+  }
+  
+  .task-error .help-box {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .task-pending .warning-box {
+    flex-direction: column;
+    gap: 6px;
+  }
+}

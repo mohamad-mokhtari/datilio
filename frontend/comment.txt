@@ -1,0 +1,6 @@
+1- Extract Elstar (v2.1.1).rar file.
+2- Go to starter folder 
+3- open vscode 
+4- npm install reusify (first don't do it. if encountred error do this)
+4- npm install
+5- npm start

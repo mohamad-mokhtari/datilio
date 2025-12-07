@@ -1,0 +1,1685 @@
+{
+  "email": {
+    "domains": {
+      "text": "Custom list of email domains to randomly choose from. Use JSON list format. Leave empty to use realistic default domains (gmail.com, yahoo.com, outlook.com, etc.)",
+      "example": "Empty: foretime10@live.com, user123@gmail.com, sarah@yahoo.com (diverse domains) | [\"company.com\", \"business.org\"]: user@company.com, john@business.org (your domains only) | [\"gmail.com\", \"yahoo.com\", \"outlook.com\"]: popular email providers only",
+      "type": "info"
+    },
+    "unique": {
+      "text": "Toggle ON to guarantee all email addresses are unique (no duplicates). Toggle OFF to allow duplicate emails. IMPORTANT: When ON, each row gets a completely unique email address",
+      "example": "OFF: may generate duplicates like user@gmail.com, user@gmail.com (same email twice) | ON: guarantees all different like user1@gmail.com, user2@yahoo.com, user3@outlook.com (all unique) | Recommended: ON for user databases, OFF for general testing",
+      "type": "info"
+    }
+  },
+  "person": {
+    "gender": {
+      "text": "Choose 'Mixed (Random)' for realistic datasets with both male and female names, or select a specific gender for all rows",
+      "type": "info"
+    }
+  },
+  "first_name": {
+    "gender": {
+      "text": "Choose 'Mixed (Random)' to get both male and female first names in your dataset. Gender determines the name pool for each row.",
+      "example": "Mixed (Random) gives: John, Sarah, Michael, Emily...",
+      "type": "info"
+    }
+  },
+  "last_name": {
+    "gender": {
+      "text": "Choose 'Mixed (Random)' for diverse names. In some locales, last names may vary by gender.",
+      "type": "info"
+    }
+  },
+  "full_name": {
+    "gender": {
+      "text": "Choose 'Mixed (Random)' (recommended) to generate realistic datasets with both male and female names",
+      "example": "Mixed gives: John Smith, Sarah Johnson, Michael Brown...",
+      "type": "info"
+    },
+    "reverse": {
+      "text": "Toggle ON to reverse the name order (Last Name, First Name). Toggle OFF for standard order (First Name Last Name). Useful for different cultural naming conventions or formal listings",
+      "example": "OFF: John Smith, Sarah Johnson, Michael Brown, Emily Davis (First Last) | ON: Smith John, Johnson Sarah, Brown Michael, Davis Emily (Last First) | Use ON for: formal lists, Asian naming conventions, alphabetical sorting by last name",
+      "type": "info"
+    }
+  },
+  "name": {
+    "gender": {
+      "text": "Choose 'Mixed (Random)' for realistic datasets with both male and female names",
+      "type": "info"
+    }
+  },
+  "title": {
+    "gender": {
+      "text": "Choose 'Mixed (Random)' to get both Mr./Mrs./Ms. titles matching the generated names",
+      "type": "info"
+    }
+  },
+  "birthdate": {
+    "min_year": {
+      "text": "Minimum birth year (must be >= 1900)",
+      "example": "1950",
+      "type": "warning"
+    },
+    "max_year": {
+      "text": "Maximum birth year (must be >= 1900 and <= current year)",
+      "example": "2005",
+      "type": "warning"
+    }
+  },
+  "date": {
+    "start": {
+      "text": "Start year for date generation (must be a year number)",
+      "example": "1900",
+      "type": "info"
+    },
+    "end": {
+      "text": "End year for date generation (must be a year number)",
+      "example": "2025",
+      "type": "info"
+    }
+  },
+  "datetime": {
+    "start": {
+      "text": "Start year for datetime generation (must be a year number)",
+      "example": "1900",
+      "type": "info"
+    },
+    "end": {
+      "text": "End year for datetime generation (must be a year number)",
+      "example": "2025",
+      "type": "info"
+    },
+    "timezone": {
+      "text": "Select a timezone for datetime generation. Choose 'None' to use default system timezone",
+      "example": "Popular choices: UTC (universal), America/New_York (US Eastern), Europe/London (UK), Asia/Tokyo (Japan)",
+      "type": "info"
+    }
+  },
+  "formatted_date": {
+    "fmt": {
+      "text": "Date format template using strftime codes. Leave empty to use locale default format",
+      "example": "%Y-%m-%d gives 2024-04-12 | %d/%m/%Y gives 12/04/2024 | %B %d, %Y gives April 12, 2024",
+      "type": "info"
+    }
+  },
+  "formatted_datetime": {
+    "fmt": {
+      "text": "Datetime format template using strftime codes. Leave empty to use locale default format",
+      "example": "%Y-%m-%d %H:%M:%S gives 2024-04-12 14:30:00 | %d/%m/%Y %I:%M %p gives 12/04/2024 02:30 PM",
+      "type": "info"
+    }
+  },
+  "formatted_time": {
+    "fmt": {
+      "text": "Time format template using strftime codes. Leave empty to use locale default format",
+      "example": "%H:%M:%S gives 14:30:00 | %I:%M %p gives 02:30 PM",
+      "type": "info"
+    }
+  },
+  "time": {
+    "start": {
+      "text": "Start time in HH:MM:SS format",
+      "example": "08:00:00",
+      "type": "info"
+    },
+    "end": {
+      "text": "End time in HH:MM:SS format",
+      "example": "18:00:00",
+      "type": "info"
+    }
+  },
+  "integer": {
+    "start": {
+      "text": "Minimum integer value (inclusive) - the lowest number that can be generated",
+      "example": "1 generates integers starting from 1 | -100 allows negative integers from -100 | 0 includes zero and positive numbers",
+      "type": "info"
+    },
+    "end": {
+      "text": "Maximum integer value (inclusive) - the highest number that can be generated",
+      "example": "100 generates integers up to 100 | 1000 for larger numbers | -1 with start=-100 generates only negative integers",
+      "type": "info"
+    }
+  },
+  "integer_number": {
+    "start": {
+      "text": "Minimum integer value (inclusive) - the lowest number that can be generated. Default is -1000",
+      "example": "0 for non-negative integers | 1 for positive integers only | -100 allows negative numbers from -100",
+      "type": "info"
+    },
+    "end": {
+      "text": "Maximum integer value (inclusive) - the highest number that can be generated. Default is 1000",
+      "example": "100 for integers up to 100 | 1000000 for large numbers | -1 with start=-100 for only negative integers",
+      "type": "info"
+    }
+  },
+  "float_number": {
+    "start": {
+      "text": "Minimum float value (inclusive) - the lowest decimal number that can be generated. Default is -1000.0",
+      "example": "0.0 for non-negative decimals | 0.5 starts from half | -100.5 allows negative decimals",
+      "type": "info"
+    },
+    "end": {
+      "text": "Maximum float value (inclusive) - the highest decimal number that can be generated. Default is 1000.0",
+      "example": "100.0 for decimals up to 100 | 1.0 with start=0.0 for values between 0 and 1 | 999.99 for prices",
+      "type": "info"
+    },
+    "precision": {
+      "text": "Number of decimal places (digits after the decimal point). Default is 15. Controls how precise the decimal number is",
+      "example": "2 gives: 45.67, 12.34, 99.99 (prices) | 4 gives: 12.3456, 98.7654 (scientific) | 0 gives: 45.0, 12.0 (whole numbers)",
+      "type": "info"
+    }
+  },
+  "decimal_number": {
+    "start": {
+      "text": "Minimum decimal value (inclusive) - for high-precision financial calculations. Default is -1000.0",
+      "example": "0.0 for non-negative amounts | 0.01 for monetary values (avoiding zero) | -1000.0 for accounting (positive and negative)",
+      "type": "info"
+    },
+    "end": {
+      "text": "Maximum decimal value (inclusive) - for high-precision financial calculations. Default is 1000.0",
+      "example": "1000000.0 for large transactions | 9999.99 for prices | 100.0 for percentages as decimals",
+      "type": "info"
+    }
+  },
+  "complex_number": {
+    "start_real": {
+      "text": "Minimum value for the real part (the 'a' in a+bi). Real part is the non-imaginary component of complex numbers",
+      "example": "-10.0 allows negative real parts | 0.0 for non-negative real parts | -100.0 for wide range",
+      "type": "info"
+    },
+    "end_real": {
+      "text": "Maximum value for the real part (the 'a' in a+bi). Sets the upper limit for the real component",
+      "example": "10.0 gives real parts up to 10 | 100.0 for larger range | 0.0 with start=-10.0 for only negative real parts",
+      "type": "info"
+    },
+    "start_imag": {
+      "text": "Minimum value for the imaginary part (the 'b' in a+bi). Imaginary part is the coefficient of 'i' (√-1)",
+      "example": "-10.0 allows negative imaginary parts | 0.0 for non-negative | -5.0 for moderate range",
+      "type": "info"
+    },
+    "end_imag": {
+      "text": "Maximum value for the imaginary part (the 'b' in a+bi). Sets the upper limit for the imaginary component",
+      "example": "10.0 gives imaginary parts up to 10 | 5.0 for smaller range | 100.0 for wide range",
+      "type": "info"
+    },
+    "precision_real": {
+      "text": "Number of decimal places for the real part. Default is 15. Controls precision of the real component",
+      "example": "2 gives: 3.14+5.67i (simple) | 6 gives: 3.141592+2.718281i (precise) | 0 gives: 3.0+5.0i (whole numbers)",
+      "type": "info"
+    },
+    "precision_imag": {
+      "text": "Number of decimal places for the imaginary part. Default is 15. Controls precision of the imaginary component",
+      "example": "2 gives: 3.14+5.67i (simple) | 6 gives: 3.141592+2.718281i (precise) | 0 gives: 3.0+5.0i (whole numbers)",
+      "type": "info"
+    }
+  },
+  "increment": {
+    "accumulator": {
+      "text": "Optional unique identifier for independent counter sequences. Each accumulator maintains its own separate counter. Leave empty for a default global counter. All counters start at 1",
+      "example": "Empty (default): 1, 2, 3, 4, 5... | With 'user_id': starts at 1 (independent) | With 'order_id': also starts at 1 (independent) | Example: Empty→1, 'a'→1, Empty→2, 'a'→2, 'b'→1, 'a'→3 (each accumulator counts separately)",
+      "type": "info"
+    }
+  },
+  "choice": {
+    "items": {
+      "text": "List of items to randomly choose from",
+      "example": "[\"option1\", \"option2\", \"option3\"]",
+      "type": "info"
+    }
+  },
+  "random_element": {
+    "elements": {
+      "text": "List of elements for random selection",
+      "example": "[\"item1\", \"item2\", \"item3\"]",
+      "type": "info"
+    }
+  },
+  "words": {
+    "quantity": {
+      "text": "Number of random words to generate. Returns a list of words. Perfect for testing word lists, tags, keywords, or multi-word fields",
+      "example": "1 gives: [\"hello\"] | 3 gives: [\"hello\", \"world\", \"test\"] | 5 gives: [\"lorem\", \"ipsum\", \"dolor\", \"sit\", \"amet\"] | 10 generates a list of 10 random words",
+      "type": "info"
+    }
+  },
+  "text": {
+    "quantity": {
+      "text": "Number of sentences or paragraphs to generate in the text block. Creates coherent text content for testing",
+      "example": "1 gives single sentence/paragraph | 3 gives 3 sentences/paragraphs | 5 gives longer text block with 5 units | Used for: article content, descriptions, comments",
+      "type": "info"
+    }
+  },
+  "uniform": {
+    "low": {
+      "text": "Minimum value (inclusive) - lower boundary of the uniform distribution. All values between low and high are equally likely",
+      "example": "0.0 with high=1.0 generates values between 0 and 1 | 10.0 with high=100.0 generates values between 10 and 100 | -5.0 with high=5.0 generates values between -5 and 5",
+      "type": "info"
+    },
+    "high": {
+      "text": "Maximum value (exclusive) - upper boundary of the uniform distribution. The actual maximum generated will be slightly less than this value",
+      "example": "1.0 with low=0.0 generates ~0.0 to ~0.999 | 100.0 with low=10.0 generates ~10.0 to ~99.999 | 5.0 with low=-5.0 generates ~-5.0 to ~4.999",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    },
+    "a": {
+      "text": "Lower boundary of the output interval (inclusive)",
+      "example": "0.0",
+      "type": "info"
+    },
+    "b": {
+      "text": "Upper boundary of the output interval (exclusive)",
+      "example": "1.0",
+      "type": "info"
+    }
+  },
+  "normal": {
+    "loc": {
+      "text": "Mean (average/center) of the normal distribution - the peak of the bell curve. Most values cluster around this number",
+      "example": "0.0 centers around zero (standard normal) | 100.0 centers around 100 | 50.0 with scale=10 generates values mostly between 30-70",
+      "type": "info"
+    },
+    "scale": {
+      "text": "Standard deviation (spread/width) of the distribution - controls how spread out values are. Larger scale = more spread. About 68% of values fall within ±1 scale from mean",
+      "example": "1.0 with loc=0.0 is standard normal | 10.0 with loc=100 spreads values 80-120 typically | 0.5 creates tighter clustering around mean",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "binomial": {
+    "n": {
+      "text": "Number of trials - how many times an event is attempted. Must be a positive integer. Think of it as flipping a coin 'n' times",
+      "example": "10 with p=0.5 simulates 10 coin flips (results 0-10) | 100 with p=0.1 simulates 100 trials with 10% success rate | 50 with p=0.3 gives ~15 successes on average",
+      "type": "info"
+    },
+    "p": {
+      "text": "Probability of success for each trial (0.0 to 1.0). 0.5 = 50% chance, 0.1 = 10% chance, 0.9 = 90% chance",
+      "example": "0.5 with n=10 simulates fair coin (50/50) | 0.1 with n=100 expects ~10 successes | 0.7 with n=20 expects ~14 successes (high success rate)",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "poisson": {
+    "lam": {
+      "text": "Lambda (λ) - expected number of events/occurrences. This is both the mean and variance of the distribution. Common for counting rare events",
+      "example": "5.0 expects ~5 events (generates mostly 3-7) | 1.0 for rare events (mostly 0-3) | 20.0 for frequent events (mostly 15-25) | Used for: customer arrivals, emails per hour, calls per day",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "exponential": {
+    "scale": {
+      "text": "Scale parameter (1/λ) - controls the rate of decay. Larger scale = events take longer. Used for time between events or waiting times",
+      "example": "1.0 for average wait time of 1 unit | 0.5 for faster events (shorter waits) | 2.0 for slower events (longer waits) | Used for: time between arrivals, product lifetimes, service times",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "gamma": {
+    "shape": {
+      "text": "Shape parameter (α, alpha) - controls the shape of the distribution. Higher values make it more symmetric/normal-like. Must be > 0",
+      "example": "1.0 gives exponential-like shape | 2.0 starts to look more bell-shaped | 9.0 approaches normal distribution | Used for: rainfall amounts, insurance claims, waiting times",
+      "type": "info"
+    },
+    "scale": {
+      "text": "Scale parameter (θ, theta) - stretches or compresses the distribution horizontally. Larger scale = larger values. Must be > 0",
+      "example": "1.0 with shape=2.0 gives moderate values | 10.0 with shape=2.0 gives larger values | 0.5 with shape=2.0 gives smaller values",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "beta": {
+    "a": {
+      "text": "Alpha (α) parameter - first shape parameter. Controls the distribution shape. Must be > 0. Higher α shifts distribution right",
+      "example": "2.0 with b=2.0 creates symmetric bell around 0.5 | 0.5 with b=0.5 creates U-shape | 5.0 with b=2.0 shifts peak right | Used for: probabilities, percentages (0-1)",
+      "type": "info"
+    },
+    "b": {
+      "text": "Beta (β) parameter - second shape parameter. Controls the distribution shape. Must be > 0. Higher β shifts distribution left",
+      "example": "2.0 with a=2.0 creates symmetric bell around 0.5 | 2.0 with a=5.0 shifts peak left | 5.0 with a=2.0 creates right-skewed distribution",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "chisquare": {
+    "df": {
+      "text": "Degrees of freedom - must be a positive integer. Higher df makes distribution more symmetric and normal-like. Used in statistical hypothesis testing",
+      "example": "1 gives highly right-skewed distribution | 5 starts looking more symmetric | 30 approaches normal distribution | Used for: goodness-of-fit tests, variance testing",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "geometric": {
+    "p": {
+      "text": "Probability of success (0.0 to 1.0) - the chance of success on each trial. Generates the number of trials needed to get first success",
+      "example": "0.5 expects 2 trials on average (50% success) | 0.1 expects 10 trials (10% success, rare event) | 0.9 expects ~1 trial (90% success, common event) | Used for: trials until first success",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "lognormal": {
+    "mean": {
+      "text": "Mean of the underlying normal distribution (not the mean of the lognormal itself). Controls the center of the log-transformed values",
+      "example": "0.0 gives median around 1.0 | 1.0 shifts distribution higher | -1.0 shifts distribution lower | Used for: income, stock prices, file sizes",
+      "type": "info"
+    },
+    "sigma": {
+      "text": "Standard deviation of the underlying normal distribution. Controls the spread. Larger sigma = more right-skewed and wider spread. Must be > 0",
+      "example": "0.5 creates moderate spread | 1.0 creates wider spread with longer tail | 0.25 creates tighter distribution | Used for: highly variable positive data",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "pareto": {
+    "a": {
+      "text": "Shape parameter (α, alpha) - controls how heavy the tail is. Smaller values = heavier tail (more extreme values). Must be > 0. The '80-20 rule' uses a≈1.16",
+      "example": "1.5 creates moderate power-law (80-20 type) | 3.0 creates lighter tail (less extreme values) | 1.0 creates very heavy tail (many extreme values) | Used for: wealth distribution, city sizes, word frequency",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "triangular": {
+    "left": {
+      "text": "Left boundary (minimum value) - the lowest possible value in the distribution. Must be less than mode and right",
+      "example": "0.0 with mode=5.0, right=10.0 creates triangle from 0 to 10 peaked at 5 | 10.0 with mode=50.0, right=100.0 creates range 10-100",
+      "type": "info"
+    },
+    "mode": {
+      "text": "Mode (peak/most likely value) - where the triangle peaks. Must be between left and right. Most values cluster around this number",
+      "example": "5.0 with left=0.0, right=10.0 peaks in middle | 2.0 with left=0.0, right=10.0 peaks near left (left-skewed) | 8.0 with left=0.0, right=10.0 peaks near right (right-skewed)",
+      "type": "info"
+    },
+    "right": {
+      "text": "Right boundary (maximum value) - the highest possible value in the distribution. Must be greater than left and mode",
+      "example": "10.0 with left=0.0, mode=5.0 creates range 0-10 | 100.0 with left=10.0, mode=50.0 creates range 10-100 | Used for: project estimates, cost modeling",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "weibull": {
+    "a": {
+      "text": "Shape parameter (k) - controls the distribution shape. Must be > 0. a<1: decreasing failure rate, a=1: exponential (constant rate), a>1: increasing failure rate",
+      "example": "0.5 gives decreasing hazard (infant mortality) | 1.0 gives constant hazard (random failures) | 2.0 gives increasing hazard (wear-out) | 3.5 approaches normal | Used for: reliability, wind speed, survival analysis",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "wald": {
+    "mean": {
+      "text": "Mean of the distribution - the average value. Also called the drift rate. Must be > 0",
+      "example": "1.0 centers distribution around 1 | 5.0 shifts peak to 5 | 0.5 creates distribution centered at 0.5 | Used for: decision times, first passage times",
+      "type": "info"
+    },
+    "scale": {
+      "text": "Scale parameter (λ, lambda) - controls the shape and spread. Higher scale = tighter distribution around mean. Must be > 0",
+      "example": "1.0 with mean=1.0 creates moderate spread | 5.0 with mean=1.0 creates tighter clustering | 0.5 creates wider spread | Also called inverse Gaussian",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "zipf": {
+    "a": {
+      "text": "Exponent parameter (α, alpha) - controls how quickly probabilities decrease. Larger a = steeper decrease. Must be > 1. Follows Zipf's law: frequency ∝ 1/rank^a",
+      "example": "1.5 moderate power law (like word frequency) | 2.0 steeper decline | 1.1 very gradual decline | Used for: word frequency, website popularity, city populations",
+      "type": "info"
+    },
+    "size": {
+      "text": "⚠️ Auto-set to your row count! This parameter is automatically set to match the number of rows you're generating. You cannot change it",
+      "example": "If you're generating 100 rows, size is automatically 100",
+      "type": "info"
+    }
+  },
+  "custom_code": {
+    "code": {
+      "text": "Custom Python expression. Use 'request.row_number' for row index.",
+      "example": "request.row_number * 10",
+      "type": "warning"
+    }
+  },
+  "password": {
+    "length": {
+      "text": "Length of the generated password",
+      "example": "12",
+      "type": "info"
+    },
+    "hashed": {
+      "text": "Toggle ON to generate bcrypt-hashed passwords, OFF for plain text",
+      "example": "OFF: MyP@ssw0rd123, Secret2024!, Secure#Pass | ON: $2b$12$KIXzF8..., $2b$12$mN9Op..., $2b$12$qR3St...",
+      "type": "info"
+    },
+    "special_chars": {
+      "text": "Toggle ON to include special characters in passwords",
+      "example": "OFF: Abc123xyz, Pass456word | ON: Abc@123#xyz!, Pass$456&word*",
+      "type": "info"
+    },
+    "digits": {
+      "text": "Toggle ON to include digits in passwords",
+      "example": "OFF: AbcDefGhi, PasswordTest | ON: Abc123Def, Pass456word",
+      "type": "info"
+    },
+    "uppercase": {
+      "text": "Toggle ON to include uppercase letters in passwords",
+      "example": "OFF: abc123def, password456 | ON: Abc123Def, Password456",
+      "type": "info"
+    },
+    "lowercase": {
+      "text": "Toggle ON to include lowercase letters in passwords",
+      "example": "OFF: ABC123DEF, PASSWORD456 | ON: Abc123Def, Password456",
+      "type": "info"
+    }
+  },
+  "username": {
+    "mask": {
+      "text": "Template pattern for username generation. Mask codes: C=Capitalized word, U=UPPERCASE word, l=lowercase word, d=digits (from drange). Separators: . _ - | Leave empty for simple lowercase name-based usernames",
+      "example": "Empty: john_smith, sarah_jones | mask='C_C_d': Cotte_Article_1923 | mask='U.l.d': ELKINS.wolverine.2013 | mask='l_l_d': plasmic_blockader_1907 | mask='C-d': Smith-2024 | mask='l.d': smith.2013",
+      "type": "info"
+    },
+    "drang": {
+      "text": "Digit range as tuple (min, max) - controls the range of random digits when 'd' appears in mask. Format: (min, max) with parentheses and comma. Default is (1800, 2100)",
+      "example": "(1900, 2021) with mask='l_l_d' gives: plasmic_blockader_1907 | (2000, 2025) gives recent years: smith_jones_2024 | (1000, 9999) gives 4-digit numbers: user_name_5432 | (1, 99) gives 1-2 digits: username_42",
+      "type": "info"
+    },
+    "gender": {
+      "text": "Choose 'Mixed (Random)' to generate usernames based on both male and female names",
+      "type": "info"
+    }
+  },
+  "emoji": {
+    "category": {
+      "text": "Choose 'Mix All (Random)' to get diverse emojis from all categories, or select a specific category",
+      "example": "Mix gives: 😀 🐶 🍕 🎉 🏆 from different categories",
+      "type": "info"
+    }
+  },
+  "file_name": {
+    "file_type": {
+      "text": "Choose 'Mix All (Random)' to generate diverse file types (images, videos, documents, audio)",
+      "example": "Mix gives: .jpg, .mp4, .pdf, .mp3, .txt, etc.",
+      "type": "info"
+    }
+  },
+  "extension": {
+    "file_type": {
+      "text": "Choose 'Mix All (Random)' to get various file extensions, or select a specific file type",
+      "example": "Mix gives diverse extensions across all file types",
+      "type": "info"
+    }
+  },
+  "mime_type": {
+    "type_": {
+      "text": "MIME type category to generate. Choose 'Mix All (Random)' for diverse types across all categories",
+      "example": "APPLICATION: application/pdf, application/json | AUDIO: audio/mpeg, audio/wav | IMAGE: image/jpeg, image/png | VIDEO: video/mp4, video/webm | TEXT: text/html, text/plain | MESSAGE: message/rfc822",
+      "type": "info"
+    },
+    "mime_type": {
+      "text": "Choose 'Mix All (Random)' to get diverse MIME types (application, audio, image, video, text)",
+      "example": "Mix generates: application/pdf, audio/mpeg, image/jpeg, video/mp4, text/html, message/rfc822",
+      "type": "info"
+    }
+  },
+  "credit_card_number": {
+    "card_type": {
+      "text": "Choose 'Mix All (Random)' to get all credit card types (Visa, MasterCard, Amex)",
+      "example": "Mix generates realistic variety of card types",
+      "type": "info"
+    }
+  },
+  "hash": {
+    "algorithm": {
+      "text": "Choose 'Mix All (Random)' to generate hashes using different algorithms",
+      "example": "Mix gives: MD5, SHA256, SHA512, BLAKE2B, etc.",
+      "type": "info"
+    }
+  },
+  "timezone": {
+    "region": {
+      "text": "Choose 'Mix All (Random)' to get timezones from all regions globally",
+      "example": "Mix gives: Africa/*, America/*, Europe/*, Asia/*, etc.",
+      "type": "info"
+    }
+  },
+  "timestamp": {
+    "fmt": {
+      "text": "Choose 'Mix All (Random)' to generate timestamps in different formats",
+      "example": "Mix gives: POSIX, ISO_8601, RFC_3339",
+      "type": "info"
+    }
+  },
+  "url": {
+    "scheme": {
+      "text": "URL protocol/scheme to use. Choose 'Mix All (Random)' to get diverse URL schemes (http, https, ftp, etc.)",
+      "example": "HTTP: http://example.com | HTTPS: https://example.com | FTP: ftp://files.example.com | Mix gives diverse schemes across all protocols",
+      "type": "info"
+    },
+    "port_range": {
+      "text": "Port range for the URL. Choose 'Mix All (Random)' to get ports from all ranges (system, registered, dynamic)",
+      "example": "WELL_KNOWN: http://example.com:80 or :443 | REGISTERED: http://example.com:8080 or :3000 | Mix gives diverse ports from all ranges",
+      "type": "info"
+    },
+    "tld_type": {
+      "text": "Top-level domain type to use. Choose 'Mix All (Random)' for diverse TLDs (.com, .org, .uk, etc.)",
+      "example": "GTLD: http://example.com, http://example.org | CCTLD: http://example.uk, http://example.de | Mix gives diverse TLDs",
+      "type": "info"
+    },
+    "subdomains": {
+      "text": "Custom list of subdomains to randomly choose from. Use JSON list format. Leave empty for random subdomains or no subdomain",
+      "example": "[\"api\", \"www\", \"cdn\"] gives: http://api.example.com, http://www.example.com, http://cdn.example.com | Empty gives: http://example.com or http://random.example.com",
+      "type": "info"
+    }
+  },
+  "uri": {
+    "scheme": {
+      "text": "URI protocol/scheme to use. Choose 'Mix All (Random)' to get diverse URI schemes (http, https, ws, wss, etc.)",
+      "example": "HTTPS: https://example.com/api/users?page=1 | HTTP: http://example.com/products | WS: ws://example.com/socket | Mix gives diverse schemes",
+      "type": "info"
+    },
+    "tld_type": {
+      "text": "Top-level domain type to use. Choose 'Mix All (Random)' for diverse TLDs in your URIs",
+      "example": "GTLD: https://example.com/path | CCTLD: https://example.uk/path | Mix gives: .com, .org, .uk, .de, etc.",
+      "type": "info"
+    },
+    "subdomains": {
+      "text": "Custom list of subdomains for the URI. Use JSON list format. Leave empty for automatic subdomain generation",
+      "example": "[\"api\", \"v1\", \"staging\"] gives: https://api.example.com/users, https://v1.example.com/data | Empty gives random or no subdomain",
+      "type": "info"
+    },
+    "query_params_count": {
+      "text": "Number of query parameters to include in the URI (the ?key=value&key2=value2 part). Leave empty or set to 0 for no query parameters",
+      "example": "0: https://example.com/path | 2: https://example.com/path?page=1&limit=10 | 4: https://api.example.com/users?page=2&sort=asc&filter=active&limit=50",
+      "type": "info"
+    }
+  },
+  "country_code": {
+    "code": {
+      "text": "Choose 'Mix All (Random)' to get country codes in different formats",
+      "example": "Mix gives: US (A2), USA (A3), FIFA codes, etc.",
+      "type": "info"
+    }
+  },
+  "isbn": {
+    "fmt": {
+      "text": "Choose 'Mix All (Random)' to generate both ISBN-10 and ISBN-13 formats",
+      "type": "info"
+    }
+  },
+  "issn": {
+    "mask": {
+      "text": "Custom template for ISSN format. Use # for digits. Leave empty for standard ISSN format (####-####)",
+      "example": "Empty: 0055-2264 | ##-####-####: 34-2807-2646 | ##-#: 71-5",
+      "type": "info"
+    }
+  },
+  "pin": {
+    "mask": {
+      "text": "Custom template for ISSN format. Use # for digits. Leave empty for standard ISSN format (####-####)",
+      "example": "Empty: 9493 | ##-####-####: 34-2807-2646 | ##-#: 71-5",
+      "type": "info"
+    }
+  },
+  "ean": {
+    "fmt": {
+      "text": "Choose 'Mix All (Random)' to generate both EAN-8 and EAN-13 formats",
+      "type": "info"
+    }
+  },
+  "duration": {
+    "min_duration": {
+      "text": "Minimum duration value (must be a positive number and less than max)",
+      "example": "If duration_unit is 'hours' and min=1, max=10, generates durations between 1 and 10 hours",
+      "type": "info"
+    },
+    "max_duration": {
+      "text": "Maximum duration value (must be greater than min duration)",
+      "example": "If duration_unit is 'days' and min=1, max=30, generates durations between 1 and 30 days",
+      "type": "info"
+    },
+    "duration_unit": {
+      "text": "Choose 'Mix All (Random)' to get durations in different units",
+      "example": "Mix gives: days, hours, minutes, seconds, etc.",
+      "type": "info"
+    }
+  },
+  "latitude": {
+    "dms": {
+      "text": "Toggle ON for degrees-minutes-seconds format, OFF for decimal degrees",
+      "example": "OFF: 40.7128, -33.8688, 51.5074 | ON: 40°42'46\"N, 33°52'8\"S, 51°30'27\"N",
+      "type": "info"
+    }
+  },
+  "longitude": {
+    "dms": {
+      "text": "Toggle ON for degrees-minutes-seconds format, OFF for decimal degrees",
+      "example": "OFF: -74.0060, 151.2093, -0.1278 | ON: 74°0'21\"W, 151°12'33\"E, 0°7'40\"W",
+      "type": "info"
+    }
+  },
+  "coordinates": {
+    "dms": {
+      "text": "Toggle ON for degrees-minutes-seconds format, OFF for decimal degrees",
+      "example": "OFF: 40.7128, -74.0060 | ON: 40°42'46\"N, 74°0'21\"W",
+      "type": "info"
+    }
+  },
+  "state": {
+    "abbr": {
+      "text": "Toggle ON for state abbreviations, OFF for full state names",
+      "example": "OFF: California, Texas, New York | ON: CA, TX, NY",
+      "type": "info"
+    }
+  },
+  "province": {
+    "abbr": {
+      "text": "Toggle ON for province abbreviations, OFF for full province names",
+      "example": "OFF: Ontario, Quebec, British Columbia | ON: ON, QC, BC",
+      "type": "info"
+    }
+  },
+  "company_type": {
+    "abbr": {
+      "text": "Toggle ON for company type abbreviations, OFF for full type names",
+      "example": "OFF: Limited Liability Company, Corporation | ON: LLC, Corp",
+      "type": "info"
+    }
+  },
+  "company": {
+    "abbr": {
+      "text": "Toggle ON to include company type abbreviation in the name",
+      "example": "OFF: Acme Industries, TechCorp | ON: Acme Industries LLC, TechCorp Inc",
+      "type": "info"
+    }
+  },
+  "calling_code": {
+    "with_plus": {
+      "text": "Toggle ON to include '+' prefix in calling codes",
+      "example": "OFF: 1, 44, 81, 49 | ON: +1, +44, +81, +49",
+      "type": "info"
+    }
+  },
+  "phone_number": {
+    "mask": {
+      "text": "Template pattern for phone number generation. Use # for digits. Leave empty for locale-appropriate default phone format. This controls the exact format of generated phone numbers",
+      "example": "Empty: locale-based format (e.g., (555) 123-4567 for US) | ###-###-####: 555-123-4567 | (###) ###-####: (555) 123-4567 | +1-###-###-####: +1-555-123-4567 | #### #### ####: 0123 4567 8910 (international)",
+      "type": "info"
+    },
+    "placeholder": {
+      "text": "Character to use as placeholder for formatting separators in the phone number. Default is typically '-' or space",
+      "example": "'-' gives: 555-123-4567 | ' ' gives: 555 123 4567 | '.' gives: 555.123.4567 | Works with mask to create custom separators",
+      "type": "info"
+    },
+    "formatted": {
+      "text": "Toggle ON for formatted phone numbers with dashes/parentheses",
+      "example": "OFF: 5551234567, 2025550199 | ON: (555) 123-4567, (202) 555-0199",
+      "type": "info"
+    }
+  },
+  "price": {
+    "minimum": {
+      "text": "Minimum price value (must be a positive number and less than maximum)",
+      "example": "500.00 generates prices starting from $500.00",
+      "type": "info"
+    },
+    "maximum": {
+      "text": "Maximum price value (must be greater than minimum)",
+      "example": "1500.00 generates prices up to $1500.00",
+      "type": "info"
+    },
+    "as_string": {
+      "text": "Toggle ON to return price as formatted string with currency symbol",
+      "example": "OFF: 99.99, 149.50, 29.95 | ON: $99.99, $149.50, $29.95",
+      "type": "info"
+    }
+  },
+  "price_in_btc": {
+    "minimum": {
+      "text": "Minimum BTC price value (must be 0 or greater and less than maximum)",
+      "example": "0.001 generates BTC prices starting from 0.001 BTC",
+      "type": "info"
+    },
+    "maximum": {
+      "text": "Maximum BTC price value (must be greater than minimum)",
+      "example": "2.0 generates BTC prices up to 2.0 BTC",
+      "type": "info"
+    }
+  },
+  "size": {
+    "minimum": {
+      "text": "Minimum file size value (must be a positive number and less than maximum)",
+      "example": "1 generates file sizes starting from 1 kB (e.g., 1 kB, 5 kB, 10 kB)",
+      "type": "info"
+    },
+    "maximum": {
+      "text": "Maximum file size value (must be greater than minimum)",
+      "example": "100 generates file sizes up to 100 kB (e.g., 56 kB, 78 kB, 95 kB)",
+      "type": "info"
+    }
+  },
+  "street_number": {
+    "maximum": {
+      "text": "Maximum street number to generate",
+      "example": "1500",
+      "type": "info"
+    }
+  },
+  "sentence": {
+    "words_count": {
+      "text": "Number of words in each sentence",
+      "example": "10",
+      "type": "info"
+    },
+    "with_punctuation": {
+      "text": "Toggle ON to add proper punctuation at the end of sentences",
+      "example": "OFF: This is a sentence | ON: This is a sentence.",
+      "type": "info"
+    }
+  },
+  "paragraph": {
+    "sentences_count": {
+      "text": "Number of sentences in each paragraph",
+      "example": "5",
+      "type": "info"
+    }
+  },
+  "word": {
+    "length": {
+      "text": "Length of the word to generate",
+      "example": "8",
+      "type": "info"
+    },
+    "capitalize": {
+      "text": "Toggle ON to capitalize the first letter of the word",
+      "example": "OFF: hello | ON: Hello",
+      "type": "info"
+    }
+  },
+  "hex_color": {
+    "safe": {
+      "text": "Toggle ON for web-safe colors only, OFF for any hex color",
+      "example": "OFF: #A3F2B1, #7B9FD4, #E8A87C | ON: #00FF00, #FF0000, #0000FF",
+      "type": "info"
+    }
+  },
+  "uuid": {
+    "version": {
+      "text": "UUID version to generate (1, 3, 4, or 5)",
+      "example": "4",
+      "type": "info"
+    }
+  },
+  "boolean": {
+    "probability": {
+      "text": "Probability of generating True (0.0 to 1.0)",
+      "example": "0.5 means 50% True, 50% False",
+      "type": "info"
+    }
+  },
+  "matrix": {
+    "precision": {
+      "text": "Number of decimal places for matrix values",
+      "example": "2",
+      "type": "info"
+    }
+  },
+  "ssn": {
+    "formatted": {
+      "text": "Toggle ON for formatted SSN with dashes",
+      "example": "OFF: 123456789, 987654321, 555443333 | ON: 123-45-6789, 987-65-4321, 555-44-3333",
+      "type": "info"
+    }
+  },
+  "zip_code": {
+    "plus4": {
+      "text": "Toggle ON to include ZIP+4 extended code",
+      "example": "OFF: 12345, 90210, 60601 | ON: 12345-6789, 90210-4321, 60601-5555",
+      "type": "info"
+    }
+  },
+  "gender_symbol": {
+    "symbol": {
+      "text": "Gender representation style",
+      "example": "♂ for male, ♀ for female",
+      "type": "info"
+    }
+  },
+  "blood_type": {
+    "rh": {
+      "text": "Toggle ON to include Rh factor in blood type",
+      "example": "OFF: A, B, AB, O | ON: A+, B-, AB+, O-",
+      "type": "info"
+    }
+  },
+  "occupation": {
+    "category": {
+      "text": "Specific occupation category to generate from",
+      "example": "Technology, Healthcare, Education, etc.",
+      "type": "info"
+    }
+  },
+  "ip_v4": {
+    "with_port": {
+      "text": "Toggle ON to include port number with IP address",
+      "example": "OFF: 192.168.1.1, 10.0.0.5, 172.16.0.10 | ON: 192.168.1.1:8080, 10.0.0.5:443, 172.16.0.10:3000",
+      "type": "info"
+    }
+  },
+  "ip_v6": {
+    "compressed": {
+      "text": "Toggle ON for compressed IPv6 format (shorter)",
+      "example": "OFF: 2001:0db8:0000:0000:0000:0000:0000:0001 | ON: 2001:db8::1",
+      "type": "info"
+    }
+  },
+  "mac_address": {
+    "separator": {
+      "text": "Character to separate MAC address octets",
+      "example": "':' gives AA:BB:CC:DD:EE:FF",
+      "type": "info"
+    }
+  },
+  "user_agent": {
+    "platform": {
+      "text": "Operating system/platform for the user agent",
+      "example": "Windows, macOS, Linux, Android, iOS",
+      "type": "info"
+    }
+  },
+  "http_method": {
+    "safe_only": {
+      "text": "Toggle ON for safe HTTP methods only (GET, HEAD, OPTIONS)",
+      "example": "OFF: includes POST, PUT, DELETE | ON: GET, HEAD, OPTIONS only",
+      "type": "info"
+    }
+  },
+  "http_status_code": {
+    "category": {
+      "text": "HTTP status code category",
+      "example": "1xx Info, 2xx Success, 3xx Redirect, 4xx Client Error, 5xx Server Error",
+      "type": "info"
+    }
+  },
+  "port": {
+    "port_range": {
+      "text": "Choose 'Mix All (Random)' to get ports from all ranges",
+      "example": "Mix gives: system (0-1023), user (1024-49151), dynamic (49152-65535)",
+      "type": "info"
+    }
+  },
+  "locale_code": {
+    "locale": {
+      "text": "Choose 'Mix All (Random)' to get diverse locale codes",
+      "example": "Mix gives: en_US, fr_FR, de_DE, ja_JP, es_ES, etc.",
+      "type": "info"
+    }
+  },
+  "currency_code": {
+    "iso_format": {
+      "text": "Toggle ON for ISO 4217 currency codes, OFF for currency symbols",
+      "example": "OFF: $, €, £, ¥ | ON: USD, EUR, GBP, JPY",
+      "type": "info"
+    }
+  },
+  "weight": {
+    "minimum": {
+      "text": "Minimum weight value in kilograms. Must be a positive number and less than maximum. Generates realistic human body weights",
+      "example": "40 for lightweight/children (40-100 kg range) | 50 for average adults (50-90 kg) | 60 for heavier range (60-120 kg) | Used for: patient records, fitness apps, health databases",
+      "type": "info"
+    },
+    "maximum": {
+      "text": "Maximum weight value in kilograms. Must be greater than minimum. Sets the upper limit for generated weights",
+      "example": "100 with min=50 gives typical adult range (50-100 kg) | 120 with min=60 gives broader range | 90 with min=50 gives moderate range (50-90 kg)",
+      "type": "info"
+    },
+    "min_weight": {
+      "text": "Minimum weight value to generate",
+      "example": "50",
+      "type": "info"
+    },
+    "max_weight": {
+      "text": "Maximum weight value to generate",
+      "example": "200",
+      "type": "info"
+    }
+  },
+  "height": {
+    "min_height": {
+      "text": "Minimum height value to generate",
+      "example": "150",
+      "type": "info"
+    },
+    "max_height": {
+      "text": "Maximum height value to generate",
+      "example": "200",
+      "type": "info"
+    }
+  },
+  "age": {
+    "min_age": {
+      "text": "Minimum age to generate",
+      "example": "18",
+      "type": "info"
+    },
+    "max_age": {
+      "text": "Maximum age to generate",
+      "example": "65",
+      "type": "info"
+    }
+  },
+  "chemical_element": {
+    "name_only": {
+      "text": "Toggle ON to return only element name, OFF for full details",
+      "example": "OFF: H (Hydrogen, #1) | ON: Hydrogen",
+      "type": "info"
+    }
+  },
+  "planet": {
+    "name_only": {
+      "text": "Toggle ON to return only planet name, OFF for full details",
+      "example": "OFF: Mars (Red Planet, 4th) | ON: Mars",
+      "type": "info"
+    }
+  },
+  "color": {
+    "as_hex": {
+      "text": "Toggle ON to return color as hex code, OFF for color name",
+      "example": "OFF: Red, Blue, Green, Yellow | ON: #FF0000, #0000FF, #00FF00, #FFFF00",
+      "type": "info"
+    }
+  },
+  "title_type": {
+    "title_type": {
+      "text": "Choose 'Mix All (Random)' to get diverse title types",
+      "example": "Mix gives: Mr., Mrs., Ms., Dr., Prof., etc.",
+      "type": "info"
+    }
+  },
+  "dna_sequence": {
+    "length": {
+      "text": "Number of nucleotide base pairs in the DNA sequence. Default is 10. DNA uses 4 bases: A (Adenine), T (Thymine), G (Guanine), C (Cytosine)",
+      "example": "10 gives: ATGCGTACGA (10 base pairs) | 20 gives: ATGCGTACGAATGCGTACGA (20 base pairs) | 50 gives longer sequences | 100+ for gene-like sequences | Used for: genetic testing, bioinformatics, molecular biology simulations",
+      "type": "info"
+    }
+  },
+  "rna_sequence": {
+    "length": {
+      "text": "Number of nucleotide bases in the RNA sequence. Default is 10. RNA uses 4 bases: A (Adenine), U (Uracil), G (Guanine), C (Cytosine). Note: RNA uses U instead of T",
+      "example": "10 gives: AUGCGUACGA (10 bases) | 20 gives: AUGCGUACGAAUGCGUACGA (20 bases) | 50 gives longer sequences | 100+ for mRNA-like sequences | Used for: transcription studies, RNA research, molecular biology",
+      "type": "info"
+    }
+  },
+  "measure_unit": {
+    "name": {
+      "text": "Type of measurement unit to generate. Choose 'Mix All (Random)' to get diverse units across all physical quantities (mass, length, temperature, energy, etc.)",
+      "example": "MASS: gram (gr) | TEMPERATURE: Celsius (°C) | FORCE: newton (N) | ENERGY: joule (J) | FREQUENCY: hertz (Hz) | Mix gives diverse units from all categories",
+      "type": "info"
+    },
+    "symbol": {
+      "text": "Toggle ON to return unit symbol only, OFF to return full unit name with symbol",
+      "example": "OFF: gram (gr), Celsius (°C), newton (N), joule (J) | ON: gr, °C, N, J (symbols only)",
+      "type": "info"
+    },
+    "measure_unit": {
+      "text": "Choose 'Mix All (Random)' to get diverse measurement units",
+      "example": "Mix gives: meters, kilograms, liters, celsius, etc.",
+      "type": "info"
+    }
+  },
+  "metric_prefix": {
+    "sign": {
+      "text": "Sign of the metric prefix (positive or negative powers of 10). Choose 'Mix All (Random)' for both positive and negative prefixes",
+      "example": "POSITIVE: kilo (k, 10³), mega (M, 10⁶), giga (G, 10⁹) | NEGATIVE: milli (m, 10⁻³), micro (μ, 10⁻⁶), nano (n, 10⁻⁹) | Mix gives both positive and negative prefixes",
+      "type": "info"
+    },
+    "symbol": {
+      "text": "Toggle ON to return prefix symbol only, OFF to return full prefix name with symbol",
+      "example": "OFF: kilo (k), mega (M), milli (m), micro (μ) | ON: k, M, m, μ (symbols only)",
+      "type": "info"
+    }
+  },
+  "dsn": {
+    "dsn_type": {
+      "text": "Choose 'Mix All (Random)' to get different database DSN types",
+      "example": "Mix gives: PostgreSQL, MySQL, MongoDB, Redis, etc.",
+      "type": "info"
+    }
+  },
+  "tld": {
+    "0": {
+      "text": "🌐 Don't panic! These numbers (0, 1, 2, 3...) are OPTIONAL custom TLD filters. You can safely LEAVE THEM ALL EMPTY to generate random top-level domains (.com, .org, .net, etc.). Only fill them if you want to specify particular TLDs to randomly choose from.",
+      "example": "Empty (recommended): generates random .com, .org, .uk, .de, etc. | Fill 0='com', 1='org': only generates .com or .org | Fill 0='uk', 1='de', 2='fr': only UK, German, or French domains",
+      "type": "info"
+    },
+    "1": {
+      "text": "Second custom TLD option (optional). Leave empty for automatic random TLD generation.",
+      "example": "If 0='com' and 1='net': randomly chooses between .com and .net",
+      "type": "info"
+    },
+    "2": {
+      "text": "Third custom TLD option (optional). Only use if you want to limit TLDs to specific choices.",
+      "example": "0='com', 1='org', 2='io' gives: .com, .org, or .io only",
+      "type": "info"
+    },
+    "3": {
+      "text": "Fourth custom TLD option (optional). Most users don't need to fill this.",
+      "example": "Adding more custom TLD choices like: uk, de, fr, jp",
+      "type": "info"
+    },
+    "4": {
+      "text": "Fifth custom TLD option (optional). Use only if you need many specific TLD choices.",
+      "example": "Building a custom list of allowed TLDs for your use case",
+      "type": "info"
+    },
+    "5": {
+      "text": "Sixth custom TLD option (optional). Rarely needed - for extensive custom TLD lists.",
+      "example": "Continuing your custom TLD list",
+      "type": "info"
+    },
+    "6": {
+      "text": "Seventh custom TLD option (optional). Advanced use only.",
+      "example": "For very specific TLD requirements",
+      "type": "info"
+    },
+    "tld_type": {
+      "text": "Choose 'Mix All (Random)' to get diverse top-level domains",
+      "example": "Mix gives: .com, .org, .net, .edu, country codes, etc.",
+      "type": "info"
+    }
+  },
+  "ipv4_with_port": {
+    "port_range": {
+      "text": "Choose 'Mix All (Random)' to get ports from all ranges",
+      "example": "Mix gives various port numbers from different ranges",
+      "type": "info"
+    }
+  },
+  "profession": {
+    "field": {
+      "text": "Specific professional field to generate from",
+      "example": "Technology, Medicine, Education, Arts, etc.",
+      "type": "info"
+    }
+  },
+  "job_title": {
+    "field": {
+      "text": "Industry field for the job title",
+      "example": "IT, Finance, Healthcare, Marketing, etc.",
+      "type": "info"
+    }
+  },
+  "academic_degree": {
+    "abbr": {
+      "text": "Toggle ON for degree abbreviations, OFF for full degree names",
+      "example": "OFF: Bachelor of Science, Master of Arts, Doctor of Philosophy | ON: B.S., M.A., Ph.D.",
+      "type": "info"
+    }
+  },
+  "university": {
+    "abbr": {
+      "text": "Toggle ON to include university abbreviation",
+      "example": "OFF: Massachusetts Institute of Technology, Stanford University | ON: MIT, Stanford",
+      "type": "info"
+    }
+  },
+  "track_number": {
+    "service": {
+      "text": "Shipping/delivery service provider",
+      "example": "UPS, FedEx, USPS, DHL, etc.",
+      "type": "info"
+    }
+  },
+  "iban": {
+    "formatted": {
+      "text": "Toggle ON for formatted IBAN with spaces",
+      "example": "OFF: GB82WEST12345698765432, DE89370400440532013000 | ON: GB82 WEST 1234 5698 7654 32, DE89 3704 0044 0532 0130 00",
+      "type": "info"
+    }
+  },
+  "bic": {
+    "formatted": {
+      "text": "Toggle ON for formatted BIC/SWIFT code",
+      "example": "Standard 8 or 11 character BIC code",
+      "type": "info"
+    }
+  },
+  "coin": {
+    "symbol": {
+      "text": "Toggle ON to include cryptocurrency symbol",
+      "example": "OFF: Bitcoin | ON: BTC",
+      "type": "info"
+    }
+  },
+  "stock_ticker": {
+    "exchange": {
+      "text": "Stock exchange to generate ticker from",
+      "example": "NYSE, NASDAQ, LSE, etc.",
+      "type": "info"
+    }
+  },
+  "license_plate": {
+    "template": {
+      "text": "Template pattern for license plate",
+      "example": "ABC-1234 or ### AAA",
+      "type": "info"
+    }
+  },
+  "imei": {
+    "formatted": {
+      "text": "Toggle ON for formatted IMEI with dashes",
+      "example": "OFF: 123456789012345 | ON: 12-345678-901234-5",
+      "type": "info"
+    }
+  },
+  "religion": {
+    "major_only": {
+      "text": "Toggle ON to generate only major world religions",
+      "example": "OFF: includes all religions | ON: Christianity, Islam, Hinduism, etc.",
+      "type": "info"
+    }
+  },
+  "language": {
+    "iso_code": {
+      "text": "Toggle ON for ISO 639-1 language codes, OFF for language names",
+      "example": "OFF: English, Spanish, French, German, Japanese | ON: en, es, fr, de, ja",
+      "type": "info"
+    }
+  },
+  "nationality": {
+    "gender_specific": {
+      "text": "Toggle ON for gender-specific nationality terms (in some languages)",
+      "example": "OFF: American | ON: American (male) / American (female)",
+      "type": "info"
+    }
+  },
+  "address": {
+    "full": {
+      "text": "Toggle ON for full address including apartment/suite numbers",
+      "example": "OFF: 123 Main St | ON: 123 Main St, Apt 4B",
+      "type": "info"
+    }
+  },
+  "street_name": {
+    "with_suffix": {
+      "text": "Toggle ON to include street suffix (St, Ave, Blvd)",
+      "example": "OFF: Main | ON: Main Street",
+      "type": "info"
+    }
+  },
+  "continent": {
+    "code": {
+      "text": "Toggle ON for continent codes (2-letter), OFF for full continent names",
+      "example": "OFF: Antarctica, Africa, Europe, Asia | ON: AN, AF, EU, AS",
+      "type": "info"
+    }
+  },
+  "country": {
+    "iso_code": {
+      "text": "Toggle ON for ISO country codes (2-letter), OFF for full country names",
+      "example": "OFF: United States, Germany, Japan | ON: US, DE, JP",
+      "type": "info"
+    }
+  },
+  "city": {
+    "with_state": {
+      "text": "Toggle ON to include state/province with city name",
+      "example": "OFF: New York | ON: New York, NY",
+      "type": "info"
+    }
+  },
+  "postal_code": {
+    "formatted": {
+      "text": "Toggle ON for formatted postal codes with dashes",
+      "example": "OFF: 123456789, 987654321 | ON: 12345-6789, 98765-4321",
+      "type": "info"
+    }
+  },
+  "hostname": {
+    "tld_type": {
+      "text": "Top-level domain type to use for hostname generation. Choose 'Mix All (Random)' for diverse TLDs",
+      "example": "CCTLD: example.uk, example.de | GTLD: example.com, example.org | GEOTLD: example.asia, example.africa | Mix gives diverse TLDs across all types",
+      "type": "info"
+    },
+    "subdomains": {
+      "text": "Custom list of subdomains to randomly choose from. Use JSON list format. Leave empty for no subdomain or random subdomain",
+      "example": "[\"api\", \"www\", \"dev\", \"staging\"] gives: api.example.com, www.example.com, dev.example.com, staging.example.com",
+      "type": "info"
+    }
+  },
+  "domain": {
+    "with_subdomain": {
+      "text": "Toggle ON to include random subdomain",
+      "example": "OFF: example.com | ON: blog.example.com",
+      "type": "info"
+    }
+  },
+  "stock_image_url": {
+    "width": {
+      "text": "Image width in pixels. This generates a URL to a stock image with your specified width. Useful for testing image displays, galleries, or responsive designs.",
+      "example": "800 gives URLs like: https://picsum.photos/800/600 | 1920 gives full HD width images | 400 gives smaller thumbnail-sized images",
+      "type": "info"
+    },
+    "height": {
+      "text": "Image height in pixels. Combined with width, this creates URLs for stock images at your exact dimensions. Perfect for testing image layouts and aspect ratios.",
+      "example": "600 with width=800 gives 800×600 images | 1080 with width=1920 gives full HD 1920×1080 images | 300 with width=400 gives small 400×300 thumbnails",
+      "type": "info"
+    },
+    "keywords": {
+      "text": "Optional list of keywords to filter stock images by topic/theme. Use JSON list format. Leave empty for random images, or specify keywords to get relevant images.",
+      "example": "[\"nature\", \"landscape\"] gives nature/landscape images | [\"business\", \"office\"] gives business-themed images | [\"food\", \"cooking\"] gives food/cooking images | Empty gives random diverse images",
+      "type": "info"
+    }
+  },
+  "slug": {
+    "parts_count": {
+      "text": "Number of words in the URL slug",
+      "example": "2 gives: hello-world, 3 gives: foo-bar-baz",
+      "type": "info"
+    }
+  },
+  "path": {
+    "0": {
+      "text": "📁 Don't panic! These numbers (0, 1, 2, 3...) are path segments - each number represents a level in the URL path. You can leave them empty to generate random paths, or fill specific ones to customize your path structure.",
+      "example": "Empty (all random): /blog/posts/2024/march | Fill 0='api', 1='v1': /api/v1/users/123 | Fill 0='shop', 1='products': /shop/products/electronics/phones",
+      "type": "info"
+    },
+    "1": {
+      "text": "Second level of the path (optional). Leave empty for random generation or specify a custom segment.",
+      "example": "If 0='api' and 1='users': /api/users/... | If 0='blog' and 1='2024': /blog/2024/...",
+      "type": "info"
+    },
+    "2": {
+      "text": "Third level of the path (optional). Continue building your custom path structure.",
+      "example": "0='api', 1='v1', 2='products' gives: /api/v1/products/...",
+      "type": "info"
+    },
+    "3": {
+      "text": "Fourth level of the path (optional). Each number adds another segment to your URL path.",
+      "example": "Building deeper paths like: /api/v1/users/profile/...",
+      "type": "info"
+    },
+    "4": {
+      "text": "Fifth level of the path (optional). You can create paths as deep as needed for your use case.",
+      "example": "Deep path: /api/v2/organizations/123/users/456/settings",
+      "type": "info"
+    },
+    "5": {
+      "text": "Sixth level of the path (optional). Perfect for complex API structures or deep file paths.",
+      "example": "Complex API path: /api/v1/companies/acme/departments/sales/employees/john",
+      "type": "info"
+    },
+    "6": {
+      "text": "Seventh level of the path (optional). Great for nested resources or hierarchical structures.",
+      "example": "Nested resource: /api/v1/projects/proj123/tasks/task456/comments/comment789",
+      "type": "info"
+    },
+    "7": {
+      "text": "Eighth level of the path (optional). For very deep path structures when needed.",
+      "example": "Very deep path: /root/home/user/documents/projects/2024/reports/january",
+      "type": "info"
+    }
+  },
+  "query_parameters": {
+    "length": {
+      "text": "Number of key-value pairs to generate in the query parameters dictionary. This controls how many parameters will be included in your URL query string.",
+      "example": "1 gives: {\"page\": \"1\"} | 3 gives: {\"page\": \"1\", \"sort\": \"desc\", \"filter\": \"active\"} | 5 gives: {\"page\": \"2\", \"limit\": \"50\", \"sort\": \"asc\", \"category\": \"tech\", \"status\": \"published\"}",
+      "type": "info"
+    }
+  },
+  "query_string": {
+    "length": {
+      "text": "Number of query parameters to generate in the URL query string format",
+      "example": "1 gives: ?page=1 | 3 gives: ?key1=val1&key2=val2&key3=val3 | 5 gives: ?page=2&limit=50&sort=asc&filter=active&status=live",
+      "type": "info"
+    }
+  },
+  "port_number": {
+    "common_only": {
+      "text": "Toggle ON to generate only well-known ports (80, 443, 8080, etc.)",
+      "example": "OFF: any port 0-65535 | ON: 80, 443, 8080, 3000, etc.",
+      "type": "info"
+    }
+  },
+  "http_response_code": {
+    "success_only": {
+      "text": "Toggle ON to generate only successful HTTP codes (2xx)",
+      "example": "OFF: 200, 404, 500, etc. | ON: 200, 201, 204, etc.",
+      "type": "info"
+    }
+  },
+  "content_type": {
+    "mime_type": {
+      "text": "MIME type category for Content-Type headers. Choose 'Mix All (Random)' for diverse content types",
+      "example": "APPLICATION: application/json, application/xml, application/pdf | IMAGE: image/jpeg, image/png, image/gif | TEXT: text/html, text/plain, text/css | AUDIO: audio/mpeg, audio/wav | VIDEO: video/mp4, video/webm",
+      "type": "info"
+    },
+    "common_only": {
+      "text": "Toggle ON to generate only commonly used Content-Type headers",
+      "example": "OFF: any content type | ON: text/html, application/json, image/png, text/plain, application/xml",
+      "type": "info"
+    }
+  },
+  "ipv4": {
+    "private_only": {
+      "text": "Toggle ON to generate private IP addresses only",
+      "example": "OFF: any IP | ON: 192.168.x.x, 10.x.x.x, 172.16.x.x",
+      "type": "info"
+    }
+  },
+  "month": {
+    "numeric": {
+      "text": "Toggle ON for numeric month, OFF for month name",
+      "example": "OFF: January, February, March, December | ON: 01, 02, 03, 12",
+      "type": "info"
+    },
+    "abbr": {
+      "text": "Toggle ON for abbreviated month names",
+      "example": "OFF: January, February, September, December | ON: Jan, Feb, Sep, Dec",
+      "type": "info"
+    }
+  },
+  "day_of_week": {
+    "numeric": {
+      "text": "Toggle ON for numeric day (1-7), OFF for day name",
+      "example": "OFF: Monday, Tuesday, Friday, Sunday | ON: 1, 2, 5, 7",
+      "type": "info"
+    },
+    "abbr": {
+      "text": "Toggle ON for abbreviated day names",
+      "example": "OFF: Monday, Tuesday, Wednesday, Sunday | ON: Mon, Tue, Wed, Sun",
+      "type": "info"
+    }
+  },
+  "week_date": {
+    "start": {
+      "text": "Starting year for week date generation",
+      "example": "2017 generates week numbers from year 2017 onwards (e.g., 2017-W15, 2018-W32)",
+      "type": "info"
+    },
+    "end": {
+      "text": "Ending year for week date generation",
+      "example": "2025 generates week numbers up to year 2025 (e.g., 2024-W45, 2025-W10)",
+      "type": "info"
+    }
+  },
+  "year": {
+    "minimum": {
+      "text": "Minimum year value to generate",
+      "example": "1990",
+      "type": "info"
+    },
+    "maximum": {
+      "text": "Maximum year value to generate",
+      "example": "2025",
+      "type": "info"
+    },
+    "min_year": {
+      "text": "Minimum year to generate",
+      "example": "1990",
+      "type": "info"
+    },
+    "max_year": {
+      "text": "Maximum year to generate",
+      "example": "2024",
+      "type": "info"
+    }
+  },
+  "timezone_offset": {
+    "with_name": {
+      "text": "Toggle ON to include timezone name with offset",
+      "example": "OFF: -05:00 | ON: EST (-05:00)",
+      "type": "info"
+    }
+  },
+  "bank_account": {
+    "formatted": {
+      "text": "Toggle ON for formatted bank account with dashes/spaces",
+      "example": "OFF: 123456789012 | ON: 1234-5678-9012",
+      "type": "info"
+    }
+  },
+  "routing_number": {
+    "validated": {
+      "text": "Toggle ON to generate validated routing numbers only",
+      "example": "OFF: any 9 digits | ON: valid checksum routing numbers",
+      "type": "info"
+    }
+  },
+  "cvv": {
+    "length": {
+      "text": "Length of CVV code (3 or 4 digits)",
+      "example": "3 for most cards, 4 for Amex",
+      "type": "info"
+    }
+  },
+  "expiration_date": {
+    "future_only": {
+      "text": "Toggle ON to generate only future expiration dates",
+      "example": "OFF: any date | ON: dates after today",
+      "type": "info"
+    }
+  },
+  "credit_card_expiration_date": {
+    "minimum": {
+      "text": "Minimum year for credit card expiration date. Represents years from 2000 (e.g., 16 = 2016, 25 = 2025). Must be less than maximum",
+      "example": "16: generates dates from 2016 onwards | 22: generates dates from 2022 onwards | 25: generates dates from 2025 onwards | Recommended: Use current year or later for realistic data",
+      "type": "info"
+    },
+    "maximum": {
+      "text": "Maximum year for credit card expiration date. Represents years from 2000 (e.g., 16 = 2016, 25 = 2025). Must be greater than minimum",
+      "example": "25: generates dates up to 2025 | 30: generates dates up to 2030 | 35: generates dates up to 2035 | Recommended: Use 5-10 years from current year for realistic range",
+      "type": "info"
+    }
+  },
+  "vehicle": {
+    "full_name": {
+      "text": "Toggle ON for full vehicle name with make, model, and year",
+      "example": "OFF: Camry | ON: 2023 Toyota Camry",
+      "type": "info"
+    }
+  },
+  "vin": {
+    "formatted": {
+      "text": "Toggle ON for formatted VIN with dashes",
+      "example": "OFF: 1HGBH41JXMN109186 | ON: 1HG-BH41J-XMN-109186",
+      "type": "info"
+    }
+  },
+  "degree": {
+    "celsius": {
+      "text": "Toggle ON for Celsius, OFF for Fahrenheit",
+      "example": "OFF: 32°F, 72°F, 98.6°F | ON: 0°C, 22°C, 37°C",
+      "type": "info"
+    }
+  },
+  "temperature": {
+    "celsius": {
+      "text": "Toggle ON for Celsius, OFF for Fahrenheit",
+      "example": "OFF: 32°F, 68°F, 95°F | ON: 0°C, 20°C, 35°C",
+      "type": "info"
+    },
+    "min": {
+      "text": "Minimum temperature value",
+      "example": "-20",
+      "type": "info"
+    },
+    "max": {
+      "text": "Maximum temperature value",
+      "example": "40",
+      "type": "info"
+    }
+  },
+  "coordinates_pair": {
+    "precision": {
+      "text": "Number of decimal places for coordinate precision",
+      "example": "2 gives: 40.71, 6 gives: 40.712800",
+      "type": "info"
+    }
+  },
+  "quantity": {
+    "min": {
+      "text": "Minimum quantity value",
+      "example": "1",
+      "type": "info"
+    },
+    "max": {
+      "text": "Maximum quantity value",
+      "example": "1000",
+      "type": "info"
+    }
+  },
+  "percentage": {
+    "with_symbol": {
+      "text": "Toggle ON to include % symbol with the number",
+      "example": "OFF: 25, 50, 75, 90 | ON: 25%, 50%, 75%, 90%",
+      "type": "info"
+    },
+    "decimals": {
+      "text": "Number of decimal places",
+      "example": "2 gives: 25.50%",
+      "type": "info"
+    }
+  },
+  "rating": {
+    "min_rating": {
+      "text": "Minimum rating value",
+      "example": "1",
+      "type": "info"
+    },
+    "max_rating": {
+      "text": "Maximum rating value",
+      "example": "5",
+      "type": "info"
+    },
+    "decimal": {
+      "text": "Toggle ON to allow decimal ratings",
+      "example": "OFF: 1, 2, 3, 4, 5 | ON: 4.5, 3.7, 4.2, 2.8, 4.9",
+      "type": "info"
+    }
+  },
+  "score": {
+    "min_score": {
+      "text": "Minimum score value",
+      "example": "0",
+      "type": "info"
+    },
+    "max_score": {
+      "text": "Maximum score value",
+      "example": "100",
+      "type": "info"
+    }
+  },
+  "identifier": {
+    "mask": {
+      "text": "Template pattern for identifier generation. Use special characters: # for digits, @ for letters, * for any alphanumeric. This creates custom ID formats for people/users",
+      "example": "Empty: random alphanumeric ID | ####-####: 1234-5678 | ID-######: ID-123456 | @@-####: AB-1234 (2 letters + 4 digits) | USR*******: USR12ab34cd (prefix + 8 alphanumeric)",
+      "type": "info"
+    },
+    "length": {
+      "text": "Length of the identifier",
+      "example": "8",
+      "type": "info"
+    },
+    "prefix": {
+      "text": "Prefix to add before the identifier",
+      "example": "ID- gives: ID-12345678",
+      "type": "info"
+    }
+  },
+  "token": {
+    "length": {
+      "text": "Length of the token",
+      "example": "32",
+      "type": "info"
+    },
+    "hex": {
+      "text": "Toggle ON for hexadecimal token, OFF for alphanumeric",
+      "example": "OFF: aB3xY9Qm, kP7wL2Nt | ON: 1a2f3e4d, 8b9c0a5f",
+      "type": "info"
+    }
+  },
+  "token_bytes": {
+    "entropy": {
+      "text": "Number of random bytes to generate (must be 0 or positive). Higher values create longer, more secure tokens",
+      "example": "16 generates 16 bytes of random data, 32 generates 32 bytes",
+      "type": "info"
+    }
+  },
+  "token_hex": {
+    "entropy": {
+      "text": "Number of random bytes (must be 0 or positive). Output will be twice this length in hex characters",
+      "example": "16 generates 32 hex characters, 32 generates 64 hex characters",
+      "type": "info"
+    }
+  },
+  "token_urlsafe": {
+    "entropy": {
+      "text": "Number of random bytes (must be 0 or positive). Creates URL-safe base64 encoded tokens",
+      "example": "16 generates ~22 characters, 32 generates ~43 characters",
+      "type": "info"
+    }
+  },
+  "version": {
+    "major": {
+      "text": "Major version number",
+      "example": "1 in 1.2.3",
+      "type": "info"
+    },
+    "semantic": {
+      "text": "Toggle ON for semantic versioning (major.minor.patch)",
+      "example": "OFF: 1.2 | ON: 1.2.3",
+      "type": "info"
+    }
+  }
+}
+

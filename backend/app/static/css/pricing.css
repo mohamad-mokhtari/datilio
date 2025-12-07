@@ -1,0 +1,379 @@
+/* Pricing Page Styles */
+.pricing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.pricing-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 16px;
+}
+
+.pricing-header p {
+    font-size: 1.25rem;
+    color: #6b7280;
+    margin-bottom: 40px;
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 32px;
+    margin-bottom: 80px;
+}
+
+.plan-card {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.plan-card:hover {
+    border-color: #3b82f6;
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.plan-card.popular {
+    border-color: #3b82f6;
+    box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.1);
+}
+
+.plan-card.current {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.popular-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #3b82f6;
+    color: white;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.current-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: #10b981;
+    color: white;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.plan-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.plan-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.plan-description {
+    color: #6b7280;
+    margin-bottom: 24px;
+}
+
+.plan-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px;
+}
+
+.price-amount {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.price-period {
+    font-size: 1.125rem;
+    color: #6b7280;
+}
+
+.plan-features {
+    margin-bottom: 32px;
+}
+
+.feature-group {
+    margin-bottom: 24px;
+}
+
+.feature-group h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 12px;
+}
+
+.feature-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-group li {
+    padding: 6px 0;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.feature-group li:before {
+    content: "✓";
+    color: #10b981;
+    font-weight: bold;
+}
+
+.plan-actions {
+    text-align: center;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: #3b82f6;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2563eb;
+}
+
+.btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #e5e7eb;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.pricing-footer {
+    text-align: center;
+    padding-top: 60px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.pricing-footer h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 32px;
+}
+
+.addons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.addon-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.addon-card:hover {
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+}
+
+.addon-card h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.addon-card p {
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 1.125rem;
+}
+
+.loading {
+    color: #6b7280;
+}
+
+.error {
+    color: #ef4444;
+}
+
+/* Usage Dashboard Styles */
+.usage-dashboard {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.usage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.usage-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.usage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.usage-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.usage-card h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.usage-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.usage-current {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.usage-limit {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.usage-bar {
+    width: 100%;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.usage-progress {
+    height: 100%;
+    background: #10b981;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.usage-progress.warning {
+    background: #f59e0b;
+}
+
+.usage-progress.danger {
+    background: #ef4444;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pricing-header h1 {
+        font-size: 2rem;
+    }
+    
+    .plans-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .plan-card {
+        padding: 24px;
+    }
+    
+    .price-amount {
+        font-size: 2.5rem;
+    }
+    
+    .usage-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .addons-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .pricing-container {
+        padding: 20px 16px;
+    }
+    
+    .plan-card {
+        padding: 20px;
+    }
+    
+    .usage-dashboard {
+        padding: 16px;
+    }
+}

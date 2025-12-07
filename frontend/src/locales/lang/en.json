@@ -1,0 +1,30 @@
+{
+    "nav": {
+        "home": "Home",
+        "singleMenuItem": "Single menu item",
+        "dashboard": "Dashboard",
+        "uploadData": "Upload Data",
+        "showData": "My Files",
+        "ruleCenter": "Rule Center",
+        "talkToData": "Talk to Data",
+        "userLists": "User Lists",
+        "generateSyntheticData": "Generate Synthetic Data",
+        "pricing": "Pricing",
+        "billing": "Billing & Usage",
+        "feedback": "Feedback",
+        "collapseMenu": {
+            "collapseMenu": "Collapse menu item",
+            "item1": "Collapse menu item 1",
+            "item2": "Collapse menu item 2"
+        },
+        "groupMenu": {
+            "groupMenu": "Group menu",
+            "single": "Group single menu item",
+            "collapse": {
+                "collapse": "Group collapse menu",
+                "item1": "Group collapse menu item 1",
+                "item2": "Group collapse menu item 2"
+            }
+        }
+    }
+}
