@@ -1,0 +1,58 @@
+---------------------- Start Up settings ----------------------
+1- python -m venv datilio_venv  (for Linux: python3 -m venv datilio_venv)
+2- .\datilio_venv\Scripts\activate (for Linux: source datilio_venv/bin/activate)
+3- pip install -r requirements.txt
+3.1- pip install ipykernel   ==> for testing codes by jupyter-notebook
+4- Create a ".env" file next to the main.py file, then copy and paste the 'Environment Variables' from the section below, changing their values based on your settings.
+5- python main.py (If you want to run in debug mode, press `Ctrl+Shift+D` and then `Enter`.)
+
+Note: in .vscode>launch.json add --port 8000 for local test as follow:
+        "configurations": [
+                {
+                    "name": "Python Debugger: FastAPI",
+                    "type": "debugpy",
+                    "request": "launch",
+                    "module": "uvicorn",
+                    "args": [
+                        "main:app",
+                        "--reload",
+                        "--port",
+                        "8000"
+                    ],
+                    "jinja": true
+                }
+            ]
+
+------------------------ amin packages ------------------------
+1- pip install fastapi "uvicorn[standard]" sqlalchemy psycopg2-binary sqlalchemy-utils alembic python-dotenv bcrypt passlib pydantic-settings pydantic[email] python-multipart python-jose
+------------------------ gui science ------------------------
+1- pip install pandas scipy scikit-learn
+------------------------ vector db ------------------------
+1- pip install qdrant-client
+2- pip install sentence-transformers
+------------------------ LLM ----------------------
+1- pip install openai langchain
+2- pip install langchain-community
+3- pip install langchain-experimental
+4- pip install tabulate
+5- pip install tiktoken
+------------------------ data generation folder added ------------------------
+1- pip install mimesis pycountry-convert requests constant bitcoinaddress
+
+
+2- alembic init alembic
+3- alembic revision --autogenerate -m "initial migration"    ===> like "python manage.py makemigrations" in django
+4- alembic upgrade head                                      ===> like "python manage.py migrate" in django
+5- alembic downgrade base
+6- alembic downgrade <target_revision>  
+
+
+7- NOTE: after add new model be careful to add it to main.py and env.py(alembic) file.
+
+8-IMPORTANT
+Example in Dockerfile
+RUN python -m nltk.downloader stopwords wordnet
+
+Example in requirements setup script
+python -m nltk.downloader stopwords wordnet
+

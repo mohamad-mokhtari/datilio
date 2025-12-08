@@ -1,0 +1,176 @@
+User Pricing & Purchase Flow for Datilio
+========================================
+
+1. **User Registration/Login**
+   - User must sign up or log in to their account before purchasing any plan.
+   - Endpoint: `POST /api/auth/login`
+     - **Input:**
+       - `email`: User's email (string)
+       - `password`: User's password (string)
+     - **Output:**
+       - `access_token`: JWT token for authentication (string)
+       - `user`: User details (object)
+         - `id`: User ID (int)
+         - `email`: User's email (string)
+         - `is_admin`: Whether the user is an admin (bool)
+
+   - Endpoint: `POST /api/auth/register`
+     - **Input:**
+       - `email`: User's email (string)
+       - `password`: User's password (string)
+     - **Output:**
+       - `message`: Confirmation message (string)
+
+2. **View Pricing Page**
+   - User navigates to the pricing page to view available plans (Explorer, DataPilot Pro, Datilio Team).
+   - Endpoint: `GET /api/plans`
+     - **Output:**
+       - `plans`: List of available plans (array of objects)
+         - `id`: Plan ID (int)
+         - `name`: Plan name (string)
+         - `price_monthly`: Monthly price (float)
+         - `features`: List of features (array of strings)
+
+3. **Select Plan**
+   - User selects a subscription plan (monthly/yearly).
+   - Endpoint: `GET /api/user/plan`
+     - **Output:**
+       - `user_plan`: Current user's active plan (object or null)
+         - `id`: User plan ID (int)
+         - `plan_id`: Associated plan ID (int)
+         - `is_active`: Whether the plan is active (bool)
+         - `start_date`: Start date of the plan (datetime)
+         - `end_date`: End date of the plan (datetime)
+
+   - Endpoint: `GET /api/user/usage`
+     - **Output:**
+       - `usage`: Current user's usage statistics (array of objects)
+         - `id`: Usage tracking ID (int)
+         - `user_id`: User ID (int)
+         - `feature`: Feature used (string)
+         - `amount`: Amount used (int)
+         - `timestamp`: Time of usage (datetime)
+
+4. **Initiate Purchase**
+   - User clicks 'Buy' or 'Upgrade' for a plan.
+   - For Plans:
+     - Endpoint: `POST /api/create-checkout-session`
+       - **Input:**
+         - `plan_id`: ID of the plan to purchase (int)
+         - `duration_months`: Duration of the subscription in months (int)
+       - **Output:**
+         - `checkout_url`: URL for Stripe Checkout (string)
+
+     - Endpoint: `POST /api/plans`
+       - **Input:**
+         - `CreatePlanIn`: 
+           - `name`: Unique name for the plan (string)
+           - `price_monthly`: Monthly price in USD (float)
+           - `file_limit`: Maximum number of files allowed (int)
+           - `file_size_limit_mb`: Maximum file size per file in MB (int)
+             - **Note:** This limit applies to each individual file uploaded, not the sum of all files.
+           - `ai_prompts_per_day`: Maximum AI prompts per day (int)
+             - **Note:** The price for AI prompts is calculated based on the number of tokens used, not the number of prompts.
+           - `synthetic_rows_per_month`: Maximum synthetic rows per month (int)
+           - `features`: JSON object containing additional features (object)
+       - **Output:**
+         - `plan`: Created plan details (object)
+           - `id`: Plan ID (int)
+           - `name`: Plan name (string)
+           - `price_monthly`: Monthly price (float)
+           - `file_limit`: Maximum number of files allowed (int)
+           - `file_size_limit_mb`: Maximum file size in MB (int)
+           - `ai_prompts_per_day`: Maximum AI prompts per day (int)
+           - `synthetic_rows_per_month`: Maximum synthetic rows per month (int)
+           - `features`: JSON object containing additional features (object)
+
+5. **Payment Processing (Stripe)**
+   - User completes payment on Stripe.
+   - Stripe redirects user back to your app (success/cancel URL).
+   - Endpoint: `POST /api/stripe/webhook`
+     - **Input:**
+       - `request`: Stripe webhook request (object)
+     - **Output:**
+       - `status`: Confirmation status (string)
+
+6. **Usage Tracking**
+   - As user uses features (uploads files, sends prompts, etc.)
+   - Endpoint: `GET /api/user/usage`
+     - **Output:**
+       - `usage`: Current usage statistics (array of objects)
+         - `id`: Usage tracking ID (int)
+         - `user_id`: User ID (int)
+         - `feature`: Feature used (string)
+         - `amount`: Amount used (int)
+         - `timestamp`: Time of usage (datetime)
+
+   - Endpoint: `GET /api/user/plan`
+     - **Output:**
+       - `user_plan`: Active plan details (object or null)
+         - `id`: User plan ID (int)
+         - `plan_id`: Associated plan ID (int)
+         - `is_active`: Whether the plan is active (bool)
+         - `start_date`: Start date of the plan (datetime)
+         - `end_date`: End date of the plan (datetime)
+
+7. **Upgrade/Downgrade/Cancel**
+   - User can upgrade/downgrade/cancel their plan from the account settings page.
+   - For Upgrades/Downgrades:
+     - Endpoint: `POST /api/purchase/plan`
+       - **Input:**
+         - `PurchasePlanIn`: 
+           - `plan_id`: ID of the plan to upgrade/downgrade (int)
+           - `duration_months`: Duration of the subscription in months (int)
+       - **Output:**
+         - `user_plan`: Updated user plan details (object)
+
+   - For Cancellations:
+     - Endpoint: `POST /api/user/cancel_plan`
+       - **Output:**
+         - `status`: Cancellation confirmation status (string)
+
+8. **Notifications**
+   - Notify user in UI when they are close to or have exceeded their plan limits.
+   - Endpoint: `GET /api/user/usage`
+     - **Output:**
+       - `usage`: Usage statistics and limit warnings (array of objects)
+         - `id`: Usage tracking ID (int)
+         - `user_id`: User ID (int)
+         - `feature`: Feature used (string)
+         - `amount`: Amount used (int)
+         - `timestamp`: Time of usage (datetime)
+
+   - Endpoint: `GET /api/user/plan`
+     - **Output:**
+       - `user_plan`: Plan status and remaining limits (object or null)
+         - `id`: User plan ID (int)
+         - `plan_id`: Associated plan ID (int)
+         - `is_active`: Whether the plan is active (bool)
+         - `start_date`: Start date of the plan (datetime)
+         - `end_date`: End date of the plan (datetime)
+
+---
+
+**API Endpoints Summary:**
+1. `GET /api/plans` — List all available plans
+2. `POST /api/plans` — Create a new plan (admin only)
+3. `POST /api/purchase/plan` — Purchase or upgrade a plan
+4. `GET /api/user/plan` — Get current user's active plan and usage
+5. `GET /api/user/usage` — Get current user's usage stats
+6. `POST /api/user/cancel_plan` — Cancel current plan
+7. `POST /api/create-checkout-session` — Initiate Stripe payment and get checkout URL
+8. `POST /api/stripe/webhook` — Stripe webhook endpoint for payment confirmation
+
+**Request/Response Models:**
+- `PurchasePlanIn`: plan_id (int), duration_months (int)
+- `CreatePlanIn`: name (str), price_monthly (float), file_limit (int), file_size_limit_mb (int), ai_prompts_per_day (int), synthetic_rows_per_month (int), features (dict)
+- `PlanOut`: Complete plan details
+- `UserPlanOut`: User's active plan details
+- `UsageOut`: Usage statistics
+
+**Note:**
+- All purchase and usage actions require user authentication (token/session).
+- UI should always reflect the user's current plan and usage.
+- All endpoints return appropriate HTTP status codes and error messages.
+- Rate limiting should be implemented for all endpoints.
+- All monetary values are handled in USD. 
