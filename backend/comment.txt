@@ -1,0 +1,7 @@
+1- python -m venv datilio_venv  (for Linux: python3 -m venv datilio_venv)
+2- .\datilio_venv\Scripts\activate (for Linux: source datilio_venv/bin/activate)
+3- pip install -r requirements.txt
+4- create "database" in postgresql
+5- alembic upgrade head
+6- create users_data_files folder in root
+4- up app in port 8000
