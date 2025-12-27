@@ -6,7 +6,7 @@ import store, { signOutSuccess } from '../store'
 
 const unauthorizedCode = [401]
 // const baseURL = `${appConfig.apiPrefix}`
-const baseURL = 'http://localhost:8000/api/v1'
+const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1'
 const defaultTimeout = 60000 // 60 seconds
 
 export interface FetchOptions extends RequestInit {

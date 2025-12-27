@@ -22,6 +22,7 @@
 
 
 export type AppConfig = {
+    baseURL: string
     apiPrefix: string
     authenticatedEntryPath: string
     unAuthenticatedEntryPath: string
@@ -31,6 +32,7 @@ export type AppConfig = {
 }
 
 const appConfig: AppConfig = {
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1',
     apiPrefix: '/api',
     authenticatedEntryPath: '/dashboard',
     unAuthenticatedEntryPath: '/sign-in',

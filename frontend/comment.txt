@@ -4,3 +4,10 @@
 4- npm install reusify (first don't do it. if encountred error do this)
 4- npm install
 5- npm start
+
+6- How it works
+    Development: Uses http://localhost:8000 from .env.development → becomes http://localhost:8000/api/v1
+    Production: Uses https://datilio.com from .env.production → becomes https://datilio.com/api/v1
+    Vite automatically loads the appropriate .env file based on the mode 
+    (npm run dev uses .env.development, npm run build uses .env.production).
+    No linting errors. The configuration is ready to use.

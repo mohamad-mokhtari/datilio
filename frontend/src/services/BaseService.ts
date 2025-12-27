@@ -7,10 +7,16 @@ import store, { signOutSuccess } from '../store'
 
 const unauthorizedCode = [401]
 
+const getBaseURL = (): string => {
+    const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    // Ensure base URL doesn't end with /api/v1, then append it
+    const cleanBaseUrl = baseUrl.replace(/\/api\/v1\/?$/, '');
+    return `${cleanBaseUrl}/api/v1`;
+};
+
 const BaseService = axios.create({
     timeout: 60000,
-    // baseURL: `${appConfig.baseURL}${appConfig.apiPrefix}`,
-    baseURL: appConfig.apiPrefix,
+    baseURL: getBaseURL(),
 })
 
 BaseService.interceptors.request.use(

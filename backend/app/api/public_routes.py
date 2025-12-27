@@ -408,4 +408,5 @@ async def blog_post(request: Request, slug: str):
 
 @router.get("/dashboard", response_class=HTMLResponse)
 async def dashboard(request: Request):
-    return RedirectResponse(url="http://localhost:5173/") 
+    from app.core.config import settings
+    return RedirectResponse(url=f"{settings.FRONTEND_BASE_URL}/") 

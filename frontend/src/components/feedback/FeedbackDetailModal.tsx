@@ -10,6 +10,7 @@ import type { Feedback, FeedbackMessage, FeedbackStatus, FeedbackType } from '@/
 import { HiOutlineX, HiOutlineChat, HiOutlineCheck, HiOutlinePhotograph } from 'react-icons/hi';
 import { formatDistanceToNow } from 'date-fns';
 import { useConfig } from '@/components/ui/ConfigProvider';
+import { getBackendBaseUrl } from '@/utils/apiClient';
 
 interface FeedbackDetailModalProps {
   feedback: Feedback | null;
@@ -97,7 +98,7 @@ const FeedbackDetailModal = ({ feedback, isOpen, onClose }: FeedbackDetailModalP
     const pathParts = imagePath.split('users_data_files');
     if (pathParts.length > 1) {
       const relativePath = pathParts[1].replace(/\\/g, '/'); // Convert backslashes to forward slashes
-      const backendUrl = import.meta.env.VITE_API_URL?.replace('/api/v1', '') || 'http://localhost:8000';
+      const backendUrl = getBackendBaseUrl();
       return `${backendUrl}/static/users_data_files${relativePath}`;
     }
     

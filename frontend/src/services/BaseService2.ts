@@ -6,7 +6,13 @@ import store, { signOutSuccess } from '../store'
 
 const unauthorizedCode = [401]
 // const baseURL = `${appConfig.apiPrefix}`
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
+const getBaseURL = (): string => {
+  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+  // Ensure base URL doesn't end with /api/v1, then append it
+  const cleanBaseUrl = baseUrl.replace(/\/api\/v1\/?$/, '');
+  return `${cleanBaseUrl}/api/v1`;
+};
+const baseURL = getBaseURL()
 const defaultTimeout = 60000 // 60 seconds
 
 export interface FetchOptions extends RequestInit {

@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+from pydantic import model_validator
 from decouple import config
 from typing import List
 
@@ -10,18 +11,44 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 100
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
-    BACKEND_CORS_ORIGINS: List[str] = [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:5174",
-        "http://127.0.0.1:5174",
-    ]
+    
+    # Frontend URLs Configuration
+    FRONTEND_BASE_URL: str = config("FRONTEND_BASE_URL", default="http://localhost:8001")
+    ADMIN_FRONTEND_BASE_URL: str = config("ADMIN_FRONTEND_BASE_URL", default="http://localhost:8002")
+    
+    # CORS Configuration - dynamically built from frontend URLs
+    BACKEND_CORS_ORIGINS: List[str] = []
+    
+    @model_validator(mode='after')
+    def build_cors_origins(self):
+        """Dynamically generate CORS origins from frontend URLs"""
+        origins = [
+            self.FRONTEND_BASE_URL,
+            self.ADMIN_FRONTEND_BASE_URL,
+        ]
+        # Add localhost variants for development
+        if "localhost" in self.FRONTEND_BASE_URL or "127.0.0.1" in self.FRONTEND_BASE_URL:
+            # Extract port if present
+            if ":" in self.FRONTEND_BASE_URL:
+                port = self.FRONTEND_BASE_URL.split(":")[-1].rstrip("/")
+                origins.extend([
+                    f"http://localhost:{port}",
+                    f"http://127.0.0.1:{port}",
+                ])
+        if "localhost" in self.ADMIN_FRONTEND_BASE_URL or "127.0.0.1" in self.ADMIN_FRONTEND_BASE_URL:
+            if ":" in self.ADMIN_FRONTEND_BASE_URL:
+                port = self.ADMIN_FRONTEND_BASE_URL.split(":")[-1].rstrip("/")
+                origins.extend([
+                    f"http://localhost:{port}",
+                    f"http://127.0.0.1:{port}",
+                ])
+        # Remove duplicates while preserving order
+        self.BACKEND_CORS_ORIGINS = list(dict.fromkeys(origins))
+        return self
+    
     PROJECT_NAME: str = "TodoApp"
 
     OPENAI_API_KEY: str = config("OPENAI_API_KEY", cast=str)
-
 
     # Database
     POSTGRESQL_CONNECTION_STRING: str = config("POSTGRESQL_CONNECTION_STRING", cast=str)
@@ -45,7 +72,13 @@ class Settings(BaseSettings):
     SMTP_PASSWORD: str = config("SMTP_PASSWORD", default="")
     FROM_EMAIL: str = config("FROM_EMAIL", default="noreply@example.com")
     CONTACT_EMAIL: str = config("CONTACT_EMAIL", default="datilio@gmail.com")
-    FRONTEND_URL: str = config("FRONTEND_URL", default="http://localhost:5173")
+    # Legacy support - use FRONTEND_BASE_URL if FRONTEND_URL is not set
+    FRONTEND_URL: str = config("FRONTEND_URL", default="")
+    
+    @property
+    def _frontend_url(self) -> str:
+        """Get frontend URL, falling back to FRONTEND_BASE_URL if FRONTEND_URL is not set"""
+        return self.FRONTEND_URL if self.FRONTEND_URL else self.FRONTEND_BASE_URL
     
     # Donation Configuration
     BUYMEACOFFEE_URL: str = config("BUYMEACOFFEE_URL", default="https://buymeacoffee.com/datilio")

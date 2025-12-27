@@ -13,6 +13,7 @@ from app.models.stripe_payment_model import StripePayment
 from app.models.user_subscription_model import UserSubscription
 from app.core.db_setup import get_db
 from app.core.stripe_config import stripe, STRIPE_WEBHOOK_SECRET
+from app.core.config import settings
 from app.schemas.pricing_schemas import (
     PlanOut,
     PlanWithUsageOut,
@@ -402,8 +403,8 @@ def create_checkout_session(
             ],
             mode="payment",
             customer_email=current_user.email,
-            success_url=os.getenv("STRIPE_SUCCESS_URL", "http://localhost:5173/pricing/success"),
-            cancel_url=os.getenv("STRIPE_CANCEL_URL", "http://localhost:5173/pricing/cancel"),
+            success_url=os.getenv("STRIPE_SUCCESS_URL", f"{settings.FRONTEND_BASE_URL}/pricing/success"),
+            cancel_url=os.getenv("STRIPE_CANCEL_URL", f"{settings.FRONTEND_BASE_URL}/pricing/cancel"),
             metadata={
                 "user_id": str(current_user.id), 
                 "plan_id": str(plan.id),
@@ -469,8 +470,8 @@ def create_addon_checkout_session(
             ],
             mode="payment",
             customer_email=current_user.email,
-            success_url=os.getenv("STRIPE_SUCCESS_URL", "http://localhost:3000/billing/success"),
-            cancel_url=os.getenv("STRIPE_CANCEL_URL", "http://localhost:3000/billing/cancel"),
+            success_url=os.getenv("STRIPE_SUCCESS_URL", f"{settings.FRONTEND_BASE_URL}/billing/success"),
+            cancel_url=os.getenv("STRIPE_CANCEL_URL", f"{settings.FRONTEND_BASE_URL}/billing/cancel"),
             metadata={
                 "user_id": str(current_user.id), 
                 "plan_id": str(addon_plan.id),
@@ -538,8 +539,8 @@ def create_subscription_checkout_session(
             ],
             mode="subscription",
             customer_email=current_user.email,
-            success_url=os.getenv("STRIPE_SUCCESS_URL", "http://localhost:3000/billing/success"),
-            cancel_url=os.getenv("STRIPE_CANCEL_URL", "http://localhost:3000/billing/cancel"),
+            success_url=os.getenv("STRIPE_SUCCESS_URL", f"{settings.FRONTEND_BASE_URL}/billing/success"),
+            cancel_url=os.getenv("STRIPE_CANCEL_URL", f"{settings.FRONTEND_BASE_URL}/billing/cancel"),
             subscription_data={
                 "metadata": {
                     "user_id": str(current_user.id), 
@@ -613,8 +614,8 @@ def create_addon_subscription_session(
             ],
             mode="subscription",
             customer_email=current_user.email,
-            success_url=os.getenv("STRIPE_SUCCESS_URL", "http://localhost:3000/billing/success"),
-            cancel_url=os.getenv("STRIPE_CANCEL_URL", "http://localhost:3000/billing/cancel"),
+            success_url=os.getenv("STRIPE_SUCCESS_URL", f"{settings.FRONTEND_BASE_URL}/billing/success"),
+            cancel_url=os.getenv("STRIPE_CANCEL_URL", f"{settings.FRONTEND_BASE_URL}/billing/cancel"),
             subscription_data={
                 "metadata": {
                     "user_id": str(current_user.id), 

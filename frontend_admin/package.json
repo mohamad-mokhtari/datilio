@@ -3,8 +3,8 @@
   "private": true,
   "version": "2.1.1",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
+    "start": "vite --host 0.0.0.0 --port 8001",
+    "dev": "vite --host 0.0.0.0 --port 8001",
     "build": "vite build",
     "build:debug": "vite build --mode debug",
     "preview": "vite preview",
