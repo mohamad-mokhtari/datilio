@@ -25,6 +25,9 @@ build/
 .env.test.local
 .env.production.local
 .env.debug
+.env.*.local
+# Keep .env.example for reference
+!.env.example
 
 # Runtime data
 pids
