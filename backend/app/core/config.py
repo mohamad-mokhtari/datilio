@@ -13,8 +13,8 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
     
     # Frontend URLs Configuration
-    FRONTEND_BASE_URL: str = config("FRONTEND_BASE_URL", default="http://localhost:8001")
-    ADMIN_FRONTEND_BASE_URL: str = config("ADMIN_FRONTEND_BASE_URL", default="http://localhost:8002")
+    FRONTEND_BASE_URL: str = config("FRONTEND_BASE_URL", default="front.datilio.com/")
+    ADMIN_FRONTEND_BASE_URL: str = config("ADMIN_FRONTEND_BASE_URL", default="admin.datilio.com/")
     
     # CORS Configuration - dynamically built from frontend URLs
     BACKEND_CORS_ORIGINS: List[str] = []
