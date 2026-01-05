@@ -1,0 +1,31 @@
+# Docker Compose for Database Services Only
+# Use this when running apps locally but need PostgreSQL/Redis in Docker
+# Usage: docker-compose -f docker-compose.db.yml up -d
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: my-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: datilio_db_2
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redis_data:
+

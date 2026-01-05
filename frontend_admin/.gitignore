@@ -128,9 +128,6 @@ requests_structure/
 # Generated files
 twSafelistGenerator/
 
-# Nginx configuration
-nginx.conf
-
 # Backup files
 *.bak
 *.backup

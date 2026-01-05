@@ -20,12 +20,18 @@ Architecture:
 
 from celery import Celery
 from app.core.config import settings
+from decouple import config
+
+# Redis configuration from environment variables
+REDIS_HOST = config("REDIS_HOST", default="localhost")
+REDIS_PORT = config("REDIS_PORT", default=6379, cast=int)
+REDIS_DB = config("REDIS_DB", default=0, cast=int)
 
 # Create Celery instance
 celery_app = Celery(
     "datilio_tasks",
-    broker=f"redis://localhost:6379/0",  # Redis as message broker
-    backend=f"redis://localhost:6379/0",  # Redis as result backend
+    broker=f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}",  # Redis as message broker
+    backend=f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}",  # Redis as result backend
 )
 
 # Celery Configuration

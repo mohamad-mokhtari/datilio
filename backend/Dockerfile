@@ -24,8 +24,7 @@ COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt && \
-    pip install gunicorn
+    pip install -r requirements.txt
 
 # Copy application code
 COPY . .

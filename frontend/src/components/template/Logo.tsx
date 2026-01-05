@@ -23,6 +23,7 @@ const Logo = (props: LogoProps) => {
     } = props
 
     const handleLogoClick = () => {
+        // Navigate to backend public page
         window.location.href = getBackendBaseUrl()
     }
 

@@ -13,11 +13,13 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
     
     # Frontend URLs Configuration
-    FRONTEND_BASE_URL: str = config("FRONTEND_BASE_URL", default="front.datilio.com/")
-    ADMIN_FRONTEND_BASE_URL: str = config("ADMIN_FRONTEND_BASE_URL", default="admin.datilio.com/")
+    FRONTEND_BASE_URL: str = config("FRONTEND_BASE_URL", default="http://localhost:3000")
+    ADMIN_FRONTEND_BASE_URL: str = config("ADMIN_FRONTEND_BASE_URL", default="http://localhost:3001")
     
     # CORS Configuration - dynamically built from frontend URLs
     BACKEND_CORS_ORIGINS: List[str] = []
+    # Additional CORS origins (comma-separated, for development or additional frontends)
+    ADDITIONAL_CORS_ORIGINS: str = config("ADDITIONAL_CORS_ORIGINS", default="")
     
     @model_validator(mode='after')
     def build_cors_origins(self):
@@ -42,6 +44,22 @@ class Settings(BaseSettings):
                     f"http://localhost:{port}",
                     f"http://127.0.0.1:{port}",
                 ])
+        
+        # Add common development ports if not already included
+        common_dev_ports = ["3000", "3001"]
+        for port in common_dev_ports:
+            localhost_url = f"http://localhost:{port}"
+            localhost_ip = f"http://127.0.0.1:{port}"
+            if localhost_url not in origins:
+                origins.append(localhost_url)
+            if localhost_ip not in origins:
+                origins.append(localhost_ip)
+        
+        # Add additional CORS origins from environment variable
+        if self.ADDITIONAL_CORS_ORIGINS:
+            additional = [origin.strip() for origin in self.ADDITIONAL_CORS_ORIGINS.split(",") if origin.strip()]
+            origins.extend(additional)
+        
         # Remove duplicates while preserving order
         self.BACKEND_CORS_ORIGINS = list(dict.fromkeys(origins))
         return self

@@ -168,7 +168,11 @@ async def health_check():
     
     # Check Redis connection
     try:
-        redis_client = redis.Redis(host='localhost', port=6379, db=0, socket_connect_timeout=2)
+        from decouple import config
+        redis_host = config("REDIS_HOST", default="localhost")
+        redis_port = config("REDIS_PORT", default=6379, cast=int)
+        redis_db = config("REDIS_DB", default=0, cast=int)
+        redis_client = redis.Redis(host=redis_host, port=redis_port, db=redis_db, socket_connect_timeout=2)
         redis_client.ping()
         health_status["redis"] = "ok"
     except Exception as e:
@@ -196,11 +200,11 @@ async def health_check():
         health_status["status"] = "degraded"
         health_status["errors"].append(f"Celery check failed: {str(e)}")
     
-    # Return appropriate status code
-    status_code = 200 if health_status["status"] == "healthy" else 503
-    
+    # Return 200 for basic health (app is running)
+    # Redis/Celery failures are reported in the response but don't fail the health check
+    # This allows the app to be considered "healthy" even if background services are down
     return JSONResponse(
-        status_code=status_code,
+        status_code=200,
         content=health_status
     )
 

@@ -17,8 +17,6 @@ build
 .env.*.local
 # Keep .env.example for reference
 !.env.example
-# Nginx configuration
-nginx.conf
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
