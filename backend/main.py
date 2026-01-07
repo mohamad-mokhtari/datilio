@@ -31,20 +31,6 @@ from app.models import (
     ml_model_model
 )
 
-# Initialize all models
-user_model.Base.metadata.create_all(bind=engine)
-user_data_model.Base.metadata.create_all(bind=engine)
-user_plan_model.Base.metadata.create_all(bind=engine)
-plan_model.Base.metadata.create_all(bind=engine)
-usage_tracking_model.Base.metadata.create_all(bind=engine)
-stripe_payment_model.Base.metadata.create_all(bind=engine)
-user_lists.Base.metadata.create_all(bind=engine)
-email_verification_model.Base.metadata.create_all(bind=engine)
-error_log_model.Base.metadata.create_all(bind=engine)
-blog_model.Base.metadata.create_all(bind=engine)
-task_model.Base.metadata.create_all(bind=engine)
-preprocessed_data_model.Base.metadata.create_all(bind=engine)
-ml_model_model.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Fast API LMS",

@@ -1,11 +1,13 @@
 services:
   postgres:
-    image: postgres:15
-    container_name: my-postgres
+    image: postgres:15-alpine
+    container_name: postgres-db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: datilio_db_2
+      # Variables read from root .env file (same directory as docker-compose.yml)
+      # Use DATABASE_* variables from root .env, with fallback to POSTGRES_* or defaults
+      POSTGRES_USER: ${DATABASE_USER:-${POSTGRES_USER:-postgres}}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-${POSTGRES_PASSWORD}}
+      POSTGRES_DB: ${DATABASE_DEFAULT:-${POSTGRES_DB:-datilio_db}}
     ports:
       - "5432:5432"
     volumes:

@@ -1,0 +1,37 @@
+# Root-level .gitignore for Docker Compose and Project-wide Files
+# ================================================================
+
+# Environment Variables - NEVER commit these!
+.env
+.env.local
+.env.*.local
+
+# Docker Compose
+docker-compose.override.yml
+*.log
+
+# IDE - Project-wide
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS - Project-wide
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Project-specific root-level files
+*.zip
+*.tar.gz
+
+# Note: Each subdirectory (backend, frontend, frontend_admin) has its own .gitignore
+# for technology-specific ignores (node_modules, __pycache__, venv, etc.)
+

@@ -71,7 +71,7 @@
 }
 
 .menu-item-divider {
-  @apply border-b border-gray-200 dark:border-gray-600 my-2;
+  @apply border-b border-gray-200 dark:border-gray-600 my-2 list-none;
 }
 
 .menu-item-disabled {

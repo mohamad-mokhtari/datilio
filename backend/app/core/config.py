@@ -69,12 +69,9 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str = config("OPENAI_API_KEY", cast=str)
 
     # Database
+    # Only POSTGRESQL_CONNECTION_STRING is used by the application
+    # Individual DATABASE_* variables are not needed - kept for backward compatibility only
     POSTGRESQL_CONNECTION_STRING: str = config("POSTGRESQL_CONNECTION_STRING", cast=str)
-    DATABASE_DEFAULT: str = config("DATABASE_DEFAULT", cast=str)
-    DATABASE_USER: str = config("DATABASE_USER", cast=str)
-    DATABASE_PASSWORD: str = config("DATABASE_PASSWORD", cast=str)
-    DATABASE_HOST: str = config("DATABASE_HOST", cast=str)
-    DATABASE_PORT: int = config("DATABASE_PORT", cast=int)
     
     # Qdrant Vector Database
     QDRANT_HOST: str = config("QDRANT_HOST", default="localhost")
