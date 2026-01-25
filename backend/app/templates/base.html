@@ -12,7 +12,7 @@
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='assets/favicon.ico') }}" />
         
         <!-- Bootstrap icons-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" />
+        <link rel="stylesheet" href="{{ url_for('static', path='css/bootstrap-icons.css') }}" />
         
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{ url_for('static', path='css/styles.css') }}" rel="stylesheet" />
@@ -222,7 +222,7 @@
     </div>
 
     <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', path='js/bootstrap.bundle.min.js') }}"></script>
     <!-- Core theme JS-->
     <script src="{{ url_for('static', path='js/scripts.js') }}"></script>
     {% block extra_scripts %}{% endblock %}

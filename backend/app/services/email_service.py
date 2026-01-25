@@ -18,8 +18,7 @@ class EmailService:
         self.smtp_username = getattr(settings, 'SMTP_USERNAME', None)
         self.smtp_password = getattr(settings, 'SMTP_PASSWORD', None)
         self.from_email = getattr(settings, 'FROM_EMAIL', 'noreply@example.com')
-        # Use FRONTEND_BASE_URL, fallback to FRONTEND_URL for backward compatibility
-        self.frontend_url = getattr(settings, 'FRONTEND_BASE_URL', None) or getattr(settings, 'FRONTEND_URL', 'http://localhost:5173')
+        self.frontend_url = getattr(settings, 'FRONTEND_BASE_URL', 'http://localhost:3000')
     
     def send_verification_email(self, user_email: str, username: str, verification_token: str) -> bool:
         """Send email verification email"""

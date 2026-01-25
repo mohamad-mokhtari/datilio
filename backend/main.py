@@ -5,6 +5,9 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.openapi.docs import get_swagger_ui_html
+from fastapi import Request as FastAPIRequest
+from fastapi.responses import HTMLResponse
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 import logging
@@ -99,6 +102,23 @@ app.include_router(router, prefix=settings.API_V1_STR)
 
 # Include public routes
 app.include_router(public_router)
+
+# Override Swagger UI to use local files instead of CDN
+@app.get("/docs", include_in_schema=False)
+async def custom_swagger_ui_html(request: FastAPIRequest):
+    """
+    Custom Swagger UI endpoint that uses local files instead of CDN.
+    This fixes connection timeout issues when CDN is not accessible.
+    """
+    root_path = request.scope.get("root_path", "").rstrip("/")
+    openapi_url = root_path + app.openapi_url
+    return get_swagger_ui_html(
+        openapi_url=openapi_url,
+        title=f"{app.title} - Swagger UI",
+        swagger_js_url="/static/swagger-ui/swagger-ui-bundle.js",
+        swagger_css_url="/static/swagger-ui/swagger-ui.css",
+        swagger_favicon_url="/static/swagger-ui/favicon.png",
+    )
 
 
 # ============================================================================

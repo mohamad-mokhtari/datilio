@@ -3,9 +3,9 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Build argument for API URL (defaults to production URL)
-#production
+# #production
 ARG VITE_API_BASE_URL=https://datilio.com/api/v1
-# #development
+#development
 # ARG VITE_API_BASE_URL=http://localhost:8000/api/v1
 
 # Set as environment variable for Vite build
