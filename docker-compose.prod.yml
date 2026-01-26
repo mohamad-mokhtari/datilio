@@ -6,7 +6,7 @@ services:
       # Variables read from root .env file (same directory as docker-compose.yml)
       # Use DATABASE_* variables from root .env, with fallback to POSTGRES_* or defaults
       POSTGRES_USER: ${DATABASE_USER:-${POSTGRES_USER:-postgres}}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-${POSTGRES_PASSWORD:-Dfg!@#45Dsa!@#45}}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-${POSTGRES_PASSWORD:-Dfg12345Dsa12345}}
       POSTGRES_DB: ${DATABASE_DEFAULT:-${POSTGRES_DEFAULT:-datilio_db}}
     ports:
       - "5432:5432"
