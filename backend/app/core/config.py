@@ -28,6 +28,7 @@ class Settings(BaseSettings):
             self.FRONTEND_BASE_URL,
             self.ADMIN_FRONTEND_BASE_URL,
         ]
+        
         # Add localhost variants for development
         if "localhost" in self.FRONTEND_BASE_URL or "127.0.0.1" in self.FRONTEND_BASE_URL:
             # Extract port if present
@@ -60,8 +61,31 @@ class Settings(BaseSettings):
             additional = [origin.strip() for origin in self.ADDITIONAL_CORS_ORIGINS.split(",") if origin.strip()]
             origins.extend(additional)
         
+        # For production: automatically add common production frontend subdomains
+        # This handles cases where frontend is on a subdomain like front.datilio.com
+        # Check if any origin contains datilio.com (production domain)
+        has_datilio_domain = any("datilio.com" in str(origin) for origin in origins) or "datilio.com" in self.FRONTEND_BASE_URL
+        
+        if has_datilio_domain:
+            # Add common frontend subdomains for datilio.com
+            production_origins = [
+                "https://front.datilio.com",
+                "https://www.datilio.com",
+                "https://datilio.com",
+                "http://front.datilio.com",  # Include http for testing
+            ]
+            for prod_origin in production_origins:
+                if prod_origin not in origins:
+                    origins.append(prod_origin)
+        
         # Remove duplicates while preserving order
         self.BACKEND_CORS_ORIGINS = list(dict.fromkeys(origins))
+        
+        # Log CORS origins for debugging (only in development)
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info(f"CORS allowed origins: {self.BACKEND_CORS_ORIGINS}")
+        
         return self
     
     PROJECT_NAME: str = "TodoApp"

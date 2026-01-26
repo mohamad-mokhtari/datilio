@@ -103,6 +103,17 @@ app.include_router(router, prefix=settings.API_V1_STR)
 # Include public routes
 app.include_router(public_router)
 
+# Debug endpoint to check CORS configuration (remove in production if needed)
+@app.get("/debug/cors", include_in_schema=False)
+async def debug_cors():
+    """Debug endpoint to check CORS configuration"""
+    return {
+        "allowed_origins": settings.BACKEND_CORS_ORIGINS,
+        "frontend_base_url": settings.FRONTEND_BASE_URL,
+        "admin_frontend_base_url": settings.ADMIN_FRONTEND_BASE_URL,
+        "additional_cors_origins": settings.ADDITIONAL_CORS_ORIGINS,
+    }
+
 # Override Swagger UI to use local files instead of CDN
 @app.get("/docs", include_in_schema=False)
 async def custom_swagger_ui_html(request: FastAPIRequest):

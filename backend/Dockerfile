@@ -33,13 +33,6 @@ COPY . .
 RUN mkdir -p /app/app/static/user_images && \
     mkdir -p /app/users_data_files
 
-# Create a non-root user
-RUN useradd -m -u 1000 appuser && \
-    chown -R appuser:appuser /app
-
-# Switch to non-root user
-USER appuser
-
 # Expose port
 EXPOSE 8000
 

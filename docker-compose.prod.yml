@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: postgres-db
-`    environment:
+    environment:
       # Variables read from root .env file (same directory as docker-compose.yml)
       # Use DATABASE_* variables from root .env, with fallback to POSTGRES_* or defaults
       POSTGRES_USER: ${DATABASE_USER:-${POSTGRES_USER:-postgres}}
