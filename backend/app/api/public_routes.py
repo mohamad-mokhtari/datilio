@@ -89,12 +89,12 @@ async def home(request: Request):
         "site_name": "DataPilot",
         "current_year": 2024
     }
-    return templates.TemplateResponse("index.html", template_data)
+    return templates.TemplateResponse(request, "index.html", template_data)
 
 @router.get("/about", response_class=HTMLResponse)
 async def about(request: Request):
     from app.core.config import settings
-    return templates.TemplateResponse("about.html", {
+    return templates.TemplateResponse(request, "about.html", {
         "request": request,
         "buymeacoffee_url": settings.BUYMEACOFFEE_URL
     })
@@ -102,7 +102,7 @@ async def about(request: Request):
 @router.get("/contact", response_class=HTMLResponse, name="contact")
 async def contact(request: Request):
     from app.core.config import settings
-    return templates.TemplateResponse("contact.html", {
+    return templates.TemplateResponse(request, "contact.html", {
         "request": request,
         "contact_email": settings.CONTACT_EMAIL,
         "buymeacoffee_url": settings.BUYMEACOFFEE_URL
@@ -223,12 +223,12 @@ async def pricing(request: Request):
         "current_year": 2024
     }
     
-    return templates.TemplateResponse("pricing.html", template_data)
+    return templates.TemplateResponse(request, "pricing.html", template_data)
 
 @router.get("/faq", response_class=HTMLResponse)
 async def faq(request: Request):
     from app.core.config import settings
-    return templates.TemplateResponse("faq.html", {
+    return templates.TemplateResponse(request, "faq.html", {
         "request": request,
         "buymeacoffee_url": settings.BUYMEACOFFEE_URL
     })
@@ -236,7 +236,7 @@ async def faq(request: Request):
 @router.get("/tutorials", response_class=HTMLResponse)
 async def tutorials(request: Request):
     from app.core.config import settings
-    return templates.TemplateResponse("tutorials.html", {
+    return templates.TemplateResponse(request, "tutorials.html", {
         "request": request,
         "buymeacoffee_url": settings.BUYMEACOFFEE_URL,
         "title": "Video Tutorials - Datilio",
@@ -316,7 +316,7 @@ async def blog_home(request: Request):
         **blog_data
     }
     
-    return templates.TemplateResponse("blog-home.html", template_data)
+    return templates.TemplateResponse(request, "blog-home.html", template_data)
 
 @router.get("/blog-post/{slug}", response_class=HTMLResponse)
 async def blog_post(request: Request, slug: str):
@@ -403,7 +403,7 @@ async def blog_post(request: Request, slug: str):
         **blog_data
     }
     
-    return templates.TemplateResponse("blog-post.html", template_data)
+    return templates.TemplateResponse(request, "blog-post.html", template_data)
 
 
 @router.get("/dashboard", response_class=HTMLResponse)
