@@ -1,37 +1,167 @@
-# Root-level .gitignore for Docker Compose and Project-wide Files
-# ================================================================
+# Datilio — single root .gitignore
+# =================================
 
-# Environment Variables - NEVER commit these!
+# Environment variables (never commit secrets)
 .env
 .env.local
+.env.debug
+.env.development
+.env.production
+.env.development.local
+.env.test.local
+.env.production.local
 .env.*.local
+!.env.example
+!**/.env.example
 
-# Docker Compose
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+Pipfile.lock
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+env3.*
+*venv*/
+datilio_venv/
+internal_venv/
+ml_venv/
+
+# Python tooling & test artifacts
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+.tox/
+.nox/
+*.db
+test.db
+
+# Node / JavaScript
+node_modules/
+jspm_packages/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnp
+.pnp.js
+.npm
+.eslintcache
+.node_repl_history
+.yarn-integrity
+*.tsbuildinfo
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Frontend build & cache
+dist/
+dist-ssr/
+build/
+.vite/
+.vite-cache/
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+out/
+.storybook-out/
+coverage/
+*.lcov
+.nyc_output/
+*.local
+
+# Docker
 docker-compose.override.yml
+
+# Logs & temp files
 *.log
-
-# IDE - Project-wide
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS - Project-wide
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Temporary files
+logs/
+log.txt
 *.tmp
 *.temp
 *.bak
 *.backup
+*.old
+tmp/
+temp/
+*~
+.*.sw?
 
-# Project-specific root-level files
+# IDE (keep shared VS Code snippets if present)
+.vscode/
+.idea/
+*.swp
+*.swo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Archives & deploy artifacts
 *.zip
 *.tar.gz
+*.tgz
+.netlify
+docs.zip
+archive.zip
 
-# Note: Each subdirectory (backend, frontend, frontend_admin) has its own .gitignore
-# for technology-specific ignores (node_modules, __pycache__, venv, etc.)
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
 
+# Backend — local data, uploads, generated files
+backend/**/*.csv
+backend/**/*.json
+backend/**/*.xlsx
+backend/**/*.xls
+backend/**/*.pdf
+backend/**/*.docx
+backend/**/*.doc
+backend/test_*
+backend/users_data_files/
+backend/app/static/user_images/
+backend/csvFiles*/
+backend/data_files*/
+backend/docs_build/
+backend/site_build/
+backend/*swagger*
+
+# Frontend admin — local-only / generated
+frontend_admin/test.json
+frontend_admin/mydashboard.json
+frontend_admin/plot_json.json
+frontend_admin/comment.txt
+frontend_admin/feedback_endpoint.txt
+frontend_admin/safelist.txt
+frontend_admin/input_samples/
+frontend_admin/requests_structure/
+frontend_admin/twSafelistGenerator/
+
+# Repo root misc
+safelist.txt
