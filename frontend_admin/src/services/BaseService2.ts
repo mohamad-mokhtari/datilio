@@ -2,11 +2,11 @@ import appConfig from '@/configs/app.config'
 import { TOKEN_TYPE, REQUEST_HEADER_AUTH_KEY } from '@/constants/api.constant'
 import { PERSIST_STORE_NAME } from '@/constants/app.constant'
 import deepParseJson from '@/utils/deepParseJson'
+import { getApiV1BaseUrl } from '@/utils/apiUrl'
 import store, { signOutSuccess } from '../store'
 
 const unauthorizedCode = [401]
-// const baseURL = `${appConfig.apiPrefix}`
-const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1'
+const baseURL = getApiV1BaseUrl()
 const defaultTimeout = 60000 // 60 seconds
 
 export interface FetchOptions extends RequestInit {

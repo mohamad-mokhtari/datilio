@@ -1,30 +1,30 @@
-# Production stack — disk-conscious defaults for small VPS (~25GB)
-# - One backend image shared by API + Celery (build once)
-# - Alpine-based Redis; user data on named volumes (not in images)
-# - Run `docker image prune` after deploy to drop old duplicate layers
+# Local full stack — same layout as docker-compose.prod.yml, local URLs and image tags
+# Usage: docker compose -f docker-compose.local.yml up -d --build
 
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: postgres-db
+    container_name: postgres-db-local
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_DEFAULT}
     ports:
-      - "127.0.0.1:5432:5432"
+      - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata_local:/var/lib/postgresql/data
     networks:
       - datilio-net
     restart: unless-stopped
 
   redis:
     image: redis:7-alpine
-    container_name: redis
+    container_name: redis-local
     command: redis-server --save 60 1 --loglevel warning
+    ports:
+      - "6379:6379"
     volumes:
-      - redis_data:/data
+      - redis_data_local:/data
     networks:
       - datilio-net
     restart: unless-stopped
@@ -33,8 +33,8 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: datilio-backend:prod
-    container_name: datilio-backend
+    image: datilio-backend:local
+    container_name: datilio-backend-local
     env_file:
       - .env
       - ./backend/.env
@@ -43,8 +43,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - user_uploads:/app/app/static/user_images
-      - user_data_files:/app/users_data_files
+      - user_uploads_local:/app/app/static/user_images
+      - user_data_files_local:/app/users_data_files
     depends_on:
       - postgres
       - redis
@@ -53,15 +53,15 @@ services:
     restart: unless-stopped
 
   celery_worker:
-    image: datilio-backend:prod
-    container_name: datilio-celery-worker
+    image: datilio-backend:local
+    container_name: datilio-celery-worker-local
     env_file:
       - .env
       - ./backend/.env
     command: celery -A app.core.celery_app worker --loglevel=info --concurrency=${CELERY_CONCURRENCY:-2}
     volumes:
-      - user_uploads:/app/app/static/user_images
-      - user_data_files:/app/users_data_files
+      - user_uploads_local:/app/app/static/user_images
+      - user_data_files_local:/app/users_data_files
     depends_on:
       - backend
     networks:
@@ -75,9 +75,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: ${VITE_API_URL:-https://datilio.com}
-    image: datilio-frontend:prod
-    container_name: datilio-frontend
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+    image: datilio-frontend:local
+    container_name: datilio-frontend-local
     ports:
       - "3000:80"
     depends_on:
@@ -91,9 +91,9 @@ services:
       context: ./frontend_admin
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: ${VITE_API_URL:-https://datilio.com}
-    image: datilio-frontend-admin:prod
-    container_name: datilio-frontend-admin
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+    image: datilio-frontend-admin:local
+    container_name: datilio-frontend-admin-local
     ports:
       - "3001:80"
     depends_on:
@@ -103,10 +103,10 @@ services:
     restart: unless-stopped
 
 volumes:
-  pgdata:
-  redis_data:
-  user_uploads:
-  user_data_files:
+  pgdata_local:
+  redis_data_local:
+  user_uploads_local:
+  user_data_files_local:
 
 networks:
   datilio-net:

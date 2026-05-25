@@ -29,7 +29,8 @@ The backend builds `POSTGRESQL_CONNECTION_STRING` from these automatically (pass
 datilio/
 ├── .env                 ← Database + Docker Compose + optional VITE_* build args
 ├── .env.example
-├── docker-compose.prod.yml
+├── docker-compose.local.yml   ← full stack on your PC
+├── docker-compose.prod.yml    ← full stack on VPS
 └── backend/
     └── .env             ← JWT, OpenAI, Stripe, SMTP, Redis, frontend URLs only
 ```
@@ -55,7 +56,16 @@ POSTGRES_DB: ${DATABASE_DEFAULT}
 
 No hardcoded fallback passwords in compose files.
 
-## Local development without Docker
+## Local full stack (Docker)
+
+```bash
+docker compose -f docker-compose.local.yml up -d --build
+```
+
+Root `.env`: `DATABASE_HOST=postgres`, `VITE_API_URL=http://localhost:8000`  
+`backend/.env`: `FRONTEND_BASE_URL=http://localhost:3000`, `REDIS_HOST=redis`
+
+## Local development without Docker (apps on host)
 
 1. Copy `/.env.example` → `/.env` and set `DATABASE_HOST=localhost`
 2. Copy `/backend/.env.example` → `/backend/.env` for app secrets

@@ -1,7 +1,7 @@
 import { extractError, getErrorMessage, isCriticalError, formatValidationErrors, createEnhancedError, ApiError } from './errorHandler';
+import { getApiV1BaseUrl } from './apiUrl';
 
-// Base API configuration
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
+const API_BASE_URL = getApiV1BaseUrl();
 
 // Get auth token from localStorage
 const getAuthToken = (): string | null => {
