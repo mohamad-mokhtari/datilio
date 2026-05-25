@@ -1,6 +1,4 @@
 from logging.config import fileConfig
-import os
-from decouple import config as decouple_config
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
@@ -30,11 +28,10 @@ from app.models import (
 # access to the values within the .ini file in use.
 config = context.config
 
-# Override sqlalchemy.url with environment variable if available
-# This is more secure than hardcoding in alembic.ini
-database_url = decouple_config("POSTGRESQL_CONNECTION_STRING", default=None)
-if database_url:
-    config.set_main_option("sqlalchemy.url", database_url)
+# Use the same DB URL as the app (built from DATABASE_* in root .env)
+from app.core.config import settings
+
+config.set_main_option("sqlalchemy.url", settings.POSTGRESQL_CONNECTION_STRING)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

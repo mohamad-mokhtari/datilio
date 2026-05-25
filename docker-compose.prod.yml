@@ -5,9 +5,9 @@ services:
     environment:
       # Variables read from root .env file (same directory as docker-compose.yml)
       # Use DATABASE_* variables from root .env, with fallback to POSTGRES_* or defaults
-      POSTGRES_USER: ${DATABASE_USER:-${POSTGRES_USER:-postgres}}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-${POSTGRES_PASSWORD:-Dfg12345Dsa12345}}
-      POSTGRES_DB: ${DATABASE_DEFAULT:-${POSTGRES_DEFAULT:-datilio_db}}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_DEFAULT}
     ports:
       - "5432:5432"
     volumes:
@@ -33,6 +33,7 @@ services:
       dockerfile: Dockerfile
     container_name: datilio-backend
     env_file:
+      - .env
       - ./backend/.env
     ports:
       - "8000:8000"
@@ -49,6 +50,7 @@ services:
       dockerfile: Dockerfile
     container_name: datilio-celery-worker
     env_file:
+      - .env
       - ./backend/.env
     command: celery -A app.core.celery_app worker --loglevel=info
     depends_on:

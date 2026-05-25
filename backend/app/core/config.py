@@ -1,7 +1,31 @@
+import os
+from pathlib import Path
+
 from pydantic_settings import BaseSettings
 from pydantic import model_validator
 from decouple import config
 from typing import List
+from urllib.parse import quote_plus
+
+_REPO_ROOT = Path(__file__).resolve().parents[3]
+_BACKEND_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _load_env_file(path: Path) -> None:
+    """Load KEY=VALUE lines into os.environ without overriding existing vars."""
+    if not path.is_file():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+
+
+# Root .env = database; backend/.env = app secrets (Docker sets these via env_file too)
+_load_env_file(_REPO_ROOT / ".env")
+_load_env_file(_BACKEND_ROOT / ".env")
 
 
 class Settings(BaseSettings):
@@ -92,11 +116,22 @@ class Settings(BaseSettings):
 
     OPENAI_API_KEY: str = config("OPENAI_API_KEY", cast=str)
 
-    # Database
-    # Only POSTGRESQL_CONNECTION_STRING is used by the application
-    # Individual DATABASE_* variables are not needed - kept for backward compatibility only
-    POSTGRESQL_CONNECTION_STRING: str = config("POSTGRESQL_CONNECTION_STRING", cast=str)
-    
+    # Database — credentials live in repo root .env only (see DATABASE_* there)
+    DATABASE_USER: str = config("DATABASE_USER", default="postgres")
+    DATABASE_PASSWORD: str = config("DATABASE_PASSWORD", cast=str)
+    DATABASE_HOST: str = config("DATABASE_HOST", default="postgres")
+    DATABASE_PORT: int = config("DATABASE_PORT", default=5432, cast=int)
+    DATABASE_DEFAULT: str = config("DATABASE_DEFAULT", default="datilio_db")
+
+    @property
+    def POSTGRESQL_CONNECTION_STRING(self) -> str:
+        """Built from DATABASE_* in root .env — not read from environment."""
+        password = quote_plus(self.DATABASE_PASSWORD)
+        return (
+            f"postgresql+psycopg2://{self.DATABASE_USER}:{password}"
+            f"@{self.DATABASE_HOST}:{self.DATABASE_PORT}/{self.DATABASE_DEFAULT}"
+        )
+
     # Qdrant Vector Database
     QDRANT_HOST: str = config("QDRANT_HOST", default="localhost")
     QDRANT_PORT: int = config("QDRANT_PORT", default=6333, cast=int)
