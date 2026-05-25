@@ -12,7 +12,15 @@ DATABASE_HOST=postgres    # Docker: "postgres" | local Python: "localhost"
 DATABASE_PORT=5432
 ```
 
-The backend builds `POSTGRESQL_CONNECTION_STRING` from these automatically.  
+**Passwords with `#`, `@`, `!`, or spaces must be quoted in `.env`:**
+
+```bash
+DATABASE_PASSWORD="Hjk!@#45"
+```
+
+Without quotes, `#` is treated as a comment and the URL breaks (`#45@postgres` host error).
+
+The backend builds `POSTGRESQL_CONNECTION_STRING` from these automatically (password is URL-encoded in code).  
 **Do not** set `POSTGRESQL_CONNECTION_STRING` in any `.env` file.
 
 ## File layout

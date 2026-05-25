@@ -1,4 +1,4 @@
-# Dependencies
+# Dependencies (reinstalled in builder — saves GBs in build context)
 node_modules/
 npm-debug.log*
 yarn-debug.log*

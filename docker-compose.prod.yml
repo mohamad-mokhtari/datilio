@@ -1,15 +1,18 @@
+# Production stack — disk-conscious defaults for small VPS (~25GB)
+# - One backend image shared by API + Celery (build once)
+# - Alpine-based Redis; user data on named volumes (not in images)
+# - Run `docker image prune` after deploy to drop old duplicate layers
+
 services:
-  postgres: 
+  postgres:
     image: postgres:15-alpine
     container_name: postgres-db
     environment:
-      # Variables read from root .env file (same directory as docker-compose.yml)
-      # Use DATABASE_* variables from root .env, with fallback to POSTGRES_* or defaults
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_DEFAULT}
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
@@ -17,10 +20,9 @@ services:
     restart: unless-stopped
 
   redis:
-    image: redis:7
+    image: redis:7-alpine
     container_name: redis
-    ports:
-      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning
     volumes:
       - redis_data:/data
     networks:
@@ -31,12 +33,18 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    image: datilio-backend:prod
     container_name: datilio-backend
     env_file:
       - .env
       - ./backend/.env
+    environment:
+      GUNICORN_WORKERS: ${GUNICORN_WORKERS:-2}
     ports:
       - "8000:8000"
+    volumes:
+      - user_uploads:/app/app/static/user_images
+      - user_data_files:/app/users_data_files
     depends_on:
       - postgres
       - redis
@@ -45,20 +53,22 @@ services:
     restart: unless-stopped
 
   celery_worker:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: datilio-backend:prod
     container_name: datilio-celery-worker
     env_file:
       - .env
       - ./backend/.env
-    command: celery -A app.core.celery_app worker --loglevel=info
+    command: celery -A app.core.celery_app worker --loglevel=info --concurrency=${CELERY_CONCURRENCY:-2}
+    volumes:
+      - user_uploads:/app/app/static/user_images
+      - user_data_files:/app/users_data_files
     depends_on:
-      - postgres
-      - redis
+      - backend
     networks:
       - datilio-net
     restart: unless-stopped
+    healthcheck:
+      disable: true
 
   frontend:
     build:
@@ -66,6 +76,7 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_API_URL: ${VITE_API_URL:-https://datilio.com}
+    image: datilio-frontend:prod
     container_name: datilio-frontend
     ports:
       - "3000:80"
@@ -81,6 +92,7 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_API_BASE_URL: ${VITE_API_BASE_URL:-https://datilio.com/api/v1}
+    image: datilio-frontend-admin:prod
     container_name: datilio-frontend-admin
     ports:
       - "3001:80"
@@ -93,8 +105,9 @@ services:
 volumes:
   pgdata:
   redis_data:
+  user_uploads:
+  user_data_files:
 
 networks:
   datilio-net:
     driver: bridge
-

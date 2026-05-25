@@ -1,54 +1,60 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-*.egg-info/
-dist/
-build/
-
-# Virtual environments
-internal_venv/
+# Virtual environments (often 1GB+ — never send to Docker daemon)
+datilio_venv/
+*venv*/
+.venv/
 venv/
 env/
 ENV/
+internal_venv/
+ml_venv/
 
-# IDE
+# Python cache & tests
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.tox/
+
+# Runtime / user data (mounted as volumes in prod)
+users_data_files/
+app/static/user_images/
+csvFiles*/
+data_files*/
+input_samples/
+inputs_sample/
+
+# Secrets & local config
+.env
+.env.*
+!.env.example
+
+# IDE & OS
 .vscode/
 .idea/
 *.swp
-*.swo
 *~
+.DS_Store
 
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Jupyter
-*.ipynb
-.ipynb_checkpoints/
-
-# Documentation
+# Docs & samples (not needed in image)
 *.md
 md_files/
 txt_files/
-
-# Scripts
-*.bat
-*.sh
-
-# Sample data
-inputs_sample/
-input_samples/
-users_data_files/
-
-# Misc
-*.log
+*.ipynb
+.ipynb_checkpoints/
 *.csv
+*.xlsx
 *.json
 !requirements.txt
-!package.json
 !alembic.ini
 
+# Scripts & archives
+*.bat
+*.sh
+*.zip
+*.log
+docs_build/
+site_build/
