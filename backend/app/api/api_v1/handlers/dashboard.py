@@ -16,6 +16,7 @@ from app.models.feedback_model import Feedback
 from app.api.deps.user_deps import get_current_user
 from app.core.db_setup import get_db
 from app.services.usage_service import UsageService
+from app.services.user_plan_service import UserPlanService
 from app.utils.http_exceptions import (
     not_found_error, bad_request_error, forbidden_error, 
     internal_server_error, unauthorized_error, validation_error,
@@ -81,25 +82,56 @@ async def get_user_dashboard(
         }
         
         # 2. CURRENT PLAN INFORMATION
-        current_plan = db.query(UserPlan).filter(
-            UserPlan.user_id == current_user.id,
-            UserPlan.is_active == True
-        ).first()
-        
-        plan_info = {
-            "has_active_plan": current_plan is not None,
-            "plan_name": current_plan.plan.name if current_plan else "Free Plan",
-            "plan_id": str(current_plan.plan.id) if current_plan else None,
-            "start_date": current_plan.start_date if current_plan else None,
-            "end_date": current_plan.end_date if current_plan else None,
-            "features": {
-                "storage_limit_gb": clean_float_value(current_plan.plan.storage_limit_gb if current_plan else 0.005),  # 5MB free
-                "ai_tokens_per_month": clean_float_value(current_plan.plan.ai_tokens_per_month if current_plan else 50000),
-                "synthetic_rows_per_month": clean_float_value(current_plan.plan.synthetic_rows_per_month if current_plan else 500),
-                "rules_limit": clean_float_value(current_plan.plan.rules_limit if current_plan else 1),
-                "custom_lists_limit": clean_float_value(current_plan.plan.custom_lists_limit if current_plan else 1)
+        current_plan, plan_record = UserPlanService.get_effective_plan_for_user(
+            db, current_user.id
+        )
+
+        if current_plan and plan_record:
+            effective_limits = current_plan.get_effective_limits()
+            plan_info = {
+                "has_active_plan": True,
+                "plan_name": plan_record.name,
+                "plan_id": str(plan_record.id),
+                "start_date": current_plan.start_date,
+                "end_date": current_plan.end_date,
+                "features": {
+                    "storage_limit_gb": clean_float_value(effective_limits["storage_limit_gb"]),
+                    "ai_tokens_per_month": clean_float_value(effective_limits["ai_tokens_per_month"]),
+                    "synthetic_rows_per_month": clean_float_value(effective_limits["synthetic_rows_per_month"]),
+                    "rules_limit": clean_float_value(effective_limits["rules_limit"]),
+                    "custom_lists_limit": clean_float_value(effective_limits["custom_lists_limit"]),
+                },
             }
-        }
+        elif plan_record:
+            plan_info = {
+                "has_active_plan": False,
+                "plan_name": plan_record.name,
+                "plan_id": str(plan_record.id),
+                "start_date": None,
+                "end_date": None,
+                "features": {
+                    "storage_limit_gb": clean_float_value(plan_record.storage_limit_gb),
+                    "ai_tokens_per_month": clean_float_value(plan_record.ai_tokens_per_month),
+                    "synthetic_rows_per_month": clean_float_value(plan_record.synthetic_rows_per_month),
+                    "rules_limit": clean_float_value(plan_record.rules_limit),
+                    "custom_lists_limit": clean_float_value(plan_record.custom_lists_limit),
+                },
+            }
+        else:
+            plan_info = {
+                "has_active_plan": False,
+                "plan_name": UserPlanService.MVP_PLAN_NAME,
+                "plan_id": None,
+                "start_date": None,
+                "end_date": None,
+                "features": {
+                    "storage_limit_gb": 0.5,
+                    "ai_tokens_per_month": 100000,
+                    "synthetic_rows_per_month": 1000,
+                    "rules_limit": 10,
+                    "custom_lists_limit": 5,
+                },
+            }
         
         # 3. USAGE SUMMARY & ANALYTICS
         try:

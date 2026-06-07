@@ -41,15 +41,18 @@ inputs_sample/
 
 # Docs & samples (not needed in image)
 *.md
+!startup/README.md
 md_files/
 txt_files/
 *.ipynb
 .ipynb_checkpoints/
 *.csv
+!startup/plans_and_add_on.csv
 *.xlsx
 *.json
 !requirements.txt
 !alembic.ini
+!startup/data/.gitkeep
 
 # Scripts & archives
 *.bat

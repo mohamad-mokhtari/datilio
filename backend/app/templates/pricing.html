@@ -2,25 +2,59 @@
 
 {% block extra_head %}
 <style>
-    .pricing-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: none;
-        border-radius: 1rem;
+    .card.pricing-card {
+        --bs-card-border-width: 1px;
+        --bs-card-border-color: #ced4da;
+        --bs-card-box-shadow: 0 4px 18px rgba(15, 23, 42, 0.1);
+        --bs-card-bg: #fff;
+        border: 1px solid #ced4da !important;
+        border-radius: 1rem !important;
+        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.1) !important;
+        background-color: #fff !important;
         overflow: hidden;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     }
     
-    .pricing-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    .card.pricing-card:hover {
+        transform: translateY(-4px);
+        border-color: #adb5bd !important;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.14) !important;
     }
     
-    .pricing-card.featured {
-        border: 3px solid #0d6efd;
-        transform: scale(1.05);
+    .card.pricing-card.featured {
+        border: 2px solid #0d6efd !important;
+        box-shadow: 0 6px 22px rgba(13, 110, 253, 0.2) !important;
     }
     
-    .pricing-card.featured:hover {
-        transform: scale(1.05) translateY(-10px);
+    .card.pricing-card.featured:hover {
+        border-color: #0b5ed7 !important;
+        box-shadow: 0 14px 30px rgba(13, 110, 253, 0.24) !important;
+    }
+
+    .card.pricing-card.mvp {
+        border: 2px solid #20c997 !important;
+        box-shadow: 0 6px 22px rgba(32, 201, 151, 0.2) !important;
+    }
+
+    .card.pricing-card.mvp:hover {
+        border-color: #198754 !important;
+        box-shadow: 0 14px 30px rgba(32, 201, 151, 0.24) !important;
+    }
+    
+    .card.pricing-card.blur-content {
+        border: 1px solid #dee2e6 !important;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
+    }
+
+    .card.pricing-card.blur-content:hover {
+        transform: none;
+        border-color: #dee2e6 !important;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
+    }
+
+    .pricing-card-col {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
     }
     
     .pricing-header {
@@ -45,6 +79,10 @@
     
     .pricing-card.business .pricing-header {
         background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+    }
+    
+    .pricing-card.mvp .pricing-header {
+        background: linear-gradient(135deg, #20c997 0%, #198754 100%);
     }
     
     .popular-badge {
@@ -119,17 +157,25 @@
     }
     
     .addon-card {
-        background: #f8f9fa;
-        border: 2px solid #e9ecef;
+        background: #fff;
+        border: 1px solid #dee2e6;
         border-radius: 1rem;
         padding: 1.5rem;
         text-align: center;
         transition: all 0.3s ease;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     }
     
     .addon-card:hover {
         border-color: #0d6efd;
-        transform: translateY(-5px);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .blur-content .addon-card:hover {
+        transform: none;
+        border-color: #dee2e6;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     }
     
     .comparison-table {
@@ -249,7 +295,7 @@
             <!-- Pricing Cards -->
             <div class="row gx-5 justify-content-center">
                 {% for plan in plans.main_plans %}
-                <div class="col-lg-4 col-md-6 mb-5">
+                <div class="col-lg-4 col-md-6 mb-5 pricing-card-col">
                     <div class="pricing-card card h-100 {% if plan.name == 'Pro' %}featured{% endif %} {{ plan.name.lower() }} {% if plan.name not in ['MVP'] %}blur-content{% endif %}">
                         <div class="pricing-header">
                             {% if plan.name == 'Pro' %}
@@ -527,7 +573,7 @@
 
 {% block extra_scripts %}
 <script>
-    // Add smooth scrolling for anchor links
+    // Smooth scrolling for anchor links only
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -539,28 +585,6 @@
                 });
             }
         });
-    });
-
-    // Add animation on scroll for pricing cards
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.pricing-card, .addon-card').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(card);
     });
 </script>
 {% endblock %}

@@ -31,6 +31,8 @@ const PlanCard: React.FC<PlanCardProps> = ({
         switch (plan.name.toLowerCase()) {
             case 'free':
                 return 'from-gray-400 to-gray-600';
+            case 'mvp':
+                return 'from-emerald-500 to-green-700';
             case 'pro':
                 return 'from-blue-500 to-blue-700';
             case 'business':

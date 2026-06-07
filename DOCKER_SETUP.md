@@ -37,12 +37,17 @@ REDIS_HOST=redis
 docker compose -f docker-compose.local.yml up -d --build
 ```
 
-### 3. Migrations & admin
+### 3. Bootstrap (migrations, admin, plans)
 
 ```bash
-docker compose -f docker-compose.local.yml exec backend alembic upgrade head
-docker compose -f docker-compose.local.yml exec backend python create_admin_user.py
+docker compose -f docker-compose.local.yml exec backend python startup/bootstrap.py
 ```
+
+Runs Alembic `upgrade head`, creates the admin user if missing, and syncs plans from `backend/startup/plans_and_add_on.csv`. Safe to re-run.
+
+See `backend/startup/README.md` for database backup/restore scripts.
+
+After changing startup scripts locally, no rebuild is needed (folder is mounted in local compose). For production, rebuild the backend image.
 
 ### 4. URLs
 
@@ -78,6 +83,7 @@ DATABASE_PASSWORD="your_secure_password"
 ```bash
 docker compose -f docker-compose.prod.yml build
 docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml exec backend python startup/bootstrap.py
 docker image prune -f
 ```
 

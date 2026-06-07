@@ -8,8 +8,43 @@ from typing import Dict, Optional, List
 from datetime import datetime, date
 import calendar
 
+from app.services.user_plan_service import UserPlanService
+
 class UsageService:
     """Service to handle usage tracking and limits"""
+    
+    @staticmethod
+    def get_user_storage_used_mb(db: Session, user_id: str) -> float:
+        """Total storage currently used by the user's saved files."""
+        from app.models.user_data_model import UserData
+
+        total_bytes = db.query(func.coalesce(func.sum(UserData.file_size), 0)).filter(
+            UserData.user_id == user_id
+        ).scalar()
+        return float(total_bytes or 0) / (1024 * 1024)
+
+    @staticmethod
+    def get_storage_usage_details(db: Session, user_id: str) -> Dict[str, float]:
+        limits = UsageService.get_user_plan_limits(db, user_id)
+        limit_mb = float(limits.get("file_storage_mb", 0))
+        used_mb = UsageService.get_user_storage_used_mb(db, user_id)
+        return {
+            "used_mb": used_mb,
+            "limit_mb": limit_mb,
+            "remaining_mb": max(0.0, limit_mb - used_mb),
+        }
+
+    @staticmethod
+    def check_storage_capacity(
+        db: Session,
+        user_id: str,
+        additional_mb: float = 0.0,
+    ) -> bool:
+        """Check total stored data against the plan storage limit."""
+        details = UsageService.get_storage_usage_details(db, user_id)
+        if details["limit_mb"] <= 0:
+            return True
+        return (details["used_mb"] + additional_mb) <= details["limit_mb"]
     
     @staticmethod
     def track_usage(
@@ -62,7 +97,19 @@ class UsageService:
         ).first()
         
         if not user_plan:
-            # Return free plan limits
+            mvp_plan = UserPlanService.get_mvp_plan(db)
+            if mvp_plan:
+                return {
+                    "file_storage_mb": mvp_plan.storage_limit_gb * 1024,
+                    "rules_used": float(mvp_plan.rules_limit),
+                    "openai_tokens": float(mvp_plan.ai_tokens_per_month),
+                    "ai_prompts": float(mvp_plan.ai_prompts_per_month),
+                    "synthetic_rows": float(mvp_plan.synthetic_rows_per_month),
+                    "custom_lists": float(mvp_plan.custom_lists_limit)
+                    if mvp_plan.custom_lists_limit > 0
+                    else float("inf"),
+                }
+            # Fallback if MVP plan is missing from the database
             return {
                 "file_storage_mb": 5.0,
                 "rules_used": 1,
@@ -89,6 +136,9 @@ class UsageService:
         """Get comprehensive usage summary for user"""
         current_usage = UsageService.get_current_month_usage(db, user_id)
         limits = UsageService.get_user_plan_limits(db, user_id)
+
+        # Storage is enforced on total saved files, not monthly upload totals
+        current_usage["file_storage_mb"] = UsageService.get_user_storage_used_mb(db, user_id)
         
         # Calculate percentages
         percentages = {}

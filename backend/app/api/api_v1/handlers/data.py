@@ -82,23 +82,24 @@ async def upload_file(
     # Calculate file size in MB for usage tracking
     file_size_mb = file.size / (1024 * 1024) if file.size else 0
     
-    # Check usage limits before processing
-    if not UsageService.check_usage_limit(db, str(current_user.id), "file_storage_mb", file_size_mb):
-        # Get current usage to show user helpful info
-        usage_summary = UsageService.get_usage_summary(db, str(current_user.id))
-        current_usage_mb = usage_summary.current_month.get("file_storage_mb", 0)
-        limit_mb = usage_summary.limits.get("file_storage_mb", 0)
-        remaining_mb = max(0, limit_mb - current_usage_mb)
-        
+    # Check total storage capacity before processing
+    if not UsageService.check_storage_capacity(db, str(current_user.id), file_size_mb):
+        storage = UsageService.get_storage_usage_details(db, str(current_user.id))
+
         raise bad_request_error(
             error_code="QUOTA_EXCEEDED",
-            message=f"Storage limit exceeded. This file is {file_size_mb:.2f} MB, but you only have {remaining_mb:.2f} MB remaining this month (used {current_usage_mb:.2f} MB of {limit_mb:.2f} MB). Please upgrade your plan or purchase additional storage.",
+            message=(
+                f"Storage limit exceeded. This file is {file_size_mb:.2f} MB, but you only have "
+                f"{storage['remaining_mb']:.2f} MB remaining "
+                f"(using {storage['used_mb']:.2f} MB of {storage['limit_mb']:.2f} MB). "
+                "Please delete files, upgrade your plan, or purchase additional storage."
+            ),
             extra={
                 "file_size_mb": round(file_size_mb, 2),
                 "limit_type": "file_storage_mb",
-                "current_usage_mb": round(current_usage_mb, 2),
-                "monthly_limit_mb": round(limit_mb, 2),
-                "remaining_mb": round(remaining_mb, 2)
+                "current_usage_mb": round(storage["used_mb"], 2),
+                "storage_limit_mb": round(storage["limit_mb"], 2),
+                "remaining_mb": round(storage["remaining_mb"], 2),
             }
         )
     
@@ -133,7 +134,7 @@ async def upload_file(
             db=db
         )
 
-        # Track usage after successful upload
+        # Track upload event for analytics (storage enforcement uses total saved file sizes)
         UsageService.track_usage(
             db=db,
             user_id=str(current_user.id),

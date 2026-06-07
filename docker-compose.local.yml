@@ -45,6 +45,10 @@ services:
     volumes:
       - user_uploads_local:/app/app/static/user_images
       - user_data_files_local:/app/users_data_files
+      - ./backend/app/services:/app/app/services
+      - ./backend/app/api:/app/app/api
+      - ./backend/app/tasks:/app/app/tasks
+      - ./backend/startup:/app/startup
     depends_on:
       - postgres
       - redis

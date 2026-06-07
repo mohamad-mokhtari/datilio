@@ -33,6 +33,7 @@ from app.schemas.pricing_schemas import (
 )
 from app.services.plan_seeder import PlanSeeder
 from app.services.usage_service import UsageService
+from app.services.user_plan_service import UserPlanService
 
 router = APIRouter()
 
@@ -78,9 +79,16 @@ def seed_plans(
     db: Session = Depends(get_db),
     admin: User = Depends(get_admin_user),
 ):
-    """Seed the database with default plans (admin only)"""
-    plans = PlanSeeder.seed_plans(db)
-    return {"message": f"Successfully seeded {len(plans)} plans", "plans": len(plans)}
+    """Sync plans from CSV (admin only). Same logic as bootstrap.py step 3."""
+    result = PlanSeeder.sync_plans_from_csv(db)
+    return {
+        "message": "Plans synced from CSV",
+        "added": result.added,
+        "updated": result.updated,
+        "unchanged": result.unchanged,
+        "deactivated": result.deactivated,
+        "total_in_csv": result.total_in_csv,
+    }
 
 @router.post("/plans", response_model=PlanOut)
 def create_plan(
@@ -133,11 +141,7 @@ def get_user_plan(
     current_user: User = Depends(get_current_user)
 ):
     """Get current user's active plan"""
-    user_plan = (
-        db.query(UserPlan)
-        .filter(UserPlan.user_id == current_user.id, UserPlan.is_active == True)
-        .first()
-    )
+    user_plan = UserPlanService.ensure_user_has_mvp_plan(db, current_user.id)
     return user_plan
 
 @router.get("/user/plan/with-usage", response_model=Optional[PlanWithUsageOut])
@@ -146,29 +150,24 @@ def get_user_plan_with_usage(
     current_user: User = Depends(get_current_user)
 ):
     """Get current user's plan with usage information"""
-    user_plan = (
-        db.query(UserPlan)
-        .filter(UserPlan.user_id == current_user.id, UserPlan.is_active == True)
-        .first()
-    )
-    
+    user_plan = UserPlanService.ensure_user_has_mvp_plan(db, current_user.id)
+
     if not user_plan:
-        # Return free plan with usage
-        free_plan = PlanSeeder.get_plan_by_name(db, "Free")
-        if free_plan:
-            usage_summary = UsageService.get_usage_summary(db, str(current_user.id))
-            return PlanWithUsageOut(
-                **free_plan.__dict__,
-                current_usage=usage_summary.current_month,
-                usage_percentages=usage_summary.percentages
-            )
-        return None
-    
+        mvp_plan = UserPlanService.get_mvp_plan(db)
+        if not mvp_plan:
+            return None
+        usage_summary = UsageService.get_usage_summary(db, str(current_user.id))
+        return PlanWithUsageOut(
+            **mvp_plan.__dict__,
+            current_usage=usage_summary.current_month,
+            usage_percentages=usage_summary.percentages,
+        )
+
     usage_summary = UsageService.get_usage_summary(db, str(current_user.id))
     return PlanWithUsageOut(
         **user_plan.plan.__dict__,
         current_usage=usage_summary.current_month,
-        usage_percentages=usage_summary.percentages
+        usage_percentages=usage_summary.percentages,
     )
 
 @router.post("/user/plan/cancel")

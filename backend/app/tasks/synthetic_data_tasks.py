@@ -149,6 +149,17 @@ def generate_synthetic_data_task(
         
         # Get the actual file size
         actual_file_size = os.path.getsize(file_location)
+        actual_file_size_mb = actual_file_size / (1024 * 1024)
+
+        if not UsageService.check_storage_capacity(db, user_id, actual_file_size_mb):
+            if os.path.exists(file_location):
+                os.remove(file_location)
+            storage = UsageService.get_storage_usage_details(db, user_id)
+            raise ValueError(
+                f"Storage limit exceeded. Generated file is {actual_file_size_mb:.2f} MB, "
+                f"but only {storage['remaining_mb']:.2f} MB remains "
+                f"({storage['used_mb']:.2f} MB used of {storage['limit_mb']:.2f} MB)."
+            )
         
         # Save a record in the UserData table
         # NOTE: Filename uniqueness is enforced at retry endpoint level
@@ -179,7 +190,7 @@ def generate_synthetic_data_task(
             task_record.progress = 90.0
             db.commit()
         
-        # Track usage after successful generation
+        # Track synthetic row usage after successful generation
         UsageService.track_usage(
             db=db,
             user_id=user_id,

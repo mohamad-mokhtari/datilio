@@ -116,6 +116,88 @@ class SyntheticDataService:
         
         return provider, getattr(provider, field)
 
+    # Sensible defaults when UI/audit omits numpy distribution parameters
+    NUMPY_DISTRIBUTION_DEFAULTS: Dict[str, Dict[str, Any]] = {
+        "uniform": {"low": 0.0, "high": 1.0},
+        "normal": {"loc": 0.0, "scale": 1.0},
+        "binomial": {"n": 10, "p": 0.5},
+        "poisson": {"lam": 1.0},
+        "exponential": {"scale": 1.0},
+        "gamma": {"shape": 2.0, "scale": 1.0},
+        "beta": {"a": 2.0, "b": 2.0},
+        "chisquare": {"df": 5},
+        "geometric": {"p": 0.5},
+        "lognormal": {"mean": 0.0, "sigma": 1.0},
+        "pareto": {"a": 2.0},
+        "triangular": {"left": 0.0, "mode": 0.5, "right": 1.0},
+        "weibull": {"a": 2.0},
+        "wald": {"mean": 1.0, "scale": 1.0},
+        "zipf": {"a": 2.0},  # numpy requires a > 1
+    }
+
+    @staticmethod
+    def prepare_numpy_distribution_params(
+        field: str,
+        params: Dict[str, Any],
+        num_rows: int,
+    ) -> Dict[str, Any]:
+        """Merge defaults, set size, and enforce distribution-specific constraints."""
+        merged = dict(SyntheticDataService.NUMPY_DISTRIBUTION_DEFAULTS.get(field, {}))
+        merged.update(params)
+        merged["size"] = num_rows
+
+        if field == "zipf":
+            a = float(merged.get("a", 2.0))
+            if a <= 1:
+                merged["a"] = 2.0
+        elif field == "pareto":
+            a = float(merged.get("a", 2.0))
+            if a <= 0:
+                merged["a"] = 2.0
+        elif field == "weibull":
+            a = float(merged.get("a", 2.0))
+            if a <= 0:
+                merged["a"] = 2.0
+        elif field == "binomial":
+            n = int(merged.get("n", 10))
+            p = float(merged.get("p", 0.5))
+            merged["n"] = max(n, 1)
+            merged["p"] = min(max(p, 0.0), 1.0)
+        elif field == "geometric":
+            p = float(merged.get("p", 0.5))
+            if p <= 0 or p > 1:
+                merged["p"] = 0.5
+        elif field == "chisquare":
+            merged["df"] = max(int(merged.get("df", 5)), 1)
+        elif field == "poisson":
+            merged["lam"] = max(float(merged.get("lam", 1.0)), 0.0)
+        elif field == "gamma":
+            merged["shape"] = max(float(merged.get("shape", 2.0)), 1e-9)
+            merged["scale"] = max(float(merged.get("scale", 1.0)), 1e-9)
+        elif field == "beta":
+            merged["a"] = max(float(merged.get("a", 2.0)), 1e-9)
+            merged["b"] = max(float(merged.get("b", 2.0)), 1e-9)
+        elif field == "exponential":
+            merged["scale"] = max(float(merged.get("scale", 1.0)), 1e-9)
+        elif field == "normal":
+            merged["scale"] = max(float(merged.get("scale", 1.0)), 1e-9)
+        elif field == "wald":
+            merged["mean"] = max(float(merged.get("mean", 1.0)), 1e-9)
+            merged["scale"] = max(float(merged.get("scale", 1.0)), 1e-9)
+        elif field == "triangular":
+            left = float(merged.get("left", 0.0))
+            mode = float(merged.get("mode", 0.5))
+            right = float(merged.get("right", 1.0))
+            if not (left <= mode <= right):
+                merged.update({"left": 0.0, "mode": 0.5, "right": 1.0})
+        elif field == "uniform":
+            low = float(merged.get("low", 0.0))
+            high = float(merged.get("high", 1.0))
+            if low >= high:
+                merged.update({"low": 0.0, "high": 1.0})
+
+        return merged
+
     @staticmethod
     def process_special_params(param_value: Any) -> Any:
         """Process special parameter values that need conversion"""
@@ -285,6 +367,12 @@ class SyntheticDataService:
                     for key, value in processed_params.items():
                         if value == 'ROW_NUMBER_PLACEHOLDER':
                             processed_params[key] = num_rows
+
+                    processed_params = SyntheticDataService.prepare_numpy_distribution_params(
+                        field_method,
+                        processed_params,
+                        num_rows,
+                    )
                     
                     # Generate values using numpy distribution
                     values = getattr(provider, field_method)(**processed_params)

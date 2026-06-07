@@ -137,7 +137,9 @@ archive.zip
 
 # Backend — local data, uploads, generated files
 backend/**/*.csv
+!backend/startup/plans_and_add_on.csv
 backend/**/*.json
+!backend/startup/data/.gitkeep
 backend/**/*.xlsx
 backend/**/*.xls
 backend/**/*.pdf
@@ -165,3 +167,5 @@ frontend_admin/twSafelistGenerator/
 
 # Repo root misc
 safelist.txt
+synthetic_field_audit_report.json
+backend/synthetic_field_audit*.json

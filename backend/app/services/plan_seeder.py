@@ -1,256 +1,193 @@
+from __future__ import annotations
+
+import csv
+import json
+import uuid as uuid_module
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
 from sqlalchemy.orm import Session
+
 from app.models.plan_model import Plan
-from typing import List
-import uuid
+
+DEFAULT_PLANS_CSV = Path(__file__).resolve().parents[2] / "startup" / "plans_and_add_on.csv"
+
+
+@dataclass
+class PlanSyncResult:
+    added: int = 0
+    updated: int = 0
+    unchanged: int = 0
+    deactivated: int = 0
+    total_in_csv: int = 0
+
+    @property
+    def changed(self) -> bool:
+        return self.added > 0 or self.updated > 0 or self.deactivated > 0
+
+
+def _parse_bool(value: Optional[str], default: bool = False) -> bool:
+    if value is None or str(value).strip() == "":
+        return default
+    return str(value).strip().lower() in {"true", "1", "yes"}
+
+
+def _parse_features(raw: Optional[str]) -> Dict[str, Any]:
+    if not raw:
+        return {}
+    try:
+        return json.loads(raw.replace('""', '"'))
+    except json.JSONDecodeError:
+        return {}
+
+
+def read_plans_from_csv(csv_path: Path) -> List[Dict[str, Any]]:
+    """Read plan definitions from CSV."""
+    plans: List[Dict[str, Any]] = []
+
+    with csv_path.open("r", encoding="utf-8", newline="") as file:
+        reader = csv.DictReader(file)
+        for raw_row in reader:
+            row = { (key or "").strip(): value for key, value in raw_row.items() }
+            if not row.get("id") or not row.get("name"):
+                continue
+
+            plans.append(
+                {
+                    "id": uuid_module.UUID(row["id"].strip()),
+                    "name": row["name"].strip(),
+                    "description": row["description"].strip()
+                    if row.get("description")
+                    else None,
+                    "price_monthly": float(row["price_monthly"])
+                    if row.get("price_monthly")
+                    else 0.0,
+                    "price_yearly": float(row["price_yearly"])
+                    if row.get("price_yearly") and row["price_yearly"].strip()
+                    else 0.0,
+                    "is_active": _parse_bool(row.get("is_active"), default=True),
+                    "file_limit": int(row["file_limit"]) if row.get("file_limit") else 1,
+                    "file_size_limit_mb": int(row["file_size_limit_mb"])
+                    if row.get("file_size_limit_mb")
+                    else 5,
+                    "storage_limit_gb": float(row["storage_limit_gb"])
+                    if row.get("storage_limit_gb")
+                    else 0.005,
+                    "rules_limit": int(row["rules_limit"]) if row.get("rules_limit") else 1,
+                    "custom_lists_limit": int(row["custom_lists_limit"])
+                    if row.get("custom_lists_limit")
+                    else 1,
+                    "ai_prompts_per_month": int(row["ai_prompts_per_month"])
+                    if row.get("ai_prompts_per_month")
+                    else 100,
+                    "ai_tokens_per_month": int(row["ai_tokens_per_month"])
+                    if row.get("ai_tokens_per_month")
+                    else 50000,
+                    "synthetic_rows_per_month": int(row["synthetic_rows_per_month"])
+                    if row.get("synthetic_rows_per_month")
+                    else 500,
+                    "features": _parse_features(row.get("features")),
+                    "is_addon": _parse_bool(row.get("is_addon"), default=False),
+                    "priority_processing": _parse_bool(
+                        row.get("priority_processing"), default=False
+                    ),
+                    "team_sharing": _parse_bool(row.get("team_sharing"), default=False),
+                    "stripe_price_id_monthly": row["stripe_price_id_monthly"].strip()
+                    if row.get("stripe_price_id_monthly")
+                    and row["stripe_price_id_monthly"].strip()
+                    else None,
+                    "stripe_price_id_yearly": row["stripe_price_id_yearly"].strip()
+                    if row.get("stripe_price_id_yearly")
+                    and row["stripe_price_id_yearly"].strip()
+                    else None,
+                }
+            )
+
+    return plans
+
+
+def _plan_differs(existing: Plan, plan_data: Dict[str, Any]) -> bool:
+    for key, value in plan_data.items():
+        if key == "id":
+            continue
+        if getattr(existing, key) != value:
+            return True
+    return False
+
 
 class PlanSeeder:
-    """Service to seed the database with default plans and add-ons"""
-    
+    """Seed and sync pricing plans from CSV."""
+
+    @staticmethod
+    def sync_plans_from_csv(
+        db: Session,
+        csv_path: Optional[Path] = None,
+    ) -> PlanSyncResult:
+        """Sync plans with CSV: add, update, and deactivate removed plans."""
+        path = csv_path or DEFAULT_PLANS_CSV
+        if not path.is_file():
+            raise FileNotFoundError(f"Plans CSV not found: {path}")
+
+        plans_data = read_plans_from_csv(path)
+        if not plans_data:
+            raise ValueError(
+                f"No plans read from {path}. "
+                "Check CSV headers (id, name, ...) and that rows are not empty."
+            )
+
+        csv_ids = {plan["id"] for plan in plans_data}
+        existing_by_id = {plan.id: plan for plan in db.query(Plan).all()}
+
+        result = PlanSyncResult(total_in_csv=len(plans_data))
+
+        for plan_data in plans_data:
+            existing = existing_by_id.get(plan_data["id"])
+            if existing:
+                if _plan_differs(existing, plan_data):
+                    for key, value in plan_data.items():
+                        if key != "id":
+                            setattr(existing, key, value)
+                    result.updated += 1
+                else:
+                    result.unchanged += 1
+            else:
+                db.add(Plan(**plan_data))
+                result.added += 1
+
+        for plan_id, plan in existing_by_id.items():
+            if plan_id not in csv_ids and plan.is_active:
+                plan.is_active = False
+                result.deactivated += 1
+
+        db.commit()
+        return result
+
     @staticmethod
     def seed_plans(db: Session) -> List[Plan]:
-        """Seed the database with default plans"""
-        
-        # Check if plans already exist
-        existing_plans = db.query(Plan).filter(Plan.is_active == True).all()
-        if existing_plans:
-            print("Plans already exist, skipping seeding")
-            return existing_plans
-        
-        plans = []
-        
-        # Free Plan
-        free_plan = Plan(
-            id=uuid.uuid4(),
-            name="Free",
-            description="Perfect for getting started with data analysis",
-            price_monthly=0.0,
-            price_yearly=0.0,
-            stripe_price_id_monthly="price_free_monthly",
-            stripe_price_id_yearly="price_free_yearly",
-            is_active=True,
-            file_limit=1,
-            file_size_limit_mb=5,
-            storage_limit_gb=0.005,  # 5MB
-            rules_limit=1,
-            custom_lists_limit=1,
-            ai_prompts_per_month=100,
-            ai_tokens_per_month=50000,
-            synthetic_rows_per_month=500,
-            features={
-                "file_formats": ["csv", "json", "excel"],
-                "data_viewer": True,
-                "basic_analytics": True
-            },
-            is_addon=False,
-            priority_processing=False,
-            team_sharing=False
-        )
-        plans.append(free_plan)
-        
-        # MVP Plan
-        mvp_plan = Plan(
-            id=uuid.uuid4(),
-            name="MVP",
-            description="Enhanced free plan for MVP users with more features",
-            price_monthly=0.0,
-            price_yearly=0.0,
-            stripe_price_id_monthly="price_free_monthly",
-            stripe_price_id_yearly="price_free_yearly",
-            is_active=True,
-            file_limit=5,
-            file_size_limit_mb=5,
-            storage_limit_gb=20.0,  # 20GB
-            rules_limit=10,
-            custom_lists_limit=5,
-            ai_prompts_per_month=200,
-            ai_tokens_per_month=100000,
-            synthetic_rows_per_month=1000,
-            features={
-                "file_formats": ["csv", "json", "excel"],
-                "data_viewer": True,
-                "basic_analytics": True,
-                "mvp_features": True
-            },
-            is_addon=False,
-            priority_processing=False,
-            team_sharing=False
-        )
-        plans.append(mvp_plan)
-        
-        # Pro Plan
-        pro_plan = Plan(
-            id=uuid.uuid4(),
-            name="Pro",
-            description="For power users and small teams",
-            price_monthly=9.0,
-            price_yearly=90.0,  # 17% discount
-            stripe_price_id_monthly="price_pro_monthly",
-            stripe_price_id_yearly="price_pro_yearly",
-            is_active=True,
-            file_limit=10,
-            file_size_limit_mb=50,
-            storage_limit_gb=5.0,  # 5GB
-            rules_limit=20,
-            custom_lists_limit=-1,  # Unlimited
-            ai_prompts_per_month=5000,
-            ai_tokens_per_month=500000,
-            synthetic_rows_per_month=20000,
-            features={
-                "file_formats": ["csv", "json", "excel"],
-                "data_viewer": True,
-                "advanced_analytics": True,
-                "custom_dashboards": True,
-                "export_formats": ["csv", "json", "excel", "pdf"]
-            },
-            is_addon=False,
-            priority_processing=False,
-            team_sharing=False
-        )
-        plans.append(pro_plan)
-        
-        # Business Plan
-        business_plan = Plan(
-            id=uuid.uuid4(),
-            name="Business",
-            description="For teams and organizations",
-            price_monthly=29.0,
-            price_yearly=290.0,  # 17% discount
-            stripe_price_id_monthly="price_business_monthly",
-            stripe_price_id_yearly="price_business_yearly",
-            is_active=True,
-            file_limit=50,
-            file_size_limit_mb=200,
-            storage_limit_gb=20.0,  # 20GB
-            rules_limit=100,
-            custom_lists_limit=-1,  # Unlimited
-            ai_prompts_per_month=25000,
-            ai_tokens_per_month=2000000,
-            synthetic_rows_per_month=100000,
-            features={
-                "file_formats": ["csv", "json", "excel"],
-                "data_viewer": True,
-                "advanced_analytics": True,
-                "custom_dashboards": True,
-                "export_formats": ["csv", "json", "excel", "pdf"],
-                "api_access": True,
-                "white_label": True
-            },
-            is_addon=False,
-            priority_processing=True,
-            team_sharing=True
-        )
-        plans.append(business_plan)
-        
-        # Add-on Plans (Subscription-based)
-        addons = [
-            # Extra Storage Add-on
-            Plan(
-                id=uuid.uuid4(),
-                name="Extra Storage",
-                description="Additional storage space - 1GB per month",
-                price_monthly=2.0,
-                price_yearly=20.0,  # 17% discount
-                stripe_price_id_monthly="price_storage_monthly",
-                stripe_price_id_yearly="price_storage_yearly",
-                is_active=True,
-                file_limit=0,
-                file_size_limit_mb=0,
-                storage_limit_gb=1.0,  # 1GB per addon
-                rules_limit=0,
-                custom_lists_limit=0,
-                ai_prompts_per_month=0,
-                ai_tokens_per_month=0,
-                synthetic_rows_per_month=0,
-                features={
-                    "addon_type": "storage",
-                    "description": "1GB additional storage per month",
-                    "unit": "GB",
-                    "quantity": 1
-                },
-                is_addon=True,
-                priority_processing=False,
-                team_sharing=False
-            ),
-            # Extra Tokens Add-on
-            Plan(
-                id=uuid.uuid4(),
-                name="Extra AI Tokens",
-                description="Additional AI tokens for Talk to Data - 100k per month",
-                price_monthly=3.0,
-                price_yearly=30.0,  # 17% discount
-                stripe_price_id_monthly="price_tokens_monthly",
-                stripe_price_id_yearly="price_tokens_yearly",
-                is_active=True,
-                file_limit=0,
-                file_size_limit_mb=0,
-                storage_limit_gb=0,
-                rules_limit=0,
-                custom_lists_limit=0,
-                ai_prompts_per_month=0,
-                ai_tokens_per_month=100000,  # 100k tokens per addon
-                synthetic_rows_per_month=0,
-                features={
-                    "addon_type": "tokens",
-                    "description": "100,000 additional AI tokens per month",
-                    "unit": "100k tokens",
-                    "quantity": 1
-                },
-                is_addon=True,
-                priority_processing=False,
-                team_sharing=False
-            ),
-            # Extra Synthetic Data Add-on
-            Plan(
-                id=uuid.uuid4(),
-                name="Extra Synthetic Data",
-                description="Additional synthetic data generation - 10k rows per month",
-                price_monthly=2.0,
-                price_yearly=20.0,  # 17% discount
-                stripe_price_id_monthly="price_synthetic_monthly",
-                stripe_price_id_yearly="price_synthetic_yearly",
-                is_active=True,
-                file_limit=0,
-                file_size_limit_mb=0,
-                storage_limit_gb=0,
-                rules_limit=0,
-                custom_lists_limit=0,
-                ai_prompts_per_month=0,
-                ai_tokens_per_month=0,
-                synthetic_rows_per_month=10000,  # 10k rows per addon
-                features={
-                    "addon_type": "synthetic_data",
-                    "description": "10,000 additional synthetic rows per month",
-                    "unit": "10k rows",
-                    "quantity": 1
-                },
-                is_addon=True,
-                priority_processing=False,
-                team_sharing=False
-            )
-        ]
-        
-        plans.extend(addons)
-        
-        # Add all plans to database
-        for plan in plans:
-            db.add(plan)
-        
-        db.commit()
-        
-        print(f"Successfully seeded {len(plans)} plans")
-        return plans
-    
+        """Backward-compatible entry point used by the admin API."""
+        result = PlanSeeder.sync_plans_from_csv(db)
+        return db.query(Plan).filter(Plan.is_active == True).order_by(Plan.price_monthly).all()
+
     @staticmethod
     def get_plan_by_name(db: Session, name: str) -> Plan:
-        """Get a plan by name"""
+        """Get a plan by name."""
         return db.query(Plan).filter(Plan.name == name, Plan.is_active == True).first()
-    
+
     @staticmethod
     def get_addons(db: Session) -> List[Plan]:
-        """Get all add-on plans"""
-        return db.query(Plan).filter(Plan.is_addon == True, Plan.is_active == True).all()
-    
+        """Get all add-on plans."""
+        return (
+            db.query(Plan)
+            .filter(Plan.is_addon == True, Plan.is_active == True)
+            .all()
+        )
+
     @staticmethod
     def get_main_plans(db: Session) -> List[Plan]:
-        """Get all main plans (non-addons)"""
-        return db.query(Plan).filter(Plan.is_addon == False, Plan.is_active == True).all()
+        """Get all main plans (non-addons)."""
+        return (
+            db.query(Plan)
+            .filter(Plan.is_addon == False, Plan.is_active == True)
+            .all()
+        )

@@ -114,6 +114,13 @@ async def pricing(request: Request):
     # Fetch plans from the API
     import httpx
     import json
+
+    def sort_plans_mvp_last(plans: list) -> list:
+        """Show MVP plan last; other plans by monthly price."""
+        return sorted(
+            plans,
+            key=lambda plan: (plan.get("name") == "MVP", plan.get("price_monthly", 0)),
+        )
     
     plans_data = {
         "main_plans": [],
@@ -136,7 +143,7 @@ async def pricing(request: Request):
     except Exception as e:
         plans_data["error"] = str(e)
         # Fallback to static plans if API is not available
-        plans_data["main_plans"] = [
+        plans_data["main_plans"] = sort_plans_mvp_last([
             {
                 "id": "free-plan",
                 "name": "Free",
@@ -188,7 +195,7 @@ async def pricing(request: Request):
                 "team_sharing": True,
                 "features": {}
             }
-        ]
+        ])
         plans_data["addons"] = [
             {
                 "id": "storage-addon",
@@ -212,6 +219,8 @@ async def pricing(request: Request):
                 "features": {"addon_type": "synthetic", "unit": "10k rows"}
             }
         ]
+    
+    plans_data["main_plans"] = sort_plans_mvp_last(plans_data["main_plans"])
     
     template_data = {
         "request": request,

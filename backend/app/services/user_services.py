@@ -3,14 +3,12 @@ from sqlalchemy.exc import IntegrityError
 from uuid import UUID
 from typing import Optional
 from sqlalchemy.orm import Session
-from datetime import datetime, timedelta
 
 from app.schemas.user_schemas import UserAuth
 from app.models.user_model import User
-from app.models.user_plan_model import UserPlan
-from app.models.plan_model import Plan
 from app.core.security import get_password, verify_password
 from app.services.email_verification_service import EmailVerificationService
+from app.services.user_plan_service import UserPlanService
 
 
 class UserService:
@@ -31,30 +29,12 @@ class UserService:
             
             # Automatically assign MVP plan to new users
             try:
-                mvp_plan = db.query(Plan).filter(
-                    Plan.name == "MVP",
-                    Plan.is_active == True,
-                    Plan.is_addon == False
-                ).first()
-                
-                if mvp_plan:
-                    # Create user plan with unlimited duration (free plan)
-                    user_plan = UserPlan(
-                        user_id=db_user.id,
-                        plan_id=mvp_plan.id,
-                        start_date=datetime.utcnow(),
-                        end_date=None,  # No expiration for free plan
-                        is_active=True
-                    )
-                    db.add(user_plan)
-                    db.commit()
+                if UserPlanService.ensure_user_has_mvp_plan(db, db_user.id):
                     print(f"✅ Assigned MVP plan to new user: {db_user.email}")
                 else:
-                    print(f"⚠️ Warning: MVP plan not found. User created without plan.")
+                    print("⚠️ Warning: MVP plan not found. User created without plan.")
             except Exception as e:
-                # Log the error but don't fail user creation
                 print(f"⚠️ Failed to assign MVP plan: {e}")
-                # Continue anyway - user is created, just without a plan
             
             # Send verification email
             try:
