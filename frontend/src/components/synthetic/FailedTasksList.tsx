@@ -6,6 +6,10 @@ import { RefreshCw, CheckCircle, AlertTriangle, HelpCircle } from 'lucide-react'
 import { FailedTask } from './types';
 import { SyntheticDataService } from '@/services/SyntheticDataService';
 import RetryTaskModal from './RetryTaskModal';
+import {
+  formatSyntheticTaskError,
+  getSyntheticFailureLabel,
+} from '@/utils/syntheticErrorMessages';
 
 interface FailedTasksListProps {
   onRetrySuccess?: (newTaskId: string) => void;
@@ -212,11 +216,14 @@ const FailedTasksList: React.FC<FailedTasksListProps> = ({
                 </td>
                 <td className="py-3 px-4">
                   <div className="max-w-xs">
-                    <div className="text-sm text-gray-900 dark:text-white truncate" title={task.error_message}>
-                      {task.error_message}
+                    <div
+                      className="text-sm text-gray-900 dark:text-white line-clamp-2"
+                      title={formatSyntheticTaskError(task.error_message)}
+                    >
+                      {formatSyntheticTaskError(task.error_message)}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      {task.failure_type.replace('_', ' ')}
+                      {getSyntheticFailureLabel(task.failure_type)}
                     </div>
                   </div>
                 </td>

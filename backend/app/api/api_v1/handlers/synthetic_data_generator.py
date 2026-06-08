@@ -22,6 +22,11 @@ from app.utils.http_exceptions import (
     internal_server_error, unauthorized_error, validation_error,
     conflict_error, too_many_requests_error
 )
+from app.utils.synthetic_error_messages import (
+    classify_synthetic_failure,
+    format_synthetic_task_error,
+    normalize_csv_filename,
+)
 
 synthetic_generator_router = APIRouter()
 
@@ -371,16 +376,21 @@ async def get_task_status(
             
         elif task_record.status == TaskStatus.FAILURE:
             response["completed_at"] = task_record.completed_at.isoformat() if task_record.completed_at else None
-            response["error"] = task_record.error_message
+            failure_type, friendly_error = classify_synthetic_failure(task_record.error_message)
+            response["error"] = friendly_error
+            response["failure_reason"] = failure_type
             response["retry_count"] = task_record.retry_count if hasattr(task_record, 'retry_count') else 0
-            
-            # Differentiate between timeout and actual failure
-            if "timeout" in task_record.error_message.lower() or "no workers" in task_record.error_message.lower():
+
+            if failure_type == "duplicate_filename":
+                response["message"] = "A file with this name already exists"
+            elif failure_type == "storage_limit":
+                response["message"] = "Storage limit reached"
+            elif failure_type == "service_unavailable":
+                response["message"] = "Background service unavailable"
+            elif failure_type == "worker_timeout":
                 response["message"] = "Task failed: No workers available"
-                response["failure_reason"] = "no_workers"
             else:
-                response["message"] = "Task failed after retries"
-                response["failure_reason"] = "processing_error"
+                response["message"] = "Data generation failed"
             
         elif task_record.status == TaskStatus.PROCESSING:
             # Get real-time progress from Celery if available
@@ -493,6 +503,7 @@ async def get_my_failed_tasks(
         for task in paginated_tasks:
             task_id = str(task.id)
             
+            failure_type, friendly_error = classify_synthetic_failure(task.error_message)
             task_dict = {
                 "id": task_id,
                 "celery_task_id": task.celery_task_id,
@@ -501,24 +512,15 @@ async def get_my_failed_tasks(
                 "status": task.status.value,
                 "progress": task.progress,
                 "input_params": task.input_params,
-                "error_message": task.error_message,
+                "error_message": friendly_error,
                 "created_at": task.created_at.isoformat() if task.created_at else None,
                 "started_at": task.started_at.isoformat() if task.started_at else None,
                 "completed_at": task.completed_at.isoformat() if task.completed_at else None,
                 "estimated_time_seconds": task.estimated_time_seconds,
                 "retry_count": task.retry_count if hasattr(task, 'retry_count') else 0,
-                "can_retry": True  # All tasks in this list can be retried
+                "can_retry": True,
+                "failure_type": failure_type,
             }
-            
-            # Categorize failure type
-            if task.error_message:
-                error_msg_lower = task.error_message.lower()
-                if "redis" in error_msg_lower or "connection refused" in error_msg_lower or "failed to queue" in error_msg_lower:
-                    task_dict["failure_type"] = "service_unavailable"
-                elif "timeout" in error_msg_lower or "no workers" in error_msg_lower:
-                    task_dict["failure_type"] = "worker_timeout"
-                else:
-                    task_dict["failure_type"] = "processing_error"
             
             # Check if this task has any retry attempts
             retry_attempts = retry_map.get(task_id, [])
@@ -654,6 +656,26 @@ async def generate_synthetic_data(
                 }
             )
         
+        csv_file_name = normalize_csv_filename(request.csv_file_name)
+        if csv_file_name:
+            existing_file = db.query(UserData).filter(
+                UserData.user_id == current_user.id,
+                UserData.file_name == csv_file_name,
+            ).first()
+            if existing_file:
+                raise bad_request_error(
+                    error_code="FILENAME_EXISTS",
+                    message=(
+                        f'A file named "{csv_file_name}" already exists in your account. '
+                        "Please choose a different file name and try again."
+                    ),
+                    extra={
+                        "existing_filename": csv_file_name,
+                        "existing_file_id": str(existing_file.id),
+                        "suggestion": f"{csv_file_name.replace('.csv', '')}_v2.csv",
+                    },
+                )
+
         # Estimate completion time (rough estimate: 1000 rows per second)
         estimated_time_seconds = max(10, int(request.num_rows / 1000 * 60))
         
@@ -674,7 +696,7 @@ async def generate_synthetic_data(
             input_params={
                 "columns_info": request.columns_info,
                 "num_rows": request.num_rows,
-                "csv_file_name": request.csv_file_name
+                "csv_file_name": csv_file_name or request.csv_file_name,
             },
             estimated_time_seconds=estimated_time_seconds
         )
@@ -692,7 +714,7 @@ async def generate_synthetic_data(
                     current_user.email,
                     request.columns_info,
                     request.num_rows,
-                    request.csv_file_name
+                    csv_file_name or request.csv_file_name,
                 ],
                 task_id=str(task_id)  # Use our UUID as Celery task ID
             )
@@ -702,7 +724,9 @@ async def generate_synthetic_data(
             # This prevents orphaned records while still allowing worker to find existing records
             task_record.status = TaskStatus.FAILURE
             task_record.completed_at = datetime.now(timezone.utc)
-            task_record.error_message = f"Failed to queue task: {str(celery_error)}"
+            task_record.error_message = format_synthetic_task_error(
+                f"Failed to queue task: {str(celery_error)}"
+            )
             db.commit()
             # Re-raise to be caught by outer exception handler
             raise celery_error

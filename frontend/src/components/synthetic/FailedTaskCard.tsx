@@ -2,6 +2,10 @@ import React from 'react';
 import Button from '@/components/ui/Button';
 import { RefreshCw, HelpCircle, CheckCircle, AlertTriangle, Settings, Clock } from 'lucide-react';
 import { FailedTask } from './types';
+import {
+  formatSyntheticTaskError,
+  getSyntheticFailureLabel,
+} from '@/utils/syntheticErrorMessages';
 
 interface FailedTaskCardProps {
   task: FailedTask;
@@ -20,8 +24,12 @@ const FailedTaskCard: React.FC<FailedTaskCardProps> = ({
   isRetrying = false,
   className = ''
 }) => {
+  const friendlyError = formatSyntheticTaskError(task.error_message);
+
   const getFailureIcon = (type: string) => {
     switch (type) {
+      case 'duplicate_filename': return <AlertTriangle className="w-5 h-5" />;
+      case 'storage_limit': return <AlertTriangle className="w-5 h-5" />;
       case 'service_unavailable': return <Settings className="w-5 h-5" />;
       case 'worker_timeout': return <Clock className="w-5 h-5" />;
       case 'processing_error': return <AlertTriangle className="w-5 h-5" />;
@@ -29,17 +37,14 @@ const FailedTaskCard: React.FC<FailedTaskCardProps> = ({
     }
   };
 
-  const getFailureTitle = (type: string) => {
-    switch (type) {
-      case 'service_unavailable': return 'Service Unavailable';
-      case 'worker_timeout': return 'Worker Timeout';
-      case 'processing_error': return 'Processing Error';
-      default: return 'Task Failed';
-    }
-  };
+  const getFailureTitle = (type: string) => getSyntheticFailureLabel(type);
 
   const getFailureHelp = (type: string) => {
     switch (type) {
+      case 'duplicate_filename':
+        return 'Choose a different file name and retry the task.';
+      case 'storage_limit':
+        return 'Free up storage space or upgrade your plan, then try again.';
       case 'service_unavailable':
         return 'Our background processing system was temporarily down. The service is now available.';
       case 'worker_timeout':
@@ -79,8 +84,8 @@ const FailedTaskCard: React.FC<FailedTaskCardProps> = ({
             <p className="label text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
               Original error:
             </p>
-            <p className="error-text text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 p-3 rounded-lg font-mono">
-              {task.error_message}
+            <p className="error-text text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
+              {friendlyError}
             </p>
           </div>
           
@@ -138,8 +143,8 @@ const FailedTaskCard: React.FC<FailedTaskCardProps> = ({
       
       <div className="card-body">
         <div className="error-details">
-          <p className="error-message text-sm text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg font-mono mb-4">
-            {task.error_message}
+          <p className="error-message text-sm text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg mb-4">
+            {friendlyError}
           </p>
           
           <div className={`help-box ${task.failure_type}`}>

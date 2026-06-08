@@ -13,7 +13,13 @@ export interface FailedTask {
   estimated_time_seconds: number;
   retry_count: number;
   can_retry: boolean;
-  failure_type: 'service_unavailable' | 'worker_timeout' | 'processing_error' | string;
+  failure_type:
+    | 'duplicate_filename'
+    | 'storage_limit'
+    | 'service_unavailable'
+    | 'worker_timeout'
+    | 'processing_error'
+    | string;
   retry_attempts_count: number;
   successful_retry_id?: string;
   successful_retry_result?: {

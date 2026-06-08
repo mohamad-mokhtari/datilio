@@ -2,6 +2,8 @@
  * Utility functions for parsing different error formats from the backend
  */
 
+import { formatSyntheticTaskError } from '@/utils/syntheticErrorMessages';
+
 export interface BackendError {
   error_code?: string;
   message: string;
@@ -14,6 +16,9 @@ export interface ParsedError {
   errorCode?: string;
   extra?: any;
 }
+
+const sanitizeRawMessage = (message: string): string =>
+  formatSyntheticTaskError(message);
 
 /**
  * Parse error from backend response
@@ -63,12 +68,12 @@ export const parseBackendError = (error: any): ParsedError => {
           return { title, message, errorCode, extra };
         }
       } catch (parseError) {
-        // If JSON parsing fails, use the error message as is
-        message = error.message;
+        message = sanitizeRawMessage(error.message);
+        return { title, message };
       }
     } else {
-      // If it's not JSON, use the message as is
-      message = error.message;
+      message = sanitizeRawMessage(error.message);
+      return { title, message };
     }
   }
 
@@ -87,25 +92,29 @@ export const parseBackendError = (error: any): ParsedError => {
 
   // Handle legacy format
   if (error?.response?.data?.detail) {
-    message = error.response.data.detail;
+    const detail = error.response.data.detail;
+    message =
+      typeof detail === 'string'
+        ? sanitizeRawMessage(detail)
+        : detail?.message || 'An error occurred';
     return { title, message };
   }
 
   // Handle simple message format
   if (error?.response?.data?.message) {
-    message = error.response.data.message;
+    message = sanitizeRawMessage(error.response.data.message);
     return { title, message };
   }
 
   // Handle direct message
   if (error?.message) {
-    message = error.message;
+    message = sanitizeRawMessage(error.message);
     return { title, message };
   }
 
   // Handle string errors
   if (typeof error === 'string') {
-    message = error;
+    message = sanitizeRawMessage(error);
     return { title, message };
   }
 
@@ -136,7 +145,9 @@ const getErrorTitle = (errorCode: string): string => {
     'NOT_FOUND': 'Not Found',
     'PAYMENT_FAILED': 'Payment Failed',
     'EMAIL_SEND_FAILED': 'Email Send Failed',
-    'NETWORK_ERROR': 'Network Error'
+    'NETWORK_ERROR': 'Network Error',
+    'FILENAME_EXISTS': 'File Name Already Exists',
+    'QUOTA_EXCEEDED': 'Usage Limit Reached',
   };
 
   return titleMap[errorCode] || 'Error';

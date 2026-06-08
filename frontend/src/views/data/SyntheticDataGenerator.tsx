@@ -14,6 +14,7 @@ import useThemeClass from '@/utils/hooks/useThemeClass';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
 import { parseBackendError } from '@/utils/errorParser';
+import { formatSyntheticTaskError } from '@/utils/syntheticErrorMessages';
 import SimpleDataPreviewModal from '@/components/csv/SimpleDataPreviewModal';
 import HelpModal from '@/components/csv/HelpModal';
 import { DataFrameRow, ColumnInfo } from '@/@types/csv';
@@ -694,7 +695,7 @@ const SyntheticDataGenerator: React.FC = () => {
           // Show error notification
           toast.push(
             <Notification title="Generation Failed" type="danger">
-              {status.error || 'Failed to generate synthetic data'}
+              {formatSyntheticTaskError(status.error)}
             </Notification>
           );
         }

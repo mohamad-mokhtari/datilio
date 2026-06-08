@@ -16,6 +16,7 @@ Task Flow:
 
 import os
 from datetime import datetime, timezone
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from celery import Task
 
@@ -25,6 +26,7 @@ from app.services.synthetic_data_service import SyntheticDataService
 from app.models.task_model import Task as TaskModel, TaskStatus
 from app.models.user_data_model import UserData, FileType, DataSource
 from app.services.usage_service import UsageService
+from app.utils.synthetic_error_messages import format_synthetic_task_error
 
 
 class DatabaseTask(Task):
@@ -48,7 +50,8 @@ class DatabaseTask(Task):
     bind=True, 
     base=DatabaseTask, 
     name='app.tasks.generate_synthetic_data',
-    autoretry_for=(Exception,),  # Retry on any exception
+    autoretry_for=(Exception,),
+    dont_autoretry_for=(IntegrityError, ValueError),
     retry_kwargs={'max_retries': 1},  # Retry up to 2 times
     retry_backoff=True,  # Exponential backoff between retries
     retry_backoff_max=600,  # Max 10 minutes between retries
@@ -222,14 +225,20 @@ def generate_synthetic_data_task(
         return final_result
         
     except Exception as e:
-        # Handle errors with logging
-        error_message = str(e)
-        
-        # Log error for monitoring (MVP: Simple logging)
         import logging
         logger = logging.getLogger(__name__)
+
+        technical_error = str(e)
+        error_message = format_synthetic_task_error(e)
+
+        if isinstance(e, IntegrityError) and "file_location" in locals() and os.path.exists(file_location):
+            try:
+                os.remove(file_location)
+            except OSError:
+                logger.warning("Could not remove orphaned synthetic file: %s", file_location)
+
         logger.error(
-            f"Synthetic data task failed: {error_message}",
+            f"Synthetic data task failed: {technical_error}",
             extra={
                 "task_id": task_id,
                 "user_id": user_id,
@@ -259,7 +268,7 @@ def generate_synthetic_data_task(
         # Log if this is the final failure (after all retries)
         if self.request.retries >= self.max_retries:
             logger.error(
-                f"Task permanently failed after {self.request.retries} retries: {error_message}",
+                f"Task permanently failed after {self.request.retries} retries: {technical_error}",
                 extra={
                     "task_id": task_id,
                     "user_id": user_id,
