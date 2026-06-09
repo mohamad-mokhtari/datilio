@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPanelExpand, useAppSelector, useAppDispatch } from '@/store'
 import { DataFile, fetchSyntheticFiles } from '@/store/slices/lists/listsSlice';
+import { fetchAllEnums } from '@/store/slices/enum/enumSlice';
 import ApiService2 from '@/services/ApiService2';
 import { Select, Button, Input, Spinner, Alert, Table, Card } from '@/components/ui';
 
@@ -1023,16 +1024,10 @@ const SyntheticDataGenerator: React.FC = () => {
     }
   };
 
-  // Show error notification when enum loading fails
+  // Clear stale generate errors when opening this page
   useEffect(() => {
-    if (enumsError) {
-      toast.push(
-        <Notification title="Error Loading Data" type="danger">
-          {enumsError}
-        </Notification>
-      );
-    }
-  }, [enumsError]);
+    setError(null);
+  }, []);
 
   // Fetch synthetic files on component mount
   useEffect(() => {
@@ -1054,6 +1049,29 @@ const SyntheticDataGenerator: React.FC = () => {
     );
   }
 
+  if (enumsError && !enumData) {
+    return (
+      <div className="container mx-auto p-6">
+        <Alert className="bg-red-50 text-red-800 border-red-200 rounded-lg">
+          <span className="flex items-center">
+            <AlertTriangle className="w-5 h-5 mr-2 shrink-0" />
+            <span>
+              {enumsError}
+              {' '}
+              <button
+                type="button"
+                className="underline font-medium"
+                onClick={() => dispatch(fetchAllEnums())}
+              >
+                Try again
+              </button>
+            </span>
+          </span>
+        </Alert>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto p-6">
       <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
@@ -1065,13 +1083,11 @@ const SyntheticDataGenerator: React.FC = () => {
           </div>
         </div>
 
-        {(error || enumsError) && (
+        {error && (
           <Alert className="mb-6 bg-red-50 text-red-800 border-red-200 rounded-lg">
             <span className="flex items-center">
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {error || enumsError}
+              <AlertTriangle className="w-5 h-5 mr-2 shrink-0" />
+              {error}
             </span>
           </Alert>
         )}

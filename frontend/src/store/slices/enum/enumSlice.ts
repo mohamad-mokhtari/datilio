@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { SLICE_ENUM_NAME } from './constants'
 import ApiService2 from '@/services/ApiService2'
+import { parseBackendError } from '@/utils/errorParser'
 
 // Define interfaces for the enum data structure
 interface MimesisEnum {
@@ -56,7 +57,10 @@ export const fetchAllEnums = createAsyncThunk(
             const response = await ApiService2.get('/enums/all');
             return response.data as EnumResponse;
         } catch (error) {
-            return rejectWithValue('Failed to fetch enums data');
+            const parsed = parseBackendError(error)
+            return rejectWithValue(
+                parsed.message || 'Could not load synthetic data field types. Please refresh the page.'
+            )
         }
     }
 );

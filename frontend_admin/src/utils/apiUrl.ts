@@ -4,11 +4,23 @@ function isDatilioProductionHost(hostname: string): boolean {
   return hostname === 'datilio.com' || hostname.endsWith('.datilio.com')
 }
 
+function resolveEnvApiOrigin(): string | null {
+  const envUrl = import.meta.env.VITE_API_URL
+  if (!envUrl || typeof envUrl !== 'string') return null
+  const cleaned = envUrl.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '')
+  if (!cleaned.startsWith('http://') && !cleaned.startsWith('https://')) return null
+  return cleaned
+}
+
 /** Backend origin (no /api/v1 suffix). Set VITE_API_URL in .env or Docker build args. */
 export function getBackendBaseUrl(): string {
   if (typeof window !== 'undefined') {
     const { hostname, protocol } = window.location
     if (isDatilioProductionHost(hostname)) {
+      const fromEnv = resolveEnvApiOrigin()
+      if (fromEnv?.startsWith('https://')) {
+        return fromEnv
+      }
       return PRODUCTION_API_ORIGIN
     }
     let baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
