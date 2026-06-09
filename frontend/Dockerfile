@@ -30,10 +30,11 @@ RUN rm -f .env .env.production .env.development .env.local 2>/dev/null || true
 
 # Verify the environment variable is set correctly
 RUN echo "Building with VITE_API_URL=$VITE_API_URL"
+RUN case "$VITE_API_URL" in http://datilio.com*) echo "ERROR: VITE_API_URL must be https://datilio.com for production" && exit 1 ;; esac
 
 # Build the app for production
 # VITE_API_URL is set via ENV above, which takes precedence
-RUN npm run build
+RUN npm run build && ! grep -rq "http://datilio.com" build/ || (echo "ERROR: build contains http://datilio.com" && exit 1)
 
 # Production stage
 FROM nginx:alpine

@@ -94,9 +94,9 @@ class Settings(BaseSettings):
             # Add common frontend subdomains for datilio.com
             production_origins = [
                 "https://front.datilio.com",
+                "https://admin.datilio.com",
                 "https://www.datilio.com",
                 "https://datilio.com",
-                "http://front.datilio.com",  # Include http for testing
             ]
             for prod_origin in production_origins:
                 if prod_origin not in origins:

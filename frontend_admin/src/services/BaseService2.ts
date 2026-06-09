@@ -6,7 +6,6 @@ import { getApiV1BaseUrl } from '@/utils/apiUrl'
 import store, { signOutSuccess } from '../store'
 
 const unauthorizedCode = [401]
-const baseURL = getApiV1BaseUrl()
 const defaultTimeout = 60000 // 60 seconds
 
 export interface FetchOptions extends RequestInit {
@@ -72,8 +71,7 @@ const BaseService2 = {
             }
         }
 
-        // Create full URL
-        const url = `${baseURL}${endpoint}`
+        const url = `${getApiV1BaseUrl()}${endpoint}`
 
         // Create timeout promise
         const timeoutPromise = new Promise<never>((_, reject) => {

@@ -21,8 +21,6 @@
 // export default appConfig
 
 
-import { getApiV1BaseUrl } from '@/utils/apiUrl'
-
 export type AppConfig = {
     baseURL: string
     apiPrefix: string
@@ -34,7 +32,8 @@ export type AppConfig = {
 }
 
 const appConfig: AppConfig = {
-    baseURL: getApiV1BaseUrl(),
+    // Resolved per-request in BaseService interceptor; kept for type compatibility
+    baseURL: '',
     apiPrefix: '/api',
     authenticatedEntryPath: '/dashboard',
     unAuthenticatedEntryPath: '/sign-in',

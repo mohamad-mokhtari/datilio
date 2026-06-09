@@ -19,8 +19,13 @@ RUN npm install --legacy-peer-deps || npm install --legacy-peer-deps || npm inst
 
 COPY . .
 
-# Build the app for production
-RUN npm run build
+# Remove .env files so Docker build args win (same as main frontend)
+RUN rm -f .env .env.production .env.development .env.local 2>/dev/null || true
+
+RUN echo "Building with VITE_API_URL=$VITE_API_URL"
+RUN case "$VITE_API_URL" in http://datilio.com*) echo "ERROR: VITE_API_URL must be https://datilio.com for production" && exit 1 ;; esac
+
+RUN npm run build && ! grep -rq "http://datilio.com" build/ || (echo "ERROR: build contains http://datilio.com" && exit 1)
 
 # Production stage
 FROM nginx:alpine

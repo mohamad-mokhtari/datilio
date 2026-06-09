@@ -1,15 +1,19 @@
 import axios from 'axios'
-import appConfig from '@/configs/app.config'
 import { TOKEN_TYPE, REQUEST_HEADER_AUTH_KEY } from '@/constants/api.constant'
 import { PERSIST_STORE_NAME } from '@/constants/app.constant'
 import deepParseJson from '@/utils/deepParseJson'
+import { getApiV1BaseUrl } from '@/utils/apiUrl'
 import store, { signOutSuccess } from '../store'
 
 const unauthorizedCode = [401]
 
 const BaseService = axios.create({
     timeout: 60000,
-    baseURL: appConfig.baseURL,
+})
+
+BaseService.interceptors.request.use((config) => {
+    config.baseURL = getApiV1BaseUrl()
+    return config
 })
 
 BaseService.interceptors.request.use(

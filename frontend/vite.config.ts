@@ -22,7 +22,8 @@ export default defineConfig({
   build: {
     outDir: 'build'
   },
+  // Only expose NODE_ENV — do not inject full process.env (can leak http:// URLs at build time)
   define: {
-    'process.env': process.env
-  }
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+  },
 });

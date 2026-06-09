@@ -75,3 +75,19 @@ Root `.env`: `DATABASE_HOST=postgres`, `VITE_API_URL=http://localhost:8000`
 
 Ensure `~/datilio/.env` has the same `DATABASE_*` values used when the DB volume was first created.  
 Changing `DATABASE_PASSWORD` in `.env` does **not** change an existing Postgres volume; reset the volume or alter the role password manually if you rotate credentials.
+
+### Production URL checklist
+
+| File | Required production values |
+|------|---------------------------|
+| Root `.env` | `VITE_API_URL=https://datilio.com` (never `http://`) |
+| `backend/.env` | `FRONTEND_BASE_URL=https://front.datilio.com`, `ADMIN_FRONTEND_BASE_URL=https://admin.datilio.com`, `STRIPE_*_URL=https://front.datilio.com/...` |
+
+After any `VITE_*` change, rebuild frontends with `--no-cache`:
+
+```bash
+docker compose -f docker-compose.prod.yml build --no-cache frontend frontend_admin
+docker compose -f docker-compose.prod.yml up -d frontend frontend_admin
+```
+
+The Dockerfiles **fail the build** if `http://datilio.com` is detected in the output bundle.
