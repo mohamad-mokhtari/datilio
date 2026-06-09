@@ -2,17 +2,10 @@ import appConfig from '@/configs/app.config'
 import { TOKEN_TYPE, REQUEST_HEADER_AUTH_KEY } from '@/constants/api.constant'
 import { PERSIST_STORE_NAME } from '@/constants/app.constant'
 import deepParseJson from '@/utils/deepParseJson'
+import { getApiBaseUrl } from '@/utils/apiBaseUrl'
 import store, { signOutSuccess } from '../store'
 
 const unauthorizedCode = [401]
-// const baseURL = `${appConfig.apiPrefix}`
-const getBaseURL = (): string => {
-  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-  // Ensure base URL doesn't end with /api/v1, then append it
-  const cleanBaseUrl = baseUrl.replace(/\/api\/v1\/?$/, '');
-  return `${cleanBaseUrl}/api/v1`;
-};
-const baseURL = getBaseURL()
 const defaultTimeout = 60000 // 60 seconds
 
 export interface FetchOptions extends RequestInit {
@@ -78,8 +71,7 @@ const BaseService2 = {
             }
         }
 
-        // Create full URL
-        const url = `${baseURL}${endpoint}`
+        const url = `${getApiBaseUrl()}${endpoint}`
 
         // Create timeout promise
         const timeoutPromise = new Promise<never>((_, reject) => {
@@ -166,6 +158,11 @@ const BaseService2 = {
 
             return fetchResponse
         } catch (error) {
+            if (error instanceof TypeError && String(error.message).toLowerCase().includes('fetch')) {
+                throw new Error(
+                    'Unable to connect to the server. Please check your internet connection and try again.'
+                )
+            }
             // Handle different types of errors
             if (error instanceof Error) {
                 // If it's already an Error object (from our error handling above), rethrow it

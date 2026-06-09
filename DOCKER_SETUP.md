@@ -103,6 +103,24 @@ Postgres is bound to `127.0.0.1:5432` on the VPS (SSH tunnel for pgAdmin).
 - Rebuild after changing `VITE_*`:  
   `docker compose -f docker-compose.local.yml build --no-cache frontend frontend_admin`
 
+### Mixed Content / "Failed to fetch" on production?
+
+The app at `https://front.datilio.com` must call the API over **HTTPS**, not HTTP.
+
+1. On the VPS root `.env`, set (or fix):
+   ```bash
+   VITE_API_URL=https://datilio.com
+   ```
+   Remove any `VITE_API_URL=http://datilio.com` line — HTTP is blocked by the browser on HTTPS pages.
+
+2. Rebuild frontends (URL is baked into the image at build time):
+   ```bash
+   docker compose -f docker-compose.prod.yml build --no-cache frontend frontend_admin
+   docker compose -f docker-compose.prod.yml up -d frontend frontend_admin
+   ```
+
+3. Hard-refresh the browser (Ctrl+Shift+R) after deploy.
+
 ### Rebuild one service
 
 ```bash

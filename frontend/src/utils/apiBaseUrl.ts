@@ -1,5 +1,8 @@
-/** Backend origin (no /api/v1 suffix). Set VITE_API_URL in .env or Docker build args. */
-export function getBackendBaseUrl(): string {
+/**
+ * Resolve the API base URL (including /api/v1) for fetch clients.
+ * Upgrades http→https when the page is served over HTTPS to avoid mixed-content blocks.
+ */
+export function getApiOrigin(): string {
   let baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
   baseUrl = baseUrl.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '')
 
@@ -16,7 +19,6 @@ export function getBackendBaseUrl(): string {
   return baseUrl
 }
 
-/** REST API base including /api/v1 — same convention as the main frontend. */
-export function getApiV1BaseUrl(): string {
-  return `${getBackendBaseUrl()}/api/v1`
+export function getApiBaseUrl(): string {
+  return `${getApiOrigin()}/api/v1`
 }

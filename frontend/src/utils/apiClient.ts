@@ -1,21 +1,9 @@
 import { extractError, getErrorMessage, isCriticalError, formatValidationErrors, createEnhancedError, ApiError } from './errorHandler';
-
-// Base API configuration
-const getApiBaseUrl = (): string => {
-  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-  // Ensure base URL doesn't end with /api/v1, then append it
-  const cleanBaseUrl = baseUrl.replace(/\/api\/v1\/?$/, '');
-  return `${cleanBaseUrl}/api/v1`;
-};
+import { getApiBaseUrl, getApiOrigin } from './apiBaseUrl';
 
 const API_BASE_URL = getApiBaseUrl();
 
-// Get backend base URL (without /api/v1)
-export const getBackendBaseUrl = (): string => {
-  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-  // Remove /api/v1 from the end if it exists
-  return baseUrl.replace(/\/api\/v1\/?$/, '');
-};
+export const getBackendBaseUrl = (): string => getApiOrigin();
 
 // Get auth token from localStorage
 const getAuthToken = (): string | null => {

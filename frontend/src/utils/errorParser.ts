@@ -17,8 +17,30 @@ export interface ParsedError {
   extra?: any;
 }
 
-const sanitizeRawMessage = (message: string): string =>
-  formatSyntheticTaskError(message);
+const NETWORK_ERROR_MESSAGE =
+  'Unable to connect to the server. Please check your internet connection and try again.';
+
+const sanitizeRawMessage = (message: string): string => {
+  const lower = message.toLowerCase();
+  if (
+    lower === 'failed to fetch' ||
+    lower.includes('networkerror') ||
+    (lower.includes('fetch') && lower.includes('failed'))
+  ) {
+    if (
+      typeof window !== 'undefined' &&
+      window.location.protocol === 'https:' &&
+      (import.meta.env.VITE_API_URL || '').startsWith('http://')
+    ) {
+      return (
+        'The app could not reach the API securely. The API URL is configured for HTTP on an HTTPS site. ' +
+        'Please rebuild the frontend with VITE_API_URL=https://datilio.com.'
+      );
+    }
+    return NETWORK_ERROR_MESSAGE;
+  }
+  return formatSyntheticTaskError(message);
+};
 
 /**
  * Parse error from backend response

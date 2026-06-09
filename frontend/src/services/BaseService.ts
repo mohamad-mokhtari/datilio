@@ -3,20 +3,14 @@ import appConfig from '@/configs/app.config'
 import { TOKEN_TYPE, REQUEST_HEADER_AUTH_KEY } from '@/constants/api.constant'
 import { PERSIST_STORE_NAME } from '@/constants/app.constant'
 import deepParseJson from '@/utils/deepParseJson'
+import { getApiBaseUrl } from '@/utils/apiBaseUrl'
 import store, { signOutSuccess } from '../store'
 
 const unauthorizedCode = [401]
 
-const getBaseURL = (): string => {
-    const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-    // Ensure base URL doesn't end with /api/v1, then append it
-    const cleanBaseUrl = baseUrl.replace(/\/api\/v1\/?$/, '');
-    return `${cleanBaseUrl}/api/v1`;
-};
-
 const BaseService = axios.create({
     timeout: 60000,
-    baseURL: getBaseURL(),
+    baseURL: getApiBaseUrl(),
 })
 
 BaseService.interceptors.request.use(
