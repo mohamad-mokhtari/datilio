@@ -820,7 +820,7 @@ const SyntheticDataGenerator: React.FC = () => {
       // Ensure file name has .csv extension
       const fileNameWithExtension = fileName.endsWith('.csv') ? fileName : `${fileName}.csv`;
 
-      const response = await ApiService2.post<TaskResponse>('/synthetic/generate-synthetic-data', {
+      const response = await ApiService2.post<TaskResponse>('/synthetic/generate-synthetic-data/', {
         user_id: temp_user_id,
         num_rows: rowCount,
         csv_file_name: fileNameWithExtension,
