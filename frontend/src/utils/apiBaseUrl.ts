@@ -1,22 +1,40 @@
 /**
  * Resolve the API base URL (including /api/v1) for fetch clients.
- * Upgrades http→https when the page is served over HTTPS to avoid mixed-content blocks.
+ *
+ * On production (*.datilio.com) always use HTTPS — ignores any http:// value
+ * baked in at build time (fixes mixed-content when Docker layer cache is stale).
  */
-export function getApiOrigin(): string {
-  let baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
-  baseUrl = baseUrl.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '')
+const PRODUCTION_API_ORIGIN = 'https://datilio.com'
 
-  if (
-    typeof window !== 'undefined' &&
-    window.location.protocol === 'https:' &&
-    baseUrl.startsWith('http://') &&
-    !baseUrl.includes('localhost') &&
-    !baseUrl.includes('127.0.0.1')
-  ) {
-    baseUrl = baseUrl.replace(/^http:\/\//, 'https://')
+function isDatilioProductionHost(hostname: string): boolean {
+  return hostname === 'datilio.com' || hostname.endsWith('.datilio.com')
+}
+
+export function getApiOrigin(): string {
+  if (typeof window !== 'undefined') {
+    const { hostname, protocol } = window.location
+
+    if (isDatilioProductionHost(hostname)) {
+      return PRODUCTION_API_ORIGIN
+    }
+
+    let baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+    baseUrl = baseUrl.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '')
+
+    if (
+      protocol === 'https:' &&
+      baseUrl.startsWith('http://') &&
+      !baseUrl.includes('localhost') &&
+      !baseUrl.includes('127.0.0.1')
+    ) {
+      baseUrl = baseUrl.replace(/^http:\/\//, 'https://')
+    }
+
+    return baseUrl
   }
 
-  return baseUrl
+  let baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+  return baseUrl.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '')
 }
 
 export function getApiBaseUrl(): string {

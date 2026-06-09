@@ -1,8 +1,6 @@
 import { extractError, getErrorMessage, isCriticalError, formatValidationErrors, createEnhancedError, ApiError } from './errorHandler';
 import { getApiBaseUrl, getApiOrigin } from './apiBaseUrl';
 
-const API_BASE_URL = getApiBaseUrl();
-
 export const getBackendBaseUrl = (): string => getApiOrigin();
 
 // Get auth token from localStorage
@@ -33,7 +31,7 @@ const apiRequest = async (url: string, options: RequestInit = {}): Promise<any> 
   };
   
   try {
-    const response = await fetch(`${API_BASE_URL}${url}`, config);
+    const response = await fetch(`${getApiBaseUrl()}${url}`, config);
     
     // Handle successful responses
     if (response.ok) {
