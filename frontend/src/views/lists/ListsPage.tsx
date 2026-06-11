@@ -12,6 +12,7 @@ import Spinner from '@/components/ui/Spinner'
 import Input from '@/components/ui/Input'
 import Notification from '@/components/ui/Notification'
 import toast from '@/components/ui/toast'
+import { parseBackendError } from '@/utils/errorParser'
 import Upload from '@/components/ui/Upload'
 import { HiPlus, HiUpload } from 'react-icons/hi'
 
@@ -165,7 +166,8 @@ const ListsPage = () => {
             }
         } catch (error) {
             console.error('Failed to create list:', error)
-            setCreateError('Failed to create list. Please try again.')
+            const parsedError = parseBackendError(error)
+            setCreateError(parsedError.message)
         } finally {
             setCreatingList(false)
         }

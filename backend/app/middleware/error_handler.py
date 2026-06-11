@@ -8,7 +8,7 @@ from fastapi import Request, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from pydantic import ValidationError
 
 from app.core.error_messages import ErrorMessages
@@ -56,28 +56,51 @@ class ErrorHandler:
             db.close()
     
     @staticmethod
-    async def _handle_http_exception(request: Request, exc: HTTPException, db) -> JSONResponse:
-        """Handle HTTP exceptions"""
-        
-        # Map HTTP status codes to error codes
+    def _detail_response(
+        status_code: int,
+        error_code: str,
+        message: str,
+        extra: Optional[dict] = None,
+    ) -> JSONResponse:
+        """Return errors in the format expected by the frontend."""
+        detail: dict = {"error_code": error_code, "message": message}
+        if extra:
+            detail["extra"] = extra
+        return JSONResponse(status_code=status_code, content={"detail": detail})
+
+    @staticmethod
+    def _parse_http_exception_detail(exc: HTTPException) -> tuple[str, str, Optional[dict]]:
+        """Extract error_code, message, and extra from an HTTPException."""
         status_code_mapping = {
             400: "VALIDATION_ERROR",
             401: "INVALID_CREDENTIALS",
             403: "ACCESS_DENIED",
             404: "NOT_FOUND",
             405: "METHOD_NOT_ALLOWED",
+            409: "CONFLICT",
             422: "VALIDATION_ERROR",
             429: "RATE_LIMIT_EXCEEDED",
             500: "INTERNAL_SERVER_ERROR",
             502: "SERVICE_UNAVAILABLE",
             503: "SERVICE_UNAVAILABLE",
-            504: "SERVICE_UNAVAILABLE"
+            504: "SERVICE_UNAVAILABLE",
         }
-        
+
+        detail = exc.detail
+        if isinstance(detail, dict) and detail.get("message"):
+            error_code = str(detail.get("error_code") or status_code_mapping.get(exc.status_code, "INTERNAL_SERVER_ERROR"))
+            return error_code, str(detail["message"]), detail.get("extra")
+        if isinstance(detail, str):
+            error_code = status_code_mapping.get(exc.status_code, "INTERNAL_SERVER_ERROR")
+            return error_code, detail, None
         error_code = status_code_mapping.get(exc.status_code, "INTERNAL_SERVER_ERROR")
-        user_message = ErrorMessages.get_user_message(error_code)
-        
-        # Log error if it's a server error
+        return error_code, ErrorMessages.get_user_message(error_code), None
+
+    @staticmethod
+    async def _handle_http_exception(request: Request, exc: HTTPException, db) -> JSONResponse:
+        """Handle HTTP exceptions"""
+        error_code, user_message, extra = ErrorHandler._parse_http_exception_detail(exc)
+
         if exc.status_code >= 500:
             ErrorLoggingService.log_error(
                 error_code=error_code,
@@ -86,26 +109,16 @@ class ErrorHandler:
                 stack_trace=traceback.format_exc(),
                 request=request,
                 response_status=exc.status_code,
-                db=db
+                db=db,
             )
         elif exc.status_code >= 400:
-            # Log client errors as counters
             ErrorLoggingService._increment_error_counter(
                 error_code=error_code,
                 endpoint=request.url.path,
-                db=db
+                db=db,
             )
-        
-        return JSONResponse(
-            status_code=exc.status_code,
-            content={
-                "error": {
-                    "code": error_code,
-                    "message": user_message,
-                    "details": exc.detail if exc.status_code < 500 else None
-                }
-            }
-        )
+
+        return ErrorHandler._detail_response(exc.status_code, error_code, user_message, extra)
     
     @staticmethod
     async def _handle_validation_error(request: Request, exc: RequestValidationError, db) -> JSONResponse:
@@ -141,11 +154,18 @@ class ErrorHandler:
     @staticmethod
     async def _handle_database_error(request: Request, exc: SQLAlchemyError, db) -> JSONResponse:
         """Handle database errors"""
-        
+        if isinstance(exc, IntegrityError):
+            technical = str(exc.orig).lower()
+            if "user_lists" in technical or "uq_user_lists" in technical:
+                return ErrorHandler._detail_response(
+                    409,
+                    "LIST_NAME_EXISTS",
+                    "A list with this name already exists in your account. Please choose a different name.",
+                )
+
         error_code = "DATABASE_ERROR"
         user_message = ErrorMessages.get_user_message(error_code)
-        
-        # Log database errors as they are critical
+
         ErrorLoggingService.log_error(
             error_code=error_code,
             error_message=user_message,
@@ -153,19 +173,10 @@ class ErrorHandler:
             stack_trace=traceback.format_exc(),
             request=request,
             response_status=500,
-            db=db
+            db=db,
         )
-        
-        return JSONResponse(
-            status_code=500,
-            content={
-                "error": {
-                    "code": error_code,
-                    "message": user_message,
-                    "details": None
-                }
-            }
-        )
+
+        return ErrorHandler._detail_response(500, error_code, user_message)
     
     @staticmethod
     async def _handle_pydantic_validation_error(request: Request, exc: ValidationError, db) -> JSONResponse:

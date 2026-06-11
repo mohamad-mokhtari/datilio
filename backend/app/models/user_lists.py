@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, CheckConstraint
+from sqlalchemy import Column, Integer, String, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 from app.core.db_setup import Base
@@ -9,10 +9,13 @@ import uuid
 
 class UserList(Base):
     __tablename__ = 'user_lists'
+    __table_args__ = (
+        UniqueConstraint('user_id', 'name', name='uq_user_lists_user_id_name'),
+    )
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, index=True)
     user_id = Column(UUID(as_uuid=True), ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
-    name = Column(String, index=True, unique=True)
+    name = Column(String, index=True, nullable=False)
     items = relationship("ListItem", back_populates="list", cascade="all, delete-orphan")
 
     # Relationship to User

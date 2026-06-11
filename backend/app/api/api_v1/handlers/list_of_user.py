@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends, Request, UploadFile, File
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from app.schemas.list_schemas import UserListCreate
 from app.models.user_lists import UserList, ListItem
@@ -11,13 +12,51 @@ from typing import Union
 import csv
 import io
 import json
+import logging
 from app.utils.http_exceptions import (
     not_found_error, bad_request_error, forbidden_error, 
     internal_server_error, unauthorized_error, validation_error,
     conflict_error, too_many_requests_error
 )
 
+logger = logging.getLogger(__name__)
+
 list_router = APIRouter()
+
+
+def _count_user_lists(db: Session, user_id) -> int:
+    return db.query(UserList).filter(UserList.user_id == user_id).count()
+
+
+def _check_custom_list_limit(db: Session, user_id) -> None:
+    """Raise a friendly error if the user has reached their custom list limit."""
+    limits = UsageService.get_user_plan_limits(db, str(user_id))
+    limit = limits.get("custom_lists", 0)
+    if limit <= 0 or limit == float("inf"):
+        return
+
+    current_count = _count_user_lists(db, user_id)
+    if current_count >= int(limit):
+        raise bad_request_error(
+            error_code="QUOTA_EXCEEDED",
+            message=(
+                f"You have reached your custom list limit ({int(limit)}). "
+                "Delete an existing list or upgrade your plan to create more."
+            ),
+            extra={
+                "limit_type": "custom_lists",
+                "current_usage": current_count,
+                "monthly_limit": int(limit),
+            },
+        )
+
+
+def _raise_duplicate_list_name(list_name: str) -> None:
+    raise conflict_error(
+        error_code="LIST_NAME_EXISTS",
+        message=f'A list named "{list_name}" already exists in your account. Please choose a different name.',
+        extra={"list_name": list_name},
+    )
 
 
 @list_router.post("/users/lists/")
@@ -26,50 +65,56 @@ async def create_user_list(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
+    list_name = list_data.name.strip()
+    if not list_name:
+        raise bad_request_error(
+            error_code="VALIDATION_ERROR",
+            message="List name is required.",
+        )
+
     existing_list = (
         db.query(UserList)
-        .filter(UserList.user_id == current_user.id, UserList.name == list_data.name)
+        .filter(UserList.user_id == current_user.id, UserList.name == list_name)
         .first()
     )
     if existing_list:
-        raise HTTPException(
-            status_code=400, detail="List with this name already exists for the user"
+        _raise_duplicate_list_name(list_name)
+
+    _check_custom_list_limit(db, current_user.id)
+
+    try:
+        user_list = UserList(user_id=current_user.id, name=list_name)
+        db.add(user_list)
+        db.flush()
+
+        for item_value in list_data.items:
+            list_item = ListItem(list_id=user_list.id, value=str(item_value))
+            db.add(list_item)
+
+        db.commit()
+        db.refresh(user_list)
+
+        UsageService.track_usage(
+            db=db,
+            user_id=str(current_user.id),
+            feature="custom_lists",
+            amount=1,
+            description=f"Created custom list: {list_name}",
         )
-
-    # Check usage limits before creating list
-    if not UsageService.check_usage_limit(db, str(current_user.id), "custom_lists", 1):
-        # Get current usage to show user helpful info
-        from app.services.usage_service import UsageService
-        usage_summary = UsageService.get_usage_summary(db, str(current_user.id))
-        current_usage = usage_summary.current_month.get("custom_lists", 0)
-        limit = usage_summary.limits.get("custom_lists", 0)
-        
-        raise HTTPException(
-            status_code=400,
-            detail=f"Custom list limit exceeded. You have {int(current_usage)} custom lists and your plan allows {int(limit)}. Please upgrade your plan to create more lists."
+    except IntegrityError as exc:
+        db.rollback()
+        logger.warning("List create integrity error for user %s: %s", current_user.id, exc)
+        _raise_duplicate_list_name(list_name)
+    except HTTPException:
+        db.rollback()
+        raise
+    except Exception as exc:
+        db.rollback()
+        logger.exception("Failed to create user list for user %s", current_user.id)
+        raise internal_server_error(
+            message="Could not create your list right now. Please try again.",
+            extra={"error_type": type(exc).__name__},
         )
-
-    user_list = UserList(
-        user_id=current_user.id, name=list_data.name
-    )
-    db.add(user_list)
-    db.commit()
-    db.refresh(user_list)
-
-    for item_value in list_data.items:
-        list_item = ListItem(list_id=user_list.id, value=item_value)
-        db.add(list_item)
-
-    db.commit()
-
-    # Track usage after successful list creation
-    UsageService.track_usage(
-        db=db,
-        user_id=str(current_user.id),
-        feature="custom_lists",
-        amount=1,
-        description=f"Created custom list: {list_data.name}"
-    )
 
     return {"status": "success", "list_id": user_list.id}
 

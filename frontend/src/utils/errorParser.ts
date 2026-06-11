@@ -56,6 +56,22 @@ export const parseBackendError = (error: any): ParsedError => {
   let errorCode: string | undefined;
   let extra: any;
 
+  // Handle global handler legacy format: error.data.error
+  if (error?.data?.error?.code && error?.data?.error?.message) {
+    errorCode = error.data.error.code;
+    message = error.data.error.message;
+    title = getErrorTitle(errorCode || 'UNKNOWN_ERROR');
+    return { title, message, errorCode, extra: error.data.error.details };
+  }
+
+  // Handle response wrapper: error.response.data.error
+  if (error?.response?.data?.error?.code && error?.response?.data?.error?.message) {
+    errorCode = error.response.data.error.code;
+    message = error.response.data.error.message;
+    title = getErrorTitle(errorCode || 'UNKNOWN_ERROR');
+    return { title, message, errorCode, extra: error.response.data.error.details };
+  }
+
   // Handle new error format: error.data.detail
   if (error?.data?.detail?.error_code && error?.data?.detail?.message) {
     const errorDetail = error.data.detail;
@@ -115,6 +131,13 @@ export const parseBackendError = (error: any): ParsedError => {
   // Handle legacy format
   if (error?.response?.data?.detail) {
     const detail = error.response.data.detail;
+    if (typeof detail === 'object' && detail?.error_code && detail?.message) {
+      errorCode = detail.error_code;
+      message = detail.message;
+      extra = detail.extra;
+      title = getErrorTitle(errorCode || 'UNKNOWN_ERROR');
+      return { title, message, errorCode, extra };
+    }
     message =
       typeof detail === 'string'
         ? sanitizeRawMessage(detail)
@@ -170,6 +193,8 @@ const getErrorTitle = (errorCode: string): string => {
     'NETWORK_ERROR': 'Network Error',
     'FILENAME_EXISTS': 'File Name Already Exists',
     'QUOTA_EXCEEDED': 'Usage Limit Reached',
+    'LIST_NAME_EXISTS': 'List Name Already Exists',
+    'CONFLICT': 'Conflict',
   };
 
   return titleMap[errorCode] || 'Error';

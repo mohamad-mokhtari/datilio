@@ -131,12 +131,27 @@ const BaseService2 = {
                         message: errorData.message,
                         extra: errorData.extra
                     });
+                } else if ((data as any)?.error?.code && (data as any)?.error?.message) {
+                    const errorData = (data as any).error;
+                    errorMessage = JSON.stringify({
+                        error_code: errorData.code,
+                        message: errorData.message,
+                        extra: errorData.details,
+                    });
                 } else if ((data as any)?.detail) {
-                    // Legacy format: {detail: "message"}
-                    if (typeof (data as any).detail === 'object' && (data as any).detail?.message) {
-                        errorMessage = (data as any).detail.message;
-                    } else if (typeof (data as any).detail === 'string') {
-                        errorMessage = (data as any).detail;
+                    const detail = (data as any).detail;
+                    if (typeof detail === 'object' && detail?.message) {
+                        if (detail.error_code) {
+                            errorMessage = JSON.stringify({
+                                error_code: detail.error_code,
+                                message: detail.message,
+                                extra: detail.extra,
+                            });
+                        } else {
+                            errorMessage = detail.message;
+                        }
+                    } else if (typeof detail === 'string') {
+                        errorMessage = detail;
                     }
                 } else if ((data as any)?.message) {
                     // Simple format: {message: "..."}
