@@ -231,10 +231,6 @@ const DataPreviewModal: React.FC<DataPreviewModalProps> = ({
         }
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to create rule');
-      }
-
       // Show success notification
       toast.push(
         <Notification title="Rule Created Successfully" type="success">
@@ -255,11 +251,23 @@ const DataPreviewModal: React.FC<DataPreviewModalProps> = ({
     } catch (error) {
       console.error('Error creating rule:', error);
       const parsedError = parseBackendError(error);
-      setCreateRuleError(parsedError.message);
+      const displayMessage =
+        parsedError.errorCode === 'RULE_NAME_EXISTS' ||
+        parsedError.message.toLowerCase().includes('already exists')
+          ? parsedError.message
+          : parsedError.message || 'Unable to create this rule. Please try again.';
+      setCreateRuleError(displayMessage);
 
       toast.push(
-        <Notification title={parsedError.title} type="danger">
-          {parsedError.message}
+        <Notification
+          title={
+            parsedError.errorCode === 'RULE_NAME_EXISTS'
+              ? 'Rule Name Already Exists'
+              : parsedError.title
+          }
+          type="danger"
+        >
+          {displayMessage}
         </Notification>
       );
     } finally {

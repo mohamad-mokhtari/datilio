@@ -70,7 +70,11 @@ export const isTechnicalMessage = (message: string): boolean => {
   if (trimmed.startsWith('{') && trimmed.endsWith('}')) {
     try {
       const parsed = JSON.parse(trimmed);
-      if (parsed.error_code || parsed.detail || parsed.stack) {
+      // Structured API errors are user-facing; only raw debug payloads are technical
+      if (parsed.error_code && parsed.message) {
+        return false;
+      }
+      if (parsed.detail || parsed.stack) {
         return true;
       }
     } catch {
@@ -126,6 +130,12 @@ export const getUserFacingMessage = (
   fallback: string = DEFAULT_USER_ERROR_MESSAGE
 ): string => {
   const parsed = parseBackendError(error);
+
+  // Always show structured backend errors (e.g. RULE_NAME_EXISTS, LIST_NAME_EXISTS)
+  if (parsed.errorCode && parsed.message) {
+    return parsed.message;
+  }
+
   const message = parsed.message.trim();
 
   if (!message || message === DEFAULT_USER_ERROR_MESSAGE || isTechnicalMessage(message)) {
@@ -169,15 +179,21 @@ export const parseBackendError = (error: any): ParsedError => {
     return { title, message, errorCode, extra: error.response.data.error.details };
   }
 
-  // Handle new error format: error.data.detail
-  if (error?.data?.detail?.error_code && error?.data?.detail?.message) {
-    const errorDetail = error.data.detail;
-    errorCode = errorDetail.error_code;
-    message = errorDetail.message;
-    extra = errorDetail.extra;
+  // Handle new error format: error.data.detail or error.response.data.detail
+  const detailFromData =
+    error?.data?.detail ??
+    error?.response?.data?.detail;
+  if (
+    detailFromData &&
+    typeof detailFromData === 'object' &&
+    detailFromData?.error_code &&
+    detailFromData?.message
+  ) {
+    errorCode = detailFromData.error_code;
+    message = detailFromData.message;
+    extra = detailFromData.extra;
     title = getErrorTitle(errorCode || 'UNKNOWN_ERROR');
-    
-    // Add extra information to message if available
+
     if (extra && errorCode) {
       message = enhanceErrorMessage(message, errorCode, extra);
     }
