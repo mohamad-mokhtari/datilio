@@ -1,3 +1,4 @@
+import { getChartErrorMessage } from '@/utils/errorParser';
 // src/components/charts/HistogramPlotComponent.tsx
 import React, { useEffect, useState } from "react";
 import ReactECharts from "echarts-for-react";
@@ -135,8 +136,7 @@ const HistogramPlotComponent: React.FC<HistogramPlotComponentProps> = ({
         }
       } catch (error) {
         console.error('Error fetching histogram data:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load histogram data. Please try again later.';
-        setError(errorMessage);
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }

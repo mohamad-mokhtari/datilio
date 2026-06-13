@@ -79,7 +79,7 @@ export const ChartDataService = {
       );
 
       if (!response.ok) {
-        throw new Error(`API request failed with status: ${response.status} - ${response.statusText}`);
+        throw new Error('Unable to load chart data. Please try again.');
       }
 
       console.log('📡 Backend data received:', response.data);
@@ -110,7 +110,7 @@ export const ChartDataService = {
       );
 
       if (!response.ok) {
-        throw new Error(`API request failed with status: ${response.status} - ${response.statusText}`);
+        throw new Error('Unable to load chart data. Please try again.');
       }
 
       console.log('📡 Filtered backend data received:', response.data);

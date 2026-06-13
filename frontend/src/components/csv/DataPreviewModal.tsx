@@ -12,6 +12,7 @@ import { RuleGroupType } from 'react-querybuilder';
 import { useConfig } from '@/components/ui/ConfigProvider';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
+import { parseBackendError } from '@/utils/errorParser';
 // @ts-ignore
 import jsPDF from 'jspdf';
 // @ts-ignore
@@ -253,13 +254,12 @@ const DataPreviewModal: React.FC<DataPreviewModalProps> = ({
       }
     } catch (error) {
       console.error('Error creating rule:', error);
-      const errorMessage = 'Failed to create rule. Please try again.';
-      setCreateRuleError(errorMessage);
-      
-      // Show error notification
+      const parsedError = parseBackendError(error);
+      setCreateRuleError(parsedError.message);
+
       toast.push(
-        <Notification title="Rule Creation Failed" type="danger">
-          {errorMessage}
+        <Notification title={parsedError.title} type="danger">
+          {parsedError.message}
         </Notification>
       );
     } finally {

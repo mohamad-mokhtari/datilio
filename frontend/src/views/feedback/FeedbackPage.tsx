@@ -10,6 +10,7 @@ import Badge from '@/components/ui/Badge';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
 import FeedbackService from '@/services/FeedbackService';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import type { Feedback, FeedbackFilters, FeedbackStatus, FeedbackType } from '@/@types/feedback';
 import { HiOutlinePlus, HiOutlineEye, HiOutlineChat, HiOutlineX, HiOutlineCheck } from 'react-icons/hi';
 import { ChevronDown, ChevronUp } from 'lucide-react';
@@ -74,7 +75,7 @@ const FeedbackPage = () => {
       const response = await FeedbackService.getFeedbackList(filters);
       setFeedbacks(response.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch feedbacks');
+      setError(getUserFacingMessage(err, 'Unable to load your feedback. Please try again.'));
       toast.push(
         <Notification title="Error" type="danger">
           {error}

@@ -1,3 +1,4 @@
+import { getChartErrorMessage } from '@/utils/errorParser';
 // src/components/charts/ThreeDSurfaceComponent.tsx
 import React, { useState, useMemo, useEffect } from "react";
 import ReactEChartsCore from 'echarts-for-react/lib/core';
@@ -108,8 +109,7 @@ const ThreeDSurfaceComponent: React.FC<ThreeDSurfaceComponentProps> = ({
         }
       } catch (error) {
         console.error('Error fetching 3D surface data:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load 3D surface data. Please try again later.';
-        setError(errorMessage);
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }
@@ -516,7 +516,7 @@ const ThreeDSurfaceComponent: React.FC<ThreeDSurfaceComponentProps> = ({
           onEvents={{
             'error': (error: any) => {
               console.error('ECharts error:', error);
-              setChartError('Failed to render chart. Please check the console for details.');
+              setChartError('Unable to display this chart. Please try again.');
             }
           }}
         />

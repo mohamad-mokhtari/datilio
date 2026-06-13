@@ -1,3 +1,4 @@
+import { getChartErrorMessage } from '@/utils/errorParser';
 // src/components/charts/BarHistogramComponent.tsx
 import React, { useEffect, useState } from "react";
 import ReactECharts from "echarts-for-react";
@@ -114,8 +115,7 @@ const BarHistogramComponent: React.FC<BarHistogramComponentProps> = ({
         }
       } catch (error) {
         console.error('Error fetching bar histogram data:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load bar histogram data. Please try again later.';
-        setError(errorMessage);
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }

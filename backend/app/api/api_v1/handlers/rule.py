@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from app.models.file_rules_model import Rule as RuleModel
 from app.api.deps.user_deps import get_current_user
@@ -11,6 +12,7 @@ from app.schemas.filter_schemas import FilterIn
 from app.schemas.rule_schemas import RuleCreate, RuleUpdate, Rule as RuleResponse
 from app.services.usage_service import UsageService
 import pandas as pd
+import logging
 from app.utils.http_exceptions import (
     not_found_error, bad_request_error, forbidden_error, 
     internal_server_error, unauthorized_error, validation_error,
@@ -19,6 +21,41 @@ from app.utils.http_exceptions import (
 
 
 rule_router = APIRouter()
+logger = logging.getLogger(__name__)
+
+
+def _raise_duplicate_rule_name(rule_name: str, file_name: str | None = None) -> None:
+    if file_name:
+        message = (
+            f'A rule named "{rule_name}" already exists for file "{file_name}". '
+            "Please choose a different name."
+        )
+    else:
+        message = (
+            f'A rule named "{rule_name}" already exists for this file. '
+            "Please choose a different name."
+        )
+    raise conflict_error(
+        error_code="RULE_NAME_EXISTS",
+        message=message,
+        extra={"rule_name": rule_name, "file_name": file_name},
+    )
+
+
+def _find_rule_name_conflict(
+    db: Session,
+    user_data_id,
+    rule_name: str,
+    exclude_rule_id=None,
+) -> RuleModel | None:
+    query = db.query(RuleModel).filter(
+        RuleModel.user_data_id == user_data_id,
+        RuleModel.rule_name == rule_name,
+    )
+    if exclude_rule_id is not None:
+        query = query.filter(RuleModel.id != exclude_rule_id)
+    return query.first()
+
 
 @rule_router.post("/users/files/{file_id}/rules", response_model=RuleResponse)
 async def create_rule(file_id: UUID, rule: RuleCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -28,6 +65,16 @@ async def create_rule(file_id: UUID, rule: RuleCreate, current_user: User = Depe
             message="User file not found",
             extra={"file_id": str(file_id)}
         )
+
+    rule_name = rule.rule_name.strip()
+    if not rule_name:
+        raise bad_request_error(
+            error_code="VALIDATION_ERROR",
+            message="Rule name is required.",
+        )
+
+    if _find_rule_name_conflict(db, user_file.id, rule_name):
+        _raise_duplicate_rule_name(rule_name, user_file.file_name)
 
     # Check usage limits before creating rule
     if not UsageService.check_usage_limit(db, str(current_user.id), "rules_used", 1):
@@ -47,20 +94,42 @@ async def create_rule(file_id: UUID, rule: RuleCreate, current_user: User = Depe
             }
         )
 
-    new_rule = RuleModel(**rule.dict(), user_data_id=user_file.id)
-    db.add(new_rule)
-    db.commit()
-    db.refresh(new_rule)
-    
-    # Track usage after successful rule creation
-    UsageService.track_usage(
-        db=db,
-        user_id=str(current_user.id),
-        feature="rules_used",
-        amount=1,
-        description=f"Created rule: {rule.rule_name}"
-    )
-    
+    try:
+        new_rule = RuleModel(
+            user_data_id=user_file.id,
+            rule_name=rule_name,
+            rule_definition=rule.rule_definition,
+            query=rule.query,
+        )
+        db.add(new_rule)
+        db.commit()
+        db.refresh(new_rule)
+    except IntegrityError as exc:
+        db.rollback()
+        logger.warning("Rule create integrity error for file %s: %s", file_id, exc)
+        _raise_duplicate_rule_name(rule_name, user_file.file_name)
+    except HTTPException:
+        db.rollback()
+        raise
+    except Exception as exc:
+        db.rollback()
+        logger.exception("Failed to create rule for file %s", file_id)
+        raise internal_server_error(
+            message="Could not create your rule right now. Please try again.",
+            extra={"error_type": type(exc).__name__},
+        )
+
+    try:
+        UsageService.track_usage(
+            db=db,
+            user_id=str(current_user.id),
+            feature="rules_used",
+            amount=1,
+            description=f"Created rule: {rule_name}",
+        )
+    except Exception as exc:
+        logger.warning("Rule %s created but usage tracking failed: %s", new_rule.id, exc)
+
     return new_rule
 
 @rule_router.get("/users/files/{file_id}/rules", response_model=list[RuleResponse])
@@ -91,11 +160,27 @@ async def update_rule(file_id: UUID, rule_id: UUID, rule: RuleUpdate, current_us
             extra={"rule_id": str(rule_id), "file_id": str(file_id)}
         )
 
-    existing_rule.rule_name = rule.rule_name
-    existing_rule.rule_definition = rule.rule_definition
-    existing_rule.query = rule.query
-    db.commit()
-    db.refresh(existing_rule)
+    rule_name = rule.rule_name.strip()
+    if not rule_name:
+        raise bad_request_error(
+            error_code="VALIDATION_ERROR",
+            message="Rule name is required.",
+        )
+
+    if _find_rule_name_conflict(db, user_file.id, rule_name, exclude_rule_id=rule_id):
+        _raise_duplicate_rule_name(rule_name, user_file.file_name)
+
+    try:
+        existing_rule.rule_name = rule_name
+        existing_rule.rule_definition = rule.rule_definition
+        existing_rule.query = rule.query
+        db.commit()
+        db.refresh(existing_rule)
+    except IntegrityError as exc:
+        db.rollback()
+        logger.warning("Rule update integrity error for rule %s: %s", rule_id, exc)
+        _raise_duplicate_rule_name(rule_name, user_file.file_name)
+
     return existing_rule
 
 @rule_router.delete("/users/files/{file_id}/rules/{rule_id}")

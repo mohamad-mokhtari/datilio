@@ -25,7 +25,7 @@ import { HiOutlineDocumentText, HiOutlineEye, HiOutlineTrash, HiOutlineDownload 
 import { ChevronDown, ChevronUp, Settings } from 'lucide-react';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
-import { parseBackendError } from '@/utils/errorParser';
+import { parseBackendError, getUserFacingMessage } from '@/utils/errorParser';
 
 const { Tr, Th, Td, THead, TBody } = Table;
 
@@ -185,8 +185,7 @@ const ShowData = () => {
       })
       .catch(error => {
         console.error('Failed to fetch data info:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Failed to fetch data information';
-        setDataInfoError(errorMessage);
+        setDataInfoError(getUserFacingMessage(error, 'Unable to load file details. Please try again.'));
         
         // Parse error using the utility function
         const parsedError = parseBackendError(error);

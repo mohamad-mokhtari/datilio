@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { SLICE_USER_LISTS_NAME } from './constants'
 import ApiService2 from '@/services/ApiService2'
 import axios from 'axios'
+import { getUserFacingMessage } from '@/utils/errorParser'
 
 export interface UserList {
     id: string
@@ -45,9 +46,9 @@ export const fetchUserLists = createAsyncThunk(
             return response.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                return rejectWithValue(error.message);
+                return rejectWithValue(getUserFacingMessage(error, 'Unable to load your lists. Please try again.'));
             }
-            return rejectWithValue('An unknown error occurred');
+            return rejectWithValue('Unable to load your lists. Please try again.');
         }
     }
 )
@@ -60,9 +61,9 @@ export const fetchUserFiles = createAsyncThunk(
             return response.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                return rejectWithValue(error.message);
+                return rejectWithValue(getUserFacingMessage(error, 'Unable to load your lists. Please try again.'));
             }
-            return rejectWithValue('An unknown error occurred');
+            return rejectWithValue('Unable to load your lists. Please try again.');
         }
     }
 )
@@ -75,9 +76,9 @@ export const fetchUploadedFiles = createAsyncThunk(
             return response.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                return rejectWithValue(error.message);
+                return rejectWithValue(getUserFacingMessage(error, 'Unable to load your lists. Please try again.'));
             }
-            return rejectWithValue('An unknown error occurred');
+            return rejectWithValue('Unable to load your lists. Please try again.');
         }
     }
 )
@@ -90,9 +91,9 @@ export const fetchSyntheticFiles = createAsyncThunk(
             return response.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                return rejectWithValue(error.message);
+                return rejectWithValue(getUserFacingMessage(error, 'Unable to load your lists. Please try again.'));
             }
-            return rejectWithValue('An unknown error occurred');
+            return rejectWithValue('Unable to load your lists. Please try again.');
         }
     }
 )

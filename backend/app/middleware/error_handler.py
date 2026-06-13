@@ -162,6 +162,12 @@ class ErrorHandler:
                     "LIST_NAME_EXISTS",
                     "A list with this name already exists in your account. Please choose a different name.",
                 )
+            if "rules" in technical or "uq_rules_user_data_id_rule_name" in technical:
+                return ErrorHandler._detail_response(
+                    409,
+                    "RULE_NAME_EXISTS",
+                    "A rule with this name already exists for this file. Please choose a different name.",
+                )
 
         error_code = "DATABASE_ERROR"
         user_message = ErrorMessages.get_user_message(error_code)

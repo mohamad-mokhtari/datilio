@@ -1,3 +1,4 @@
+import { getChartErrorMessage } from '@/utils/errorParser';
 // src/components/charts/PieChartComponent.tsx
 import React, { useState, useMemo, useEffect } from "react";
 import ReactECharts from 'echarts-for-react';
@@ -103,8 +104,7 @@ const PieChartComponent: React.FC<PieChartComponentProps> = ({
         }
       } catch (error) {
         console.error('Error fetching pie chart data:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load pie chart data. Please try again later.';
-        setError(errorMessage);
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }
@@ -314,7 +314,7 @@ const PieChartComponent: React.FC<PieChartComponentProps> = ({
           onEvents={{
             'error': (error: any) => {
               console.error('ECharts error:', error);
-              setChartError('Failed to render chart. Please check the console for details.');
+              setChartError('Unable to display this chart. Please try again.');
             }
           }}
         />

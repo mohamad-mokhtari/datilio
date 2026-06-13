@@ -10,6 +10,7 @@ import {
   formatSyntheticTaskError,
   getSyntheticFailureLabel,
 } from '@/utils/syntheticErrorMessages';
+import { getUserFacingMessage } from '@/utils/errorParser';
 
 interface FailedTasksListProps {
   onRetrySuccess?: (newTaskId: string) => void;
@@ -56,11 +57,12 @@ const FailedTasksList: React.FC<FailedTasksListProps> = ({
       setFailedTasks(filteredTasks);
     } catch (err) {
       console.error('Failed to fetch tasks:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch failed tasks';
+      const rawMessage = err instanceof Error ? err.message : '';
+      const errorMessage = getUserFacingMessage(err, 'Unable to load recent tasks. Please try again.');
       setError(errorMessage);
       
       // If endpoint is not available, notify parent component
-      if (errorMessage.includes('endpoint not available') || errorMessage.includes('coming soon')) {
+      if (rawMessage.includes('endpoint not available') || rawMessage.includes('coming soon')) {
         onEndpointNotAvailable?.();
       }
     } finally {
@@ -127,7 +129,7 @@ const FailedTasksList: React.FC<FailedTasksListProps> = ({
           <div className={`mb-4 ${isEndpointNotAvailable ? 'text-blue-600 dark:text-blue-400' : 'text-red-600 dark:text-red-400'}`}>
             <AlertTriangle className="w-8 h-8 mx-auto mb-2" />
             <p className="font-medium">
-              {isEndpointNotAvailable ? 'Feature Coming Soon' : 'Failed to load tasks'}
+              {isEndpointNotAvailable ? 'Feature Coming Soon' : 'Unable to load tasks'}
             </p>
             <p className="text-sm">{error}</p>
             {isEndpointNotAvailable && (

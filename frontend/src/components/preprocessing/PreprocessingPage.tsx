@@ -20,6 +20,7 @@ import GlobalMixedOptions from './GlobalMixedOptions';
 import PreprocessingHelp from './PreprocessingHelp';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import { FEATURES } from '@/configs/version.config';
 import './PreprocessingPage.css';
 
@@ -101,7 +102,7 @@ const PreprocessingPage: React.FC<PreprocessingPageProps> = ({ fileId: propFileI
       setOutputFilename(`preprocessed_${timestamp}.csv`);
     } catch (err: any) {
       console.error('Error fetching columns info:', err);
-      const errorMessage = err?.response?.data?.detail?.message || err.message || 'Failed to load column information';
+      const errorMessage = getUserFacingMessage(err, 'Unable to load column information. Please try again.');
       setError(errorMessage);
       setColumns([]); // Ensure columns is empty array on error
       toast.push(
@@ -124,7 +125,7 @@ const PreprocessingPage: React.FC<PreprocessingPageProps> = ({ fileId: propFileI
       setPreprocessingOptions(options);
     } catch (err: any) {
       console.error('Error fetching preprocessing options:', err);
-      const errorMessage = err?.response?.data?.detail?.message || err.message || 'Failed to load preprocessing options';
+      const errorMessage = getUserFacingMessage(err, 'Unable to load preprocessing options. Please try again.');
       setError(errorMessage);
       toast.push(
         <Notification title="Error" type="danger">
@@ -230,7 +231,7 @@ const PreprocessingPage: React.FC<PreprocessingPageProps> = ({ fileId: propFileI
         </Notification>
       );
     } catch (err: any) {
-      const errorMessage = err?.response?.data?.detail?.message || err.message || 'Preprocessing failed';
+      const errorMessage = getUserFacingMessage(err, 'Preprocessing failed. Please try again.');
       setError(errorMessage);
       toast.push(
         <Notification title="Preprocessing Failed" type="danger">
@@ -634,7 +635,7 @@ const PreprocessingPage: React.FC<PreprocessingPageProps> = ({ fileId: propFileI
                         </Notification>
                       );
                     } catch (err: any) {
-                      const errorMessage = err?.response?.data?.detail?.message || err.message || 'Failed to download file';
+                      const errorMessage = getUserFacingMessage(err, 'Unable to download file. Please try again.');
                       toast.push(
                         <Notification title="Download Failed" type="danger">
                           {errorMessage}

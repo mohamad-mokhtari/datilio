@@ -1,3 +1,4 @@
+import { getChartErrorMessage } from '@/utils/errorParser';
 // src/components/charts/FiveDScatterComponent.tsx
 import React, { useState, useMemo, useEffect } from "react";
 import ReactEChartsCore from 'echarts-for-react/lib/core';
@@ -115,8 +116,7 @@ const FiveDScatterComponent: React.FC<FiveDScatterComponentProps> = ({
         }
       } catch (error) {
         console.error('Error fetching 5D scatter data:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load 5D scatter data. Please try again later.';
-        setError(errorMessage);
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }
@@ -593,7 +593,7 @@ const FiveDScatterComponent: React.FC<FiveDScatterComponentProps> = ({
           onEvents={{
             'error': (error: any) => {
               console.error('ECharts error:', error);
-              setChartError('Failed to render chart. Please check the console for details.');
+              setChartError('Unable to display this chart. Please try again.');
             }
           }}
         />

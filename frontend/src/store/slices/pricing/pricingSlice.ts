@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { SLICE_PRICING_NAME } from './constants'
 import PricingService from '@/services/PricingService'
+import { getUserFacingMessage } from '@/utils/errorParser'
 import type {
     Plan,
     AddonPlan,
@@ -50,7 +51,7 @@ export const fetchAllPlans = createAsyncThunk(
         try {
             return await PricingService.getAllPlans()
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to fetch plans')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to load plans. Please try again.'))
         }
     }
 )
@@ -65,7 +66,7 @@ export const fetchMainPlans = createAsyncThunk(
             return result;
         } catch (error: any) {
             console.error('Redux: Error fetching main plans:', error);
-            return rejectWithValue(error.message || 'Failed to fetch main plans')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to load plans. Please try again.'))
         }
     }
 )
@@ -80,7 +81,7 @@ export const fetchAddonPlans = createAsyncThunk(
             return result;
         } catch (error: any) {
             console.error('Redux: Error fetching addon plans:', error);
-            return rejectWithValue(error.message || 'Failed to fetch addon plans')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to load add-on plans. Please try again.'))
         }
     }
 )
@@ -91,7 +92,7 @@ export const fetchUserPlan = createAsyncThunk(
         try {
             return await PricingService.getCurrentUserPlan()
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to fetch user plan')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to load your plan. Please try again.'))
         }
     }
 )
@@ -102,7 +103,7 @@ export const fetchUserPlanWithUsage = createAsyncThunk(
         try {
             return await PricingService.getUserPlanWithUsage()
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to fetch user plan with usage')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to load your plan details. Please try again.'))
         }
     }
 )
@@ -114,7 +115,7 @@ export const cancelUserPlan = createAsyncThunk(
             const result = await PricingService.cancelUserPlan()
             return result.message
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to cancel user plan')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to cancel your plan. Please try again.'))
         }
     }
 )
@@ -125,7 +126,7 @@ export const fetchUsageSummary = createAsyncThunk(
         try {
             return await PricingService.getUsageSummary()
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to fetch usage summary')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to load usage summary. Please try again.'))
         }
     }
 )
@@ -136,7 +137,7 @@ export const fetchUsageHistory = createAsyncThunk(
         try {
             return await PricingService.getUsageHistory()
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to fetch usage history')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to load usage history. Please try again.'))
         }
     }
 )
@@ -147,7 +148,7 @@ export const fetchUsageBreakdown = createAsyncThunk(
         try {
             return await PricingService.getUsageBreakdown()
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to fetch usage breakdown')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to load usage breakdown. Please try again.'))
         }
     }
 )
@@ -158,7 +159,7 @@ export const fetchPaymentHistory = createAsyncThunk(
         try {
             return await PricingService.getPaymentHistory()
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to fetch payment history')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to load payment history. Please try again.'))
         }
     }
 )
@@ -169,7 +170,7 @@ export const createSubscriptionSession = createAsyncThunk(
         try {
             return await PricingService.createSubscriptionSession(data)
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to create subscription session')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to start checkout. Please try again.'))
         }
     }
 )
@@ -180,7 +181,7 @@ export const createAddonCheckoutSession = createAsyncThunk(
         try {
             return await PricingService.createAddonCheckoutSession(data)
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to create addon checkout session')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to start checkout. Please try again.'))
         }
     }
 )
@@ -192,7 +193,7 @@ export const updateSubscription = createAsyncThunk(
         try {
             return await PricingService.updateSubscription(data)
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to update subscription')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to update your subscription. Please try again.'))
         }
     }
 )
@@ -203,7 +204,7 @@ export const cancelSubscription = createAsyncThunk(
         try {
             return await PricingService.cancelSubscription(data)
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to cancel subscription')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to cancel your subscription. Please try again.'))
         }
     }
 )
@@ -214,7 +215,7 @@ export const fetchUserSubscription = createAsyncThunk(
         try {
             return await PricingService.getSubscription(subscriptionId)
         } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to fetch subscription')
+            return rejectWithValue(getUserFacingMessage(error, 'Unable to load subscription details. Please try again.'))
         }
     }
 )

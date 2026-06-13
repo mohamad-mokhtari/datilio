@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Check, Upload } from 'lucide-react'
 import MLService from '@/services/MLService'
 import PreprocessingService, { PreprocessedFile, PreprocessedFileMetadata } from '@/services/PreprocessingService'
+import { getUserFacingMessage } from '@/utils/errorParser'
 
 const { Tr, Th, Td, THead, TBody } = Table
 
@@ -41,7 +42,7 @@ const CreateModelWizard: React.FC = () => {
       const res = await PreprocessingService.getMLReadyPreprocessedFiles()
       setPreprocessedFiles(res?.ml_ready_files || [])
     } catch (e: any) {
-      setFilesError(e?.message || 'Failed to load ML-ready preprocessed files')
+      setFilesError(getUserFacingMessage(e, 'Unable to load preprocessed files. Please try again.'))
     } finally {
       setFilesLoading(false)
     }
@@ -63,7 +64,7 @@ const CreateModelWizard: React.FC = () => {
       setMetadata(res)
     } catch (e: any) {
       console.error('Error loading metadata:', e)
-      setMetadataError(e?.message || 'Failed to load file metadata')
+      setMetadataError(getUserFacingMessage(e, 'Unable to load file details. Please try again.'))
     } finally {
       setMetadataLoading(false)
     }
@@ -88,7 +89,7 @@ const CreateModelWizard: React.FC = () => {
       }
       setStep(3)
     } catch (e: any) {
-      setError(e?.message || 'Failed to analyze target')
+      setError(getUserFacingMessage(e, 'Unable to analyze the target column. Please try again.'))
     } finally {
       setLoading(false)
     }
@@ -112,7 +113,7 @@ const CreateModelWizard: React.FC = () => {
         setTimeout(() => navigate(`/ml-models/${res.model_id}`), 600)
       }
     } catch (e: any) {
-      setError(e?.message || 'Training failed')
+      setError(getUserFacingMessage(e, 'Model training failed. Please try again.'))
     } finally {
       setLoading(false)
     }

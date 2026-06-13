@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Text, JSON, TIMESTAMP, ForeignKey, Boolean
+from sqlalchemy import Column, String, Text, JSON, TIMESTAMP, ForeignKey, Boolean, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 import uuid
@@ -7,6 +7,9 @@ from .mixins import Timestamp
 
 class Rule(Timestamp, Base):
     __tablename__ = 'rules'
+    __table_args__ = (
+        UniqueConstraint('user_data_id', 'rule_name', name='uq_rules_user_data_id_rule_name'),
+    )
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, index=True)
     user_data_id = Column(UUID(as_uuid=True), ForeignKey('user_data.id', ondelete='CASCADE'), nullable=False)

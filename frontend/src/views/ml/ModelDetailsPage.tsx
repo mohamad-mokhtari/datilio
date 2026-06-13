@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Button, Spinner, Alert, Table } from '@/components/ui'
 import { useNavigate, useParams } from 'react-router-dom'
 import MLService, { MLModel } from '@/services/MLService'
+import { getUserFacingMessage } from '@/utils/errorParser'
 import { ArrowLeft, Trash2, Download } from 'lucide-react'
 
 const { Tr, Th, Td, THead, TBody } = Table
@@ -20,7 +21,7 @@ const ModelDetailsPage: React.FC = () => {
       const res = await MLService.getModel(modelId)
       setModel(res)
     } catch (e: any) {
-      setError(e?.message || 'Failed to load model')
+      setError(getUserFacingMessage(e, 'Unable to load model details. Please try again.'))
     } finally {
       setLoading(false)
     }

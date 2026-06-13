@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Download, Eye } from 'lucide-react';
 import PreprocessingService, { PreprocessedFileDataResponse } from '@/services/PreprocessingService';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import { useConfig } from '@/components/ui/ConfigProvider';
 
 const { Tr, Th, Td, THead, TBody } = Table;
@@ -86,7 +87,7 @@ const PreprocessedFileDataModal: React.FC<PreprocessedFileDataModalProps> = ({
       setData(response);
     } catch (err: any) {
       console.error('Error fetching preprocessed file data:', err);
-      const errorMessage = err?.response?.data?.detail?.message || err.message || 'Failed to load file data';
+      const errorMessage = getUserFacingMessage(err, 'Unable to load file data. Please try again.');
       setError(errorMessage);
       toast.push(
         <Notification title="Error" type="danger">
@@ -149,7 +150,7 @@ const PreprocessedFileDataModal: React.FC<PreprocessedFileDataModalProps> = ({
         </Notification>
       );
     } catch (err: any) {
-      const errorMessage = err?.response?.data?.detail?.message || err.message || 'Failed to download file';
+      const errorMessage = getUserFacingMessage(err, 'Unable to download file. Please try again.');
       toast.push(
         <Notification title="Download Failed" type="danger">
           {errorMessage}

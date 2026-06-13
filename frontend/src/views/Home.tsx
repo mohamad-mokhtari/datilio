@@ -249,7 +249,7 @@ const Home = () => {
       <Container>
         <div className="text-center py-12">
           <HiExclamationCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Failed to Load Dashboard</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Unable to Load Dashboard</h3>
           <p className="text-gray-600 mb-4">{error || 'Unable to load dashboard data'}</p>
           <Button onClick={fetchDashboardData} variant="solid">
             Try Again

@@ -1,3 +1,4 @@
+import { getChartErrorMessage } from '@/utils/errorParser';
 import React, { useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 import Select from 'react-select';
@@ -91,7 +92,7 @@ const TreemapChartComponent: React.FC<TreemapChartComponentProps> = ({
         }
       } catch (error) {
         console.error('Error fetching treemap chart data:', error);
-        setError(error instanceof Error ? error.message : 'Failed to load chart data');
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }

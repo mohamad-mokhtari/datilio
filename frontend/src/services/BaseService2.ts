@@ -158,7 +158,7 @@ const BaseService2 = {
                     errorMessage = (data as any).message;
                 } else {
                     // Fallback to status text
-                    errorMessage = response.statusText || 'Request failed';
+                    errorMessage = response.statusText || 'Something went wrong. Please try again.';
                 }
 
                 const error = new Error(errorMessage);

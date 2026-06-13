@@ -18,6 +18,7 @@ import EmailVerificationService from '@/services/EmailVerificationService'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import { HiOutlineMail } from 'react-icons/hi'
+import { getUserFacingMessage } from '@/utils/errorParser'
 
 interface SignInFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -121,7 +122,10 @@ const SignInForm = (props: SignInFormProps) => {
                 setMessage('');
             }
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Failed to resend verification email';
+            const errorMessage = getUserFacingMessage(
+                error,
+                'Unable to send the verification email. Please try again in a few minutes.'
+            );
             toast.push(
                 <Notification title="Error" type="danger">
                     {errorMessage}

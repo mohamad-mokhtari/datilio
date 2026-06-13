@@ -4,6 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { HiOutlineUser, HiOutlineMail, HiOutlineLockClosed } from 'react-icons/hi';
 import ApiService2 from '@/services/ApiService2';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import PasswordInput from '@/components/shared/PasswordInput'
@@ -55,7 +56,7 @@ const SignUpForm = () => {
                 });
             }
         } catch (error: any) {
-            setMessage(error?.data?.detail || 'Failed to create account');
+            setMessage(getUserFacingMessage(error, 'Unable to create your account. Please try again.'));
         } finally {
             setSubmitting(false);
         }

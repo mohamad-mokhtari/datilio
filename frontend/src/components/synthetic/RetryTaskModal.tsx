@@ -3,6 +3,7 @@ import Button from '@/components/ui/Button';
 import { X, AlertTriangle, RefreshCw } from 'lucide-react';
 import { FailedTask } from './types';
 import { SyntheticDataService } from '@/services/SyntheticDataService';
+import { getUserFacingMessage } from '@/utils/errorParser';
 
 interface RetryTaskModalProps {
   task: FailedTask | null;
@@ -62,7 +63,7 @@ const RetryTaskModal: React.FC<RetryTaskModalProps> = ({
           setFilename(errorData.extra.suggestion);
         }
       } else {
-        setError(err.message || 'Failed to retry task. Please try again.');
+        setError(getUserFacingMessage(err, 'Unable to retry this task. Please try again.'));
       }
     } finally {
       setLoading(false);

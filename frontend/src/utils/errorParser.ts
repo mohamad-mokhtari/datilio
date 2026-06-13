@@ -17,11 +17,84 @@ export interface ParsedError {
   extra?: any;
 }
 
-const NETWORK_ERROR_MESSAGE =
+export const DEFAULT_USER_ERROR_MESSAGE =
+  'Something went wrong. Please try again.';
+
+export const DEFAULT_NETWORK_ERROR_MESSAGE =
   'Unable to connect to the server. Please check your internet connection and try again.';
 
-const sanitizeRawMessage = (message: string): string => {
-  const lower = message.toLowerCase();
+export const DEFAULT_CHART_ERROR_MESSAGE =
+  'Unable to load this chart. Please try again.';
+
+const TECHNICAL_MESSAGE_PATTERNS: RegExp[] = [
+  /sqlalchemy/i,
+  /integrityerror/i,
+  /uniqueviolation/i,
+  /psycopg2/i,
+  /duplicate key/i,
+  /traceback/i,
+  /\bat\s+\/[\w./-]+\.(py|ts|tsx|js)\b/i,
+  /\[object object\]/i,
+  /networkerror/i,
+  /failed to fetch/i,
+  /econnrefused/i,
+  /axioserror/i,
+  /internal server error/i,
+  /bad gateway/i,
+  /service unavailable/i,
+  /unprocessable entity/i,
+  /request failed with status/i,
+  /check the console/i,
+  /vite_api_url/i,
+  /rebuild the frontend/i,
+  /^error:\s*\d{3}/i,
+  /^\d{3}\s+(internal|bad|not found)/i,
+  /insert into\s+/i,
+  /select\s+.+\s+from\s+/i,
+  /:\s*(internal server error|bad request|not found|unauthorized|forbidden)$/i,
+];
+
+/**
+ * Returns true when a string looks like a developer/technical error, not user copy.
+ */
+export const isTechnicalMessage = (message: string): boolean => {
+  const trimmed = message.trim();
+  if (!trimmed) {
+    return true;
+  }
+
+  if (TECHNICAL_MESSAGE_PATTERNS.some((pattern) => pattern.test(trimmed))) {
+    return true;
+  }
+
+  if (trimmed.startsWith('{') && trimmed.endsWith('}')) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (parsed.error_code || parsed.detail || parsed.stack) {
+        return true;
+      }
+    } catch {
+      return true;
+    }
+  }
+
+  if (trimmed.length > 220 && trimmed.split('\n').length === 1) {
+    return true;
+  }
+
+  return false;
+};
+
+const sanitizeRawMessage = (
+  message: string,
+  fallback: string = DEFAULT_USER_ERROR_MESSAGE
+): string => {
+  const trimmed = message.trim();
+  if (!trimmed) {
+    return fallback;
+  }
+
+  const lower = trimmed.toLowerCase();
   if (
     lower === 'failed to fetch' ||
     lower.includes('networkerror') ||
@@ -32,14 +105,38 @@ const sanitizeRawMessage = (message: string): string => {
       window.location.protocol === 'https:' &&
       (import.meta.env.VITE_API_URL || '').startsWith('http://')
     ) {
-      return (
-        'The app could not reach the API securely. The API URL is configured for HTTP on an HTTPS site. ' +
-        'Please rebuild the frontend with VITE_API_URL=https://datilio.com.'
-      );
+      return 'We could not connect to the server securely. Please refresh the page or try again later.';
     }
-    return NETWORK_ERROR_MESSAGE;
+    return DEFAULT_NETWORK_ERROR_MESSAGE;
   }
-  return formatSyntheticTaskError(message);
+
+  const formatted = formatSyntheticTaskError(trimmed);
+  if (isTechnicalMessage(formatted)) {
+    return fallback;
+  }
+
+  return formatted;
+};
+
+/**
+ * Primary entry point: turn any caught error into user-safe text.
+ */
+export const getUserFacingMessage = (
+  error: unknown,
+  fallback: string = DEFAULT_USER_ERROR_MESSAGE
+): string => {
+  const parsed = parseBackendError(error);
+  const message = parsed.message.trim();
+
+  if (!message || message === DEFAULT_USER_ERROR_MESSAGE || isTechnicalMessage(message)) {
+    return fallback;
+  }
+
+  return message;
+};
+
+export const getChartErrorMessage = (error: unknown): string => {
+  return getUserFacingMessage(error, DEFAULT_CHART_ERROR_MESSAGE);
 };
 
 /**
@@ -52,7 +149,7 @@ const sanitizeRawMessage = (message: string): string => {
  */
 export const parseBackendError = (error: any): ParsedError => {
   let title = 'Error';
-  let message = 'An error occurred';
+  let message = DEFAULT_USER_ERROR_MESSAGE;
   let errorCode: string | undefined;
   let extra: any;
 
@@ -181,20 +278,21 @@ const getErrorTitle = (errorCode: string): string => {
     'TOKEN_EXPIRED': 'Token Expired',
     'INVALID_TOKEN': 'Invalid Token',
     'ACCESS_DENIED': 'Access Denied',
-    'VALIDATION_ERROR': 'Validation Error',
+    'VALIDATION_ERROR': 'Check Your Input',
     'EMAIL_ALREADY_EXISTS': 'Email Already Exists',
     'WEAK_PASSWORD': 'Weak Password',
     'RATE_LIMIT_EXCEEDED': 'Rate Limit Exceeded',
     'SERVICE_UNAVAILABLE': 'Service Unavailable',
-    'INTERNAL_SERVER_ERROR': 'Internal Server Error',
+    'INTERNAL_SERVER_ERROR': 'Something Went Wrong',
     'NOT_FOUND': 'Not Found',
     'PAYMENT_FAILED': 'Payment Failed',
     'EMAIL_SEND_FAILED': 'Email Send Failed',
-    'NETWORK_ERROR': 'Network Error',
+    'NETWORK_ERROR': 'Connection Problem',
     'FILENAME_EXISTS': 'File Name Already Exists',
     'QUOTA_EXCEEDED': 'Usage Limit Reached',
     'LIST_NAME_EXISTS': 'List Name Already Exists',
-    'CONFLICT': 'Conflict',
+    'RULE_NAME_EXISTS': 'Rule Name Already Exists',
+    'CONFLICT': 'Unable to Complete',
   };
 
   return titleMap[errorCode] || 'Error';

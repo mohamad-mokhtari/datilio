@@ -7,6 +7,7 @@ import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
 import { useAuth } from '@/hooks/useApi';
 import EmailVerificationService from '@/services/EmailVerificationService';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import { HiOutlineCheckCircle, HiOutlineXCircle, HiOutlineMail, HiOutlineRefresh, HiOutlineExclamation } from 'react-icons/hi';
 
 type VerificationState = 'loading' | 'success' | 'error' | 'idle';
@@ -27,7 +28,7 @@ const EmailVerificationPage = () => {
   useEffect(() => {
     if (!token) {
       setState('error');
-      setError('No verification token provided');
+      setError('This verification link is invalid. Please request a new verification email.');
       return;
     }
 
@@ -81,7 +82,10 @@ const EmailVerificationPage = () => {
       }
     } catch (err: any) {
       setState('error');
-      let errorMessage = err instanceof Error ? err.message : 'Verification failed';
+      let errorMessage = getUserFacingMessage(
+        err,
+        'Unable to verify your email. The link may have expired. Please request a new one.'
+      );
       
       // Handle "already used" token error gracefully
       if (errorMessage.includes('already used') || errorMessage.includes('already verified')) {

@@ -1,5 +1,4 @@
 import ApiService2 from './ApiService2';
-import apiClient from '@/utils/apiClient';
 
 export interface EmailVerificationResponse {
   message: string;
@@ -33,7 +32,7 @@ export const EmailVerificationService = {
     );
     
     if (!response.ok) {
-      throw new Error(`Failed to verify email: ${response.statusText}`);
+      throw new Error('Unable to verify your email. The link may have expired. Please request a new one.');
     }
     
     return response.data;
@@ -49,7 +48,7 @@ export const EmailVerificationService = {
     );
     
     if (!response.ok) {
-      throw new Error(`Failed to resend verification email: ${response.statusText}`);
+      throw new Error('Unable to send the verification email. Please try again in a few minutes.');
     }
     
     return response.data;
@@ -65,7 +64,7 @@ export const EmailVerificationService = {
     );
     
     if (!response.ok) {
-      throw new Error(`Failed to resend verification email: ${response.statusText}`);
+      throw new Error('Unable to send the verification email. Please try again in a few minutes.');
     }
     
     return response.data;
@@ -81,7 +80,7 @@ export const EmailVerificationService = {
     );
     
     if (!response.ok) {
-      throw new Error(`Failed to resend verification email: ${response.statusText}`);
+      throw new Error('Unable to send the verification email. Please try again in a few minutes.');
     }
     
     return response.data;
@@ -96,7 +95,7 @@ export const EmailVerificationService = {
     );
     
     if (!response.ok) {
-      throw new Error(`Failed to get verification status: ${response.statusText}`);
+      throw new Error('Unable to check your verification status. Please try again.');
     }
     
     return response.data;

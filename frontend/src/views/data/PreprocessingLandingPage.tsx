@@ -11,6 +11,7 @@ import DeletePreprocessedFileDialog from '@/components/preprocessing/DeletePrepr
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
 import ApiService2 from '@/services/ApiService2';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import { DataFrameRow, ColumnInfo } from '@/@types/csv';
 
 const { Tr, Th, Td, THead, TBody } = Table;
@@ -69,7 +70,7 @@ const PreprocessingLandingPage: React.FC = () => {
       setPreprocessedFiles(files);
     } catch (err: any) {
       console.error('Error fetching preprocessed files:', err);
-      const errorMessage = err?.response?.data?.detail?.message || err.message || 'Failed to load preprocessed files';
+      const errorMessage = getUserFacingMessage(err, 'Unable to load preprocessed files. Please try again.');
       setPreprocessedError(errorMessage);
       toast.push(
         <Notification title="Error" type="danger">
@@ -134,7 +135,7 @@ const PreprocessingLandingPage: React.FC = () => {
       }
     } catch (err: any) {
       console.error('Error fetching original file data:', err);
-      const errorMessage = err?.response?.data?.detail?.message || err.message || 'Failed to load original file data';
+      const errorMessage = getUserFacingMessage(err, 'Unable to load original file data. Please try again.');
       toast.push(
         <Notification title="Error Loading Original File" type="danger">
           {errorMessage}
@@ -188,7 +189,7 @@ const PreprocessingLandingPage: React.FC = () => {
       );
     } catch (err: any) {
       console.error('Download error details:', err);
-      const errorMessage = err?.response?.data?.detail?.message || err.message || 'Failed to download file';
+      const errorMessage = getUserFacingMessage(err, 'Unable to download file. Please try again.');
       toast.push(
         <Notification title="Download Failed" type="danger">
           {errorMessage}
@@ -274,7 +275,7 @@ const PreprocessingLandingPage: React.FC = () => {
       setDeleteDialogOpen(false);
       setFileToDelete(null);
     } catch (err: any) {
-      const errorMessage = err?.response?.data?.detail?.message || err.message || 'Failed to delete file';
+      const errorMessage = getUserFacingMessage(err, 'Unable to delete file. Please try again.');
       toast.push(
         <Notification title="Delete Failed" type="danger">
           {errorMessage}

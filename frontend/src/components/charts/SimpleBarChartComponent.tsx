@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import ReactECharts from 'echarts-for-react';
 import Select from 'react-select';
 import ChartDataService, { SamplingMetadata } from '@/services/ChartDataService';
+import { getChartErrorMessage } from '@/utils/errorParser';
 
 interface SimpleBarChartComponentProps {
   userId: string;
@@ -97,7 +98,7 @@ const SimpleBarChartComponent: React.FC<SimpleBarChartComponentProps> = ({
         }
       } catch (error) {
         console.error('Error fetching chart data:', error);
-        setError('Failed to load chart data. Please try again later.');
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }

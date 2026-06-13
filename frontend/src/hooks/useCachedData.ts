@@ -13,6 +13,7 @@ import {
     getStorageInfo,
     FileData 
 } from '@/utils/indexedDBUtils';
+import { getUserFacingMessage } from '@/utils/errorParser';
 
 interface UseCachedDataReturn {
     // Data state
@@ -104,7 +105,7 @@ export const useCachedData = (): UseCachedDataReturn => {
             const result = await getCachedFileData(fileName);
             setData(result);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to load data');
+            setError(getUserFacingMessage(err, 'Unable to load data. Please try again.'));
         } finally {
             setLoading(false);
         }
@@ -114,7 +115,7 @@ export const useCachedData = (): UseCachedDataReturn => {
         try {
             return await hasCachedData(fileName);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to check data existence');
+            setError(getUserFacingMessage(err, 'Unable to check saved data. Please try again.'));
             return false;
         }
     }, []);
@@ -153,7 +154,7 @@ export const usePlottingData = (): UsePlottingDataReturn => {
             const result = await getDataForPlotting(fileName);
             setPlottingData(result);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to load plotting data');
+            setError(getUserFacingMessage(err, 'Unable to load chart data. Please try again.'));
         } finally {
             setLoading(false);
         }
@@ -197,7 +198,7 @@ export const usePaginatedData = (pageSize: number = 100): UsePaginatedDataReturn
             const result = await getCachedDataPaginated(fileName, page, customPageSize || pageSize);
             setPaginatedData(result);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to load page data');
+            setError(getUserFacingMessage(err, 'Unable to load page data. Please try again.'));
         } finally {
             setLoading(false);
         }
@@ -246,7 +247,7 @@ export const useSearchData = (): UseSearchDataReturn => {
             const results = await searchCachedData(fileName, searchTerm, columns);
             setSearchResults(results);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to search data');
+            setError(getUserFacingMessage(err, 'Unable to search data. Please try again.'));
         } finally {
             setLoading(false);
         }
@@ -290,7 +291,7 @@ export const useStorageInfo = (): UseStorageInfoReturn => {
             const info = await getStorageInfo();
             setStorageInfo(info);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to load storage info');
+            setError(getUserFacingMessage(err, 'Unable to load storage information. Please try again.'));
         } finally {
             setLoading(false);
         }

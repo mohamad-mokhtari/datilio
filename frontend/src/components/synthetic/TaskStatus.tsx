@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TaskError from './TaskError';
 import { CheckCircle, Clock, AlertTriangle } from 'lucide-react';
 import { TaskStatus as TaskStatusType } from '@/services/SyntheticDataService';
+import { getUserFacingMessage } from '@/utils/errorParser';
 
 interface TaskStatusProps {
   taskId: string;
@@ -32,7 +33,7 @@ const TaskStatus: React.FC<TaskStatusProps> = ({
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch task status: ${response.statusText}`);
+      throw new Error('Unable to check task status.');
     }
 
     return response.json();
@@ -56,7 +57,7 @@ const TaskStatus: React.FC<TaskStatusProps> = ({
           clearInterval(interval);
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch task status');
+        setError(getUserFacingMessage(err, 'Unable to check task status. Please try again.'));
         setLoading(false);
         clearInterval(interval);
       }

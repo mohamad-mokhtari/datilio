@@ -4,6 +4,7 @@ import Button from '@/components/ui/Button';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
 import EmailVerificationService from '@/services/EmailVerificationService';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import { HiOutlineMail, HiOutlineX, HiOutlineCheckCircle, HiOutlineExclamation } from 'react-icons/hi';
 
 interface VerificationRequiredModalProps {
@@ -28,7 +29,10 @@ const VerificationRequiredModal = ({ isOpen, onClose, userEmail }: VerificationR
         );
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to resend verification email';
+      const errorMessage = getUserFacingMessage(
+        error,
+        'Unable to send the verification email. Please try again in a few minutes.'
+      );
       toast.push(
         <Notification title="Error" type="danger">
           {errorMessage}

@@ -4,6 +4,7 @@ import Badge from '@/components/ui/Badge';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
 import EmailVerificationService from '@/services/EmailVerificationService';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import { HiOutlineMail, HiOutlineCheckCircle, HiOutlineXCircle, HiOutlineRefresh } from 'react-icons/hi';
 
 interface EmailVerificationStatusProps {
@@ -48,7 +49,10 @@ const EmailVerificationStatus = ({ className = '', showResendButton = true }: Em
         );
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to resend verification email';
+      const errorMessage = getUserFacingMessage(
+        error,
+        'Unable to send the verification email. Please try again in a few minutes.'
+      );
       toast.push(
         <Notification title="Error" type="danger">
           {errorMessage}

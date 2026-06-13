@@ -6,6 +6,7 @@ import Badge from '@/components/ui/Badge';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
 import FeedbackService from '@/services/FeedbackService';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import type { Feedback, FeedbackMessage, FeedbackStatus, FeedbackType } from '@/@types/feedback';
 import { HiOutlineX, HiOutlineChat, HiOutlineCheck, HiOutlinePhotograph } from 'react-icons/hi';
 import { formatDistanceToNow } from 'date-fns';
@@ -119,7 +120,7 @@ const FeedbackDetailModal = ({ feedback, isOpen, onClose }: FeedbackDetailModalP
       const detailedFeedback = await FeedbackService.getFeedbackById(feedback.id);
       setCurrentFeedback(detailedFeedback);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to fetch feedback details';
+      const errorMessage = getUserFacingMessage(error, 'Unable to load feedback details. Please try again.');
       toast.push(
         <Notification title="Error" type="danger">
           {errorMessage}
@@ -151,7 +152,7 @@ const FeedbackDetailModal = ({ feedback, isOpen, onClose }: FeedbackDetailModalP
         </Notification>
       );
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to send message';
+      const errorMessage = getUserFacingMessage(error, 'Unable to send your message. Please try again.');
       toast.push(
         <Notification title="Error" type="danger">
           {errorMessage}
@@ -179,7 +180,7 @@ const FeedbackDetailModal = ({ feedback, isOpen, onClose }: FeedbackDetailModalP
         </Notification>
       );
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to close feedback';
+      const errorMessage = getUserFacingMessage(error, 'Unable to close this feedback. Please try again.');
       toast.push(
         <Notification title="Error" type="danger">
           {errorMessage}

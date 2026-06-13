@@ -1,5 +1,6 @@
 import React from 'react';
 import { useError } from '@/contexts/ErrorContext';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import { HiOutlineExclamation, HiOutlineInformationCircle } from 'react-icons/hi';
 
 const ErrorDisplay: React.FC = () => {
@@ -34,7 +35,7 @@ const ErrorDisplay: React.FC = () => {
               </div>
               
               <div className="text-sm leading-relaxed">
-                {error.message}
+                {getUserFacingMessage(error.message)}
               </div>
               
               {error.validationErrors && error.validationErrors.length > 0 && (

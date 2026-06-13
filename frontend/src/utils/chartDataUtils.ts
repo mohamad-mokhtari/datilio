@@ -5,6 +5,7 @@
 
 import indexedDBService, { FileData } from '@/services/IndexedDBService';
 import { UnifiedChartDataResponse } from '@/services/ChartDataService';
+import { getUserFacingMessage } from '@/utils/errorParser';
 
 export interface ChartDataResult {
   success: boolean;
@@ -132,7 +133,7 @@ export const hasIndexedDBData = async (
     return {
       success: false,
       source: 'indexeddb',
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: getUserFacingMessage(error, 'Unable to read saved data.')
     };
   }
 };

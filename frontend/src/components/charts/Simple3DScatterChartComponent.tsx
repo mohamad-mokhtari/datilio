@@ -1,3 +1,4 @@
+import { getChartErrorMessage } from '@/utils/errorParser';
 // src/components/charts/Simple3DScatterChartComponent.tsx
 import React, { useEffect, useState } from "react";
 import ReactEChartsCore from 'echarts-for-react/lib/core';
@@ -124,8 +125,7 @@ const Simple3DScatterChartComponent: React.FC<Simple3DScatterChartComponentProps
         }
       } catch (error) {
         console.error('Error fetching 3D scatter chart data:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load 3D scatter chart data. Please try again later.';
-        setError(errorMessage);
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }

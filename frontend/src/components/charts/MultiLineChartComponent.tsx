@@ -1,3 +1,4 @@
+import { getChartErrorMessage } from '@/utils/errorParser';
 import React, { useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 import Select from 'react-select';
@@ -147,8 +148,7 @@ const MultiLineChartComponent: React.FC<MultiLineChartComponentProps> = ({
         }
       } catch (error) {
         console.error('Error fetching chart data:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load chart data. Please try again later.';
-        setError(errorMessage);
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }

@@ -1,3 +1,4 @@
+import { getChartErrorMessage } from '@/utils/errorParser';
 // src/components/charts/BoxPlotComponent.tsx
 import React, { useEffect, useState } from "react";
 import ReactECharts from "echarts-for-react";
@@ -100,8 +101,7 @@ const BoxPlotComponent: React.FC<BoxPlotComponentProps> = ({
         }
       } catch (error) {
         console.error('Error fetching box plot data:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load box plot data. Please try again later.';
-        setError(errorMessage);
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }

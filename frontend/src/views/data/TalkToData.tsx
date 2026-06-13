@@ -175,7 +175,7 @@ const TalkToData: React.FC = () => {
         // Only set hasMore if we got new items
         setHasMore(sortedItems.length === 2);
       } else {
-        throw new Error(`Failed to fetch QA history: ${response.status} - ${response.statusText}`);
+        throw new Error('Unable to load conversation history.');
       }
     } catch (error: any) {
       console.error('Error fetching QA history:', error);
@@ -230,7 +230,7 @@ const TalkToData: React.FC = () => {
           </Notification>
         );
       } else {
-        throw new Error(`Failed to submit question: ${response.status} - ${response.statusText}`);
+        throw new Error('Unable to submit your question.');
       }
     } catch (error: any) {
       console.error('Error asking question:', error);
@@ -269,7 +269,7 @@ const TalkToData: React.FC = () => {
           </Notification>
         );
       } else {
-        throw new Error(`Failed to submit feedback: ${response.status} - ${response.statusText}`);
+        throw new Error('Unable to submit your feedback.');
       }
     } catch (error: any) {
       console.error('Error submitting feedback:', error);
@@ -308,7 +308,7 @@ const TalkToData: React.FC = () => {
           </Notification>
         );
       } else {
-        throw new Error(`Failed to submit comment: ${response.status} - ${response.statusText}`);
+        throw new Error('Unable to submit your comment.');
       }
     } catch (error: any) {
       console.error('Error submitting comment:', error);

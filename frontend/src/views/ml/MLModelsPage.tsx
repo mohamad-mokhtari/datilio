@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Spinner, Table, Alert, Input } from '@/components/ui'
 import MLService, { MLModel } from '@/services/MLService'
+import { getUserFacingMessage } from '@/utils/errorParser'
 import { useNavigate } from 'react-router-dom'
 import { Plus, RefreshCcw } from 'lucide-react'
 
@@ -20,7 +21,7 @@ const MLModelsPage: React.FC = () => {
       const res = await MLService.listModels()
       setModels(res.models || [])
     } catch (e: any) {
-      setError(e?.message || 'Failed to load models')
+      setError(getUserFacingMessage(e, 'Unable to load models. Please try again.'))
     } finally {
       setLoading(false)
     }

@@ -11,6 +11,9 @@ import type {
   FeedbackMessage
 } from '@/@types/feedback';
 
+const serviceError = (action: string) =>
+  new Error(`Unable to ${action}. Please try again.`);
+
 /**
  * Feedback Service
  * Handles all feedback-related API operations
@@ -22,7 +25,7 @@ export const FeedbackService = {
   async createFeedback(data: CreateFeedbackRequest): Promise<Feedback> {
     const response = await ApiService2.post<Feedback>('/feedback/', data);
     if (!response.ok) {
-      throw new Error(`Failed to create feedback: ${response.statusText}`);
+      throw serviceError('submit your feedback');
     }
     return response.data;
   },
@@ -44,7 +47,7 @@ export const FeedbackService = {
     
     const response = await ApiService2.get<Feedback[]>(url);
     if (!response.ok) {
-      throw new Error(`Failed to fetch feedback list: ${response.statusText}`);
+      throw serviceError('load your feedback');
     }
 
     // Since the API returns an array, we need to construct the pagination response
@@ -66,7 +69,7 @@ export const FeedbackService = {
   async getFeedbackById(feedbackId: string): Promise<Feedback> {
     const response = await ApiService2.get<Feedback>(`/feedback/${feedbackId}`);
     if (!response.ok) {
-      throw new Error(`Failed to fetch feedback: ${response.statusText}`);
+      throw serviceError('load this feedback');
     }
     return response.data;
   },
@@ -89,7 +92,7 @@ export const FeedbackService = {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to upload image: ${response.statusText}`);
+      throw serviceError('upload your image');
     }
     return response.data;
   },
@@ -121,7 +124,7 @@ export const FeedbackService = {
     }
     
     if (!response.ok) {
-      throw new Error(`Failed to add message: ${response.statusText}`);
+      throw serviceError('send your message');
     }
     return response.data;
   },
@@ -135,7 +138,7 @@ export const FeedbackService = {
       data
     );
     if (!response.ok) {
-      throw new Error(`Failed to add admin message: ${response.statusText}`);
+      throw serviceError('send the admin message');
     }
     return response.data;
   },
@@ -149,7 +152,7 @@ export const FeedbackService = {
       data
     );
     if (!response.ok) {
-      throw new Error(`Failed to close feedback: ${response.statusText}`);
+      throw serviceError('close this feedback');
     }
   },
 
@@ -162,7 +165,7 @@ export const FeedbackService = {
       data
     );
     if (!response.ok) {
-      throw new Error(`Failed to reopen feedback: ${response.statusText}`);
+      throw serviceError('reopen this feedback');
     }
   }
 };

@@ -1,3 +1,4 @@
+import { getChartErrorMessage } from '@/utils/errorParser';
 // src/components/charts/StackedAreaChartComponent.tsx
 import React, { useState, useMemo, useEffect } from "react";
 import ReactECharts from 'echarts-for-react';
@@ -90,8 +91,7 @@ const StackedAreaChartComponent: React.FC<StackedAreaChartComponentProps> = ({
         }
       } catch (error) {
         console.error('Error fetching stacked area chart data:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load stacked area chart data. Please try again later.';
-        setError(errorMessage);
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }
@@ -348,7 +348,7 @@ const StackedAreaChartComponent: React.FC<StackedAreaChartComponentProps> = ({
           onEvents={{
             'error': (error: any) => {
               console.error('ECharts error:', error);
-              setChartError('Failed to render chart. Please check the console for details.');
+              setChartError('Unable to display this chart. Please try again.');
             }
           }}
         />

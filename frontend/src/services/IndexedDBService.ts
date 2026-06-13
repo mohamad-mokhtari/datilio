@@ -3,6 +3,8 @@
  * Provides better user experience for large files by caching data locally
  */
 
+import { getUserFacingMessage } from '@/utils/errorParser';
+
 export interface FileData {
     file_name: string;
     file_id: string;
@@ -103,7 +105,7 @@ class IndexedDBService {
             });
         } catch (error) {
             console.error('Error storing file data:', error);
-            return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+            return { success: false, error: getUserFacingMessage(error, 'Unable to save data locally.') };
         }
     }
 
@@ -141,7 +143,7 @@ class IndexedDBService {
             });
         } catch (error) {
             console.error('Error retrieving file data:', error);
-            return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+            return { success: false, error: getUserFacingMessage(error, 'Unable to save data locally.') };
         }
     }
 
@@ -220,7 +222,7 @@ class IndexedDBService {
             });
         } catch (error) {
             console.error('Error deleting file data:', error);
-            return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+            return { success: false, error: getUserFacingMessage(error, 'Unable to save data locally.') };
         }
     }
 
@@ -252,7 +254,7 @@ class IndexedDBService {
             });
         } catch (error) {
             console.error('Error clearing all file data:', error);
-            return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+            return { success: false, error: getUserFacingMessage(error, 'Unable to save data locally.') };
         }
     }
 

@@ -9,6 +9,7 @@ import Input from '@/components/ui/Input';
 import { useConfig } from '@/components/ui/ConfigProvider';
 import PlotCard from './PlotCard';
 import { ColumnInfo } from '@/@types/csv';
+import { getUserFacingMessage } from '@/utils/errorParser';
 
 const { Tr, Th, Td, THead, TBody } = Table;
 
@@ -600,7 +601,7 @@ const RulesModal: React.FC<RulesModalProps> = ({
       setRules(response.data);
     } catch (error) {
       console.error('Error fetching rules:', error);
-      setError('Failed to load rules. Please try again.');
+      setError(getUserFacingMessage(error, 'Unable to load rules. Please try again.'));
     } finally {
       setLoading(false);
     }
@@ -627,7 +628,7 @@ const RulesModal: React.FC<RulesModalProps> = ({
       setDeleteConfirmation(null);
     } catch (error) {
       console.error('Error deleting rule:', error);
-      setError('Failed to delete rule. Please try again.');
+      setError(getUserFacingMessage(error, 'Unable to delete rule. Please try again.'));
     } finally {
       setDeletingRuleId(null);
     }
@@ -655,7 +656,7 @@ const RulesModal: React.FC<RulesModalProps> = ({
       setShowResults(true);
     } catch (error) {
       console.error('Error fetching rule data:', error);
-      setError('Failed to fetch rule data. Please try again.');
+      setError(getUserFacingMessage(error, 'Unable to load rule results. Please try again.'));
     } finally {
       setLoadingRuleData(false);
     }

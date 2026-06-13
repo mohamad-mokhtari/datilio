@@ -1,3 +1,4 @@
+import { getChartErrorMessage } from '@/utils/errorParser';
 // src/components/charts/SimpleScatterChartComponent.tsx
 import React, { useEffect, useState } from "react";
 import ReactECharts from 'echarts-for-react';
@@ -94,8 +95,7 @@ const SimpleScatterChartComponent: React.FC<SimpleScatterChartComponentProps> = 
         }
       } catch (error) {
         console.error('Error fetching scatter chart data:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load scatter chart data. Please try again later.';
-        setError(errorMessage);
+        setError(getChartErrorMessage(error));
       } finally {
         setIsLoading(false);
       }

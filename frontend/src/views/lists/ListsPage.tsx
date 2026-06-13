@@ -12,7 +12,7 @@ import Spinner from '@/components/ui/Spinner'
 import Input from '@/components/ui/Input'
 import Notification from '@/components/ui/Notification'
 import toast from '@/components/ui/toast'
-import { parseBackendError } from '@/utils/errorParser'
+import { parseBackendError, getUserFacingMessage } from '@/utils/errorParser'
 import Upload from '@/components/ui/Upload'
 import { HiPlus, HiUpload } from 'react-icons/hi'
 
@@ -85,7 +85,7 @@ const ListsPage = () => {
             setListItems(response.data)
         } catch (error) {
             console.error('Failed to fetch list items:', error)
-            setItemsError('Failed to load list items. Please try again.')
+            setItemsError(getUserFacingMessage(error, 'Unable to load list items. Please try again.'))
         } finally {
             setLoadingItems(false)
         }
@@ -162,7 +162,7 @@ const ListsPage = () => {
                 dispatch(fetchUserLists())
                 closeCreateModal()
             } else {
-                setCreateError('Failed to create list')
+                setCreateError('Unable to create list. Please try again.')
             }
         } catch (error) {
             console.error('Failed to create list:', error)
@@ -239,11 +239,11 @@ const ListsPage = () => {
                 dispatch(fetchUserLists())
                 closeUploadModal()
             } else {
-                setUploadError('Failed to upload list')
+                setUploadError('Unable to upload list. Please try again.')
             }
         } catch (error) {
             console.error('Failed to upload list:', error)
-            setUploadError('Failed to upload list. Please try again.')
+            setUploadError(getUserFacingMessage(error, 'Unable to upload list. Please try again.'))
         } finally {
             setUploading(false)
         }
@@ -285,11 +285,11 @@ const ListsPage = () => {
                     </Notification>
                 )
             } else {
-                setAddItemError('Failed to add item')
+                setAddItemError('Unable to add item. Please try again.')
             }
         } catch (error) {
             console.error('Failed to add item:', error)
-            setAddItemError('Failed to add item. Please try again.')
+            setAddItemError(getUserFacingMessage(error, 'Unable to add item. Please try again.'))
         } finally {
             setAddingItem(false)
         }

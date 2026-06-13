@@ -7,6 +7,7 @@ import Upload from '@/components/ui/Upload';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
 import FeedbackService from '@/services/FeedbackService';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import type { CreateFeedbackRequest, FeedbackType } from '@/@types/feedback';
 import { HiOutlineX, HiOutlinePaperClip, HiOutlineChat } from 'react-icons/hi';
 import { useConfig } from '@/components/ui/ConfigProvider';
@@ -127,7 +128,7 @@ const CreateFeedbackModal = ({ isOpen, onClose, onSuccess }: CreateFeedbackModal
 
       onSuccess();
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to create feedback';
+      const errorMessage = getUserFacingMessage(error, 'Unable to submit your feedback. Please try again.');
       toast.push(
         <Notification title="Error" type="danger">
           {errorMessage}

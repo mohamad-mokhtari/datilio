@@ -6,6 +6,7 @@ import Button from '@/components/ui/Button';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
 import EmailVerificationService from '@/services/EmailVerificationService';
+import { getUserFacingMessage } from '@/utils/errorParser';
 import { HiOutlineMail, HiOutlineCheckCircle, HiOutlineArrowRight, HiOutlineRefresh } from 'react-icons/hi';
 
 const VerificationInstructionsPage = () => {
@@ -29,7 +30,10 @@ const VerificationInstructionsPage = () => {
         );
       }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to resend verification email';
+      const errorMessage = getUserFacingMessage(
+        err,
+        'Unable to send the verification email. Please try again in a few minutes.'
+      );
       toast.push(
         <Notification title="Error" type="danger">
           {errorMessage}
