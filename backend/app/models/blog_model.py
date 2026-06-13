@@ -18,7 +18,7 @@ class BlogPost(Base, Timestamp):
     content_json = Column(Text, nullable=False)  # JSON string
     author_name = Column(String(100), nullable=False, default="Datilio Team")
     author_email = Column(String(255), nullable=True)
-    category = Column(String(50), nullable=True, default="General")
+    category = Column(String(50), nullable=True, default="Tutorials")
     tags = Column(JSONB, nullable=False, default=lambda: json.dumps([]))
     is_published = Column(Boolean, default=False)
     published_at = Column(DateTime(timezone=True), nullable=True)

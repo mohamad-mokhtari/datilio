@@ -117,16 +117,15 @@ export interface BlogAnalytics {
     }[]
 }
 
-// Blog categories — keep in sync with backend/app/constants/blog_categories.py
+// Blog categories — keep in sync with backend/app/api/blog_categories.py
 export const BLOG_CATEGORIES = [
-    'News',
     'Tutorials',
     'AI & Data',
     'Data Science',
     'Product',
 ] as const
 
-export const DEFAULT_BLOG_CATEGORY = 'News' as const
+export const DEFAULT_BLOG_CATEGORY = 'Tutorials' as const
 
 export type BlogCategory = typeof BLOG_CATEGORIES[number]
 
