@@ -140,7 +140,6 @@ backend/**/*.csv
 !backend/startup/plans_and_add_on.csv
 backend/**/*.json
 !backend/startup/data/.gitkeep
-!backend/blog_drafts/seed/**/*.json
 backend/**/*.xlsx
 backend/**/*.xls
 backend/**/*.pdf
