@@ -10,6 +10,14 @@ import calendar
 
 from app.services.user_plan_service import UserPlanService
 
+
+def _normalize_custom_lists_limit(value: Optional[int]) -> float:
+    """None or negative plan values mean unlimited custom lists."""
+    if value is None or value < 0:
+        return float("inf")
+    return float(value)
+
+
 class UsageService:
     """Service to handle usage tracking and limits"""
     
@@ -105,9 +113,7 @@ class UsageService:
                     "openai_tokens": float(mvp_plan.ai_tokens_per_month),
                     "ai_prompts": float(mvp_plan.ai_prompts_per_month),
                     "synthetic_rows": float(mvp_plan.synthetic_rows_per_month),
-                    "custom_lists": float(mvp_plan.custom_lists_limit)
-                    if mvp_plan.custom_lists_limit > 0
-                    else float("inf"),
+                    "custom_lists": _normalize_custom_lists_limit(mvp_plan.custom_lists_limit),
                 }
             # Fallback if MVP plan is missing from the database
             return {
@@ -128,7 +134,7 @@ class UsageService:
             "openai_tokens": float(effective_limits['ai_tokens_per_month']),
             "ai_prompts": float(effective_limits['ai_prompts_per_month']),
             "synthetic_rows": float(effective_limits['synthetic_rows_per_month']),
-            "custom_lists": float(effective_limits['custom_lists_limit']) if effective_limits['custom_lists_limit'] > 0 else float('inf')
+            "custom_lists": _normalize_custom_lists_limit(effective_limits.get("custom_lists_limit")),
         }
     
     @staticmethod

@@ -93,14 +93,6 @@ async def create_user_list(
 
         db.commit()
         db.refresh(user_list)
-
-        UsageService.track_usage(
-            db=db,
-            user_id=str(current_user.id),
-            feature="custom_lists",
-            amount=1,
-            description=f"Created custom list: {list_name}",
-        )
     except IntegrityError as exc:
         db.rollback()
         logger.warning("List create integrity error for user %s: %s", current_user.id, exc)
@@ -114,6 +106,22 @@ async def create_user_list(
         raise internal_server_error(
             message="Could not create your list right now. Please try again.",
             extra={"error_type": type(exc).__name__},
+        )
+
+    try:
+        UsageService.track_usage(
+            db=db,
+            user_id=str(current_user.id),
+            feature="custom_lists",
+            amount=1,
+            description=f"Created custom list: {list_name}",
+        )
+    except Exception as exc:
+        logger.warning(
+            "List %s created for user %s but usage tracking failed: %s",
+            user_list.id,
+            current_user.id,
+            exc,
         )
 
     return {"status": "success", "list_id": user_list.id}
