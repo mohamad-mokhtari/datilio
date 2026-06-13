@@ -37,6 +37,7 @@ class User(Timestamp, Base):
     email_verification_tokens = relationship("EmailVerificationToken", back_populates="user", cascade="all, delete-orphan")
     preprocessed_files = relationship("PreprocessedData", back_populates="user", cascade="all, delete-orphan")
     ml_models = relationship("MLModel", back_populates="user", cascade="all, delete-orphan")
+    tasks = relationship("Task", back_populates="user", cascade="all, delete-orphan")
 
     @property
     def is_admin(self) -> bool:

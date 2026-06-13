@@ -14,6 +14,7 @@ This model stores information about Celery tasks including:
 
 from sqlalchemy import Column, String, Integer, DateTime, Text, Float, ForeignKey, Enum as SQLEnum
 from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.db_setup import Base
 import uuid
@@ -48,7 +49,9 @@ class Task(Base):
     celery_task_id = Column(String(255), unique=True, nullable=False, index=True)
     
     # User information
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    
+    user = relationship("User", back_populates="tasks")
     
     # Task information
     task_type = Column(SQLEnum(TaskType), nullable=False, index=True)

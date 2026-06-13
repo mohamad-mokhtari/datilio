@@ -258,8 +258,12 @@ async def delete_user(
         
         if user.id == current_user.id:
             raise bad_request_error(message="Cannot delete your own account")
-        
-        # Delete user (cascade will handle related data)
+
+        from app.models.task_model import Task
+
+        # Celery/async task rows are not always loaded via ORM cascade before commit
+        db.query(Task).filter(Task.user_id == user_id).delete(synchronize_session=False)
+
         db.delete(user)
         db.commit()
         
