@@ -3,7 +3,7 @@ import { Button, Input, Select } from '@/components/ui'
 import { HiX, HiPlus, HiTrash, HiUpload, HiCamera } from 'react-icons/hi'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
-import { BlogPost, BlogPostCreate, BlogPostUpdate, BlogContentBlock, BLOG_CATEGORIES, COMMON_BLOG_TAGS } from '@/@types/blog'
+import { BlogPost, BlogPostCreate, BlogPostUpdate, BlogContentBlock, BLOG_CATEGORIES, DEFAULT_BLOG_CATEGORY, COMMON_BLOG_TAGS } from '@/@types/blog'
 import AdminBlogService from '@/services/AdminBlogService'
 import { RootState } from '@/store'
 
@@ -33,7 +33,7 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({
         },
         author_name: '',
         author_email: '',
-        category: 'General',
+        category: DEFAULT_BLOG_CATEGORY,
         tags: [],
         is_published: false,
         meta_description: '',
@@ -111,7 +111,7 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({
                 },
                 author_name: '',
                 author_email: '',
-                category: 'General',
+                category: DEFAULT_BLOG_CATEGORY,
                 tags: [],
                 is_published: false,
                 meta_description: '',
@@ -225,7 +225,7 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({
                         caption: newBlockCaption || undefined
                     }
                 } else {
-                    toast.error('Please upload an image first')
+                    toast.error('Please upload an image or paste an image URL')
                     return
                 }
                 break
@@ -510,6 +510,20 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({
                                     </div>
                                 )}
 
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Or paste image URL
+                                    </label>
+                                    <Input
+                                        value={formData.featured_image_url}
+                                        onChange={(e) => handleInputChange('featured_image_url', e.target.value)}
+                                        placeholder="https://images.unsplash.com/photo-...?w=1200&fm=jpg"
+                                    />
+                                    <p className="text-xs text-gray-500 mt-1">
+                                        Use a direct link (Unsplash, etc.) — no upload needed. Add &amp;fm=jpg if a download fails.
+                                    </p>
+                                </div>
+
                             </div>
                         </div>
 
@@ -565,16 +579,11 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({
                                     Category
                                 </label>
                                 <Select
-                                    value={[
-                                        { label: 'General', value: 'General' },
-                                        ...BLOG_CATEGORIES.filter(cat => cat !== 'General').map(cat => ({ label: cat, value: cat }))
-                                    ].find(opt => opt.value === formData.category) || null}
-                                    onChange={(option) => handleInputChange('category', option?.value || 'General')}
+                                    value={BLOG_CATEGORIES.map(cat => ({ label: cat, value: cat }))
+                                        .find(opt => opt.value === formData.category) || null}
+                                    onChange={(option) => handleInputChange('category', option?.value || DEFAULT_BLOG_CATEGORY)}
                                     placeholder="Select category"
-                                    options={[
-                                        { label: 'General', value: 'General' },
-                                        ...BLOG_CATEGORIES.filter(cat => cat !== 'General').map(cat => ({ label: cat, value: cat }))
-                                    ]}
+                                    options={BLOG_CATEGORIES.map(cat => ({ label: cat, value: cat }))}
                                 />
                             </div>
                             <div>
@@ -764,6 +773,11 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({
                                         )}
 
 
+                                        <Input
+                                            value={newBlockUrl}
+                                            onChange={(e) => setNewBlockUrl(e.target.value)}
+                                            placeholder="Image URL (paste link or upload above)"
+                                        />
                                         <Input
                                             value={newBlockAlt}
                                             onChange={(e) => setNewBlockAlt(e.target.value)}

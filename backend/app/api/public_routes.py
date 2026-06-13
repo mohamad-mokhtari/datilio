@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Request
+from typing import Optional
+
+from fastapi import APIRouter, Query, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -253,33 +255,39 @@ async def tutorials(request: Request):
     })
 
 @router.get("/blog-home", response_class=HTMLResponse)
-async def blog_home(request: Request):
-    # Use the blog service directly instead of HTTP calls
+async def blog_home(
+    request: Request,
+    page: int = Query(1, ge=1),
+    category: Optional[str] = Query(None),
+):
     from app.services.blog_service import BlogService
     from app.schemas.blog_schemas import BlogPostListQuery
     from app.core.db_setup import SessionLocal
     from app.core.config import settings
-    
+    from app.api.blog_categories import BLOG_CATEGORIES
+
+    active_category = category if category in BLOG_CATEGORIES else None
+
     blog_data = {
         "blog_posts": [],
         "total": 0,
-        "current_page": 1,
+        "current_page": page,
         "total_pages": 0,
-        "error": None
+        "active_category": active_category,
+        "blog_categories": BLOG_CATEGORIES,
+        "error": None,
     }
-    
+
     try:
-        # Create database session
         db = SessionLocal()
-        
-        # Create query parameters
+
         query_params = BlogPostListQuery(
-            page=1,
+            page=page,
             limit=12,
-            published_only=True
+            published_only=True,
+            category=active_category,
         )
-        
-        # Get blog posts using service
+
         posts, total = BlogService.get_blog_posts(db, query_params)
         
         # Convert to template format

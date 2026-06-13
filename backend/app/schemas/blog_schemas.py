@@ -3,6 +3,8 @@ from typing import List, Optional, Union, Dict, Any
 from datetime import datetime
 from uuid import UUID
 
+from app.api.blog_categories import BLOG_CATEGORIES, DEFAULT_BLOG_CATEGORY
+
 
 class BlogContentItem(BaseModel):
     """Schema for individual blog content items"""
@@ -76,7 +78,7 @@ class BlogPostBase(BaseModel):
     content: BlogContent = Field(..., description="Blog content structure")
     author_name: str = Field("Datilio Team", max_length=100, description="Author name")
     author_email: Optional[str] = Field(None, max_length=255, description="Author email")
-    category: str = Field("General", max_length=50, description="Blog category")
+    category: str = Field(DEFAULT_BLOG_CATEGORY, max_length=50, description="Blog category")
     tags: Optional[List[str]] = Field(None, description="List of tags")
     is_published: bool = Field(False, description="Whether the post is published")
     meta_description: Optional[str] = Field(None, max_length=300, description="SEO meta description")
@@ -88,6 +90,12 @@ class BlogPostBase(BaseModel):
         import re
         if not re.match(r'^[a-z0-9-]+$', v):
             raise ValueError('Slug must contain only lowercase letters, numbers, and hyphens')
+        return v
+
+    @validator('category')
+    def validate_category(cls, v):
+        if v not in BLOG_CATEGORIES:
+            raise ValueError(f'Category must be one of: {", ".join(BLOG_CATEGORIES)}')
         return v
 
     @validator('tags')
@@ -126,6 +134,12 @@ class BlogPostUpdate(BaseModel):
             import re
             if not re.match(r'^[a-z0-9-]+$', v):
                 raise ValueError('Slug must contain only lowercase letters, numbers, and hyphens')
+        return v
+
+    @validator('category')
+    def validate_category(cls, v):
+        if v is not None and v not in BLOG_CATEGORIES:
+            raise ValueError(f'Category must be one of: {", ".join(BLOG_CATEGORIES)}')
         return v
 
     @validator('tags')

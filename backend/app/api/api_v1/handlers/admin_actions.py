@@ -48,6 +48,35 @@ from app.utils.http_exceptions import (
     conflict_error, too_many_requests_error
 )
 
+_BLOG_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif"}
+_BLOG_IMAGE_CONTENT_TYPES = {
+    "image/jpeg": ".jpg",
+    "image/jpg": ".jpg",
+    "image/png": ".png",
+    "image/gif": ".gif",
+    "image/webp": ".webp",
+    "image/avif": ".avif",
+}
+
+
+def _resolve_blog_image_extension(filename: Optional[str], content_type: Optional[str]) -> str:
+    """Resolve file extension from filename or Content-Type (handles Unsplash AVIF downloads)."""
+    ext = Path(filename or "").suffix.lower()
+    if ext == ".jpeg":
+        ext = ".jpg"
+    if ext in _BLOG_IMAGE_EXTENSIONS:
+        return ext
+
+    mime = (content_type or "").split(";")[0].strip().lower()
+    inferred = _BLOG_IMAGE_CONTENT_TYPES.get(mime)
+    if inferred:
+        return inferred
+
+    raise HTTPException(
+        status_code=400,
+        detail="Unsupported image format. Use JPEG, PNG, GIF, WebP, or AVIF",
+    )
+
 admin_actions_router = APIRouter()
 
 # ============================================================================
@@ -784,13 +813,7 @@ async def upload_blog_image(
         # Reset file pointer
         await image_file.seek(0)
         
-        # Create unique filename
-        file_extension = Path(image_file.filename).suffix.lower()
-        if file_extension not in ['.jpg', '.jpeg', '.png', '.gif', '.webp']:
-            raise HTTPException(
-                status_code=400,
-                detail="Unsupported image format. Use JPEG, PNG, GIF, or WebP"
-            )
+        file_extension = _resolve_blog_image_extension(image_file.filename, image_file.content_type)
         
         # Generate unique filename
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

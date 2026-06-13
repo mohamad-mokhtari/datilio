@@ -109,6 +109,8 @@
         margin-right: 0.5rem;
         margin-bottom: 0.5rem;
         transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
     }
     
     .filter-btn:hover,
@@ -190,12 +192,14 @@
                 <div class="container px-5">
             <!-- Filter Buttons -->
             <div class="filter-buttons text-center">
-                <button class="filter-btn active" data-category="all">All Posts</button>
-                <button class="filter-btn" data-category="AI & ML">AI & ML</button>
-                <button class="filter-btn" data-category="Data Viz">Data Viz</button>
-                <button class="filter-btn" data-category="Big Data">Big Data</button>
-                <button class="filter-btn" data-category="Tutorials">Tutorials</button>
-                <button class="filter-btn" data-category="News">News</button>
+                <a href="{{ url_for('blog_home') }}"
+                   class="filter-btn {% if not active_category %}active{% endif %}"
+                   data-category="all">All Posts</a>
+                {% for cat in blog_categories %}
+                <a href="{{ url_for('blog_home') }}?category={{ cat | urlencode }}"
+                   class="filter-btn {% if active_category == cat %}active{% endif %}"
+                   data-category="{{ cat }}">{{ cat }}</a>
+                {% endfor %}
             </div>
 
             <!-- Blog Posts Grid -->
@@ -264,7 +268,7 @@
                         <ul class="pagination">
                             {% if current_page > 1 %}
                             <li class="page-item">
-                                <a class="page-link" href="?page={{ current_page - 1 }}">Previous</a>
+                                <a class="page-link" href="?page={{ current_page - 1 }}{% if active_category %}&category={{ active_category | urlencode }}{% endif %}">Previous</a>
                             </li>
                             {% endif %}
                             
@@ -275,7 +279,7 @@
                                 </li>
                                 {% elif page_num <= 3 or page_num > total_pages - 3 or (page_num >= current_page - 1 and page_num <= current_page + 1) %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                                    <a class="page-link" href="?page={{ page_num }}{% if active_category %}&category={{ active_category | urlencode }}{% endif %}">{{ page_num }}</a>
                                 </li>
                                 {% elif page_num == 4 and current_page > 5 %}
                                 <li class="page-item disabled">
@@ -290,7 +294,7 @@
                             
                             {% if current_page < total_pages %}
                             <li class="page-item">
-                                <a class="page-link" href="?page={{ current_page + 1 }}">Next</a>
+                                <a class="page-link" href="?page={{ current_page + 1 }}{% if active_category %}&category={{ active_category | urlencode }}{% endif %}">Next</a>
                             </li>
                             {% endif %}
                         </ul>
@@ -299,8 +303,13 @@
                 {% else %}
                     <div class="no-posts">
                         <i class="bi bi-journal-text"></i>
+                        {% if active_category %}
+                        <h3>No posts in “{{ active_category }}” yet</h3>
+                        <p><a href="{{ url_for('blog_home') }}">View all posts</a></p>
+                        {% else %}
                         <h3>No blog posts found</h3>
                         <p>Check back later for new content!</p>
+                        {% endif %}
                     </div>
                 {% endif %}
                     </div>
@@ -345,49 +354,30 @@
 
 {% block extra_scripts %}
 <script>
-    // Filter functionality
     document.addEventListener('DOMContentLoaded', function() {
-        const filterButtons = document.querySelectorAll('.filter-btn');
         const blogItems = document.querySelectorAll('.blog-post-item');
         const searchInput = document.getElementById('searchInput');
-        
-        // Filter by category
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const category = this.getAttribute('data-category');
-                
-                // Update active button
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Filter posts
-                blogItems.forEach(item => {
-                    if (category === 'all' || item.getAttribute('data-category') === category) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        });
-        
-        // Search functionality
+        const activeCategory = {{ active_category | tojson if active_category else 'null' }};
+
+        // Client-side search within the current page (respects server-side category filter)
         searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            
+            const searchTerm = this.value.toLowerCase().trim();
+
             blogItems.forEach(item => {
                 const title = item.querySelector('.card-title').textContent.toLowerCase();
-                const summary = item.querySelector('.blog-summary').textContent.toLowerCase();
-                
-                if (title.includes(searchTerm) || summary.includes(searchTerm)) {
-                    item.style.display = 'block';
+                const summaryEl = item.querySelector('.blog-summary');
+                const summary = summaryEl ? summaryEl.textContent.toLowerCase() : '';
+                const itemCategory = item.getAttribute('data-category');
+                const categoryMatch = !activeCategory || itemCategory === activeCategory;
+
+                if (categoryMatch && (!searchTerm || title.includes(searchTerm) || summary.includes(searchTerm))) {
+                    item.classList.remove('d-none');
                 } else {
-                    item.style.display = 'none';
+                    item.classList.add('d-none');
                 }
             });
         });
-        
-        // Add animation on scroll
+
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
