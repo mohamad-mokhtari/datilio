@@ -120,8 +120,15 @@ const ShowData = () => {
   const closeDataPreviewModal = () => {
     setIsDataPreviewOpen(false);
     setDataFrameData([]);
-    // Reopen the FilterModal when DataPreviewModal is closed
+    // Reopen the FilterModal when DataPreviewModal is closed manually
     setIsFilterModalOpen(true);
+  };
+
+  const handleRuleCreated = () => {
+    setIsDataPreviewOpen(false);
+    setIsFilterModalOpen(false);
+    setDataFrameData([]);
+    setPythonCodeSnippet(undefined);
   };
 
   const handlePageChange = (page: number) => {
@@ -721,6 +728,7 @@ const ShowData = () => {
         filterQuery={filterQuery}
         onPageChange={handlePageChange}
         pythonCodeSnippet={pythonCodeSnippet}
+        onRuleCreated={handleRuleCreated}
       />
 
       <RulesModal

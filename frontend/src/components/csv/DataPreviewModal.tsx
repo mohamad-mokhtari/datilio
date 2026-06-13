@@ -41,6 +41,7 @@ interface DataPreviewModalProps {
   filterQuery?: RuleGroupType;
   onPageChange?: (page: number) => void;
   pythonCodeSnippet?: string; // Python code snippet from filter response
+  onRuleCreated?: () => void;
 }
 
 const DataPreviewModal: React.FC<DataPreviewModalProps> = ({
@@ -57,6 +58,7 @@ const DataPreviewModal: React.FC<DataPreviewModalProps> = ({
   filterQuery,
   onPageChange,
   pythonCodeSnippet,
+  onRuleCreated,
 }) => {
   const { themeColor, primaryColorLevel } = useConfig();
   
@@ -243,6 +245,12 @@ const DataPreviewModal: React.FC<DataPreviewModalProps> = ({
       setRuleName('');
       setRuleDefinition('');
       setCreateRuleError(null);
+
+      if (onRuleCreated) {
+        onRuleCreated();
+      } else {
+        onClose();
+      }
     } catch (error) {
       console.error('Error creating rule:', error);
       const errorMessage = 'Failed to create rule. Please try again.';

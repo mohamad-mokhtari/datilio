@@ -749,7 +749,6 @@ const RulesModal: React.FC<RulesModalProps> = ({
                     <Tr>
                       <Th>Rule Name</Th>
                       <Th>Definition</Th>
-                      <Th>Query</Th>
                       <Th>Actions</Th>
                     </Tr>
                   </THead>
@@ -757,10 +756,7 @@ const RulesModal: React.FC<RulesModalProps> = ({
                     {rules.map((rule) => (
                       <Tr key={rule.id}>
                         <Td className="font-medium">{rule.rule_name}</Td>
-                        <Td className="text-sm text-gray-600">{rule.rule_definition}</Td>
-                        <Td className="text-sm text-gray-500 font-mono">
-                          {rule.query.pseudo_query?.query || 'No query'}
-                        </Td>
+                        <Td className="text-sm text-gray-600 max-w-md">{rule.rule_definition || '—'}</Td>
                         <Td>
                           <div className="flex items-center space-x-2">
                             <Button
