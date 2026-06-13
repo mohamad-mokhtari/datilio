@@ -1,0 +1,72 @@
+{
+  "title": "End-to-End Decision Workflow With Datilio",
+  "slug": "end-to-end-datilio-decision-workflow",
+  "summary": "From question to decision, Datilio supports upload through verified insight on one file thread.",
+  "featured_image_url": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "From question to decision, Datilio supports upload through verified insight on one file thread.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Decisions fail when steps scatter across tools with no shared context. Receive export. Upload and preview. Clean via filters."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&fm=jpg&fit=crop",
+        "alt": "Team meeting with presentation screen",
+        "caption": "Team meeting with presentation screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Full path"
+      },
+      {
+        "type": "paragraph",
+        "text": "Receive export. Upload and preview. Clean via filters. Chart key views. Ask Talk to Data. Verify. Export. Decide."
+      },
+      {
+        "type": "paragraph",
+        "text": "Document file date and rule names on the decision record."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Each step reinforces trust in the next.",
+          "Skipping preview or verify breaks the chain.",
+          "Synthetic data trains the path without production risk."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Outcome"
+      },
+      {
+        "type": "paragraph",
+        "text": "Faster cycles with auditable artifacts—not just faster slides."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio's product story is this end-to-end file-first decision workflow."
+      },
+      {
+        "type": "paragraph",
+        "text": "That is the loop teams run every week: file in, verified insight out, decision documented."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Product",
+  "tags": [
+    "End-to-End",
+    "Datilio",
+    "Decision Workflow",
+    "Product"
+  ],
+  "is_published": true,
+  "meta_description": "From question to decision, Datilio supports upload through verified insight on one file thread.",
+  "meta_keywords": "End-to-End, Datilio, Decision Workflow, Product"
+}

@@ -1,0 +1,72 @@
+{
+  "title": "The Datilio File Workflow: Where AI Fits After Upload",
+  "slug": "datilio-file-workflow-ai-layer",
+  "summary": "Datilio is built as upload → preview → filter → chart → Talk to Data—not AI first.",
+  "featured_image_url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Datilio is built as upload → preview → filter → chart → Talk to Data—not AI first.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Each step adds confidence before language models summarize anything. Upload CSV, Excel, or JSON. Preview schema and row count. Save filters for your business slice."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+        "alt": "Data visualization on a modern display",
+        "caption": "Data visualization on a modern display. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Layer by layer"
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload CSV, Excel, or JSON. Preview schema and row count. Save filters for your business slice. Chart key metrics."
+      },
+      {
+        "type": "paragraph",
+        "text": "Talk to Data then answers within that inspected context—same columns, same rules, same session."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Upload establishes the dataset contract.",
+          "Preview catches schema drift between exports.",
+          "Charts provide verification targets for AI totals."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Why order matters"
+      },
+      {
+        "type": "paragraph",
+        "text": "Skipping preview or filters invites mismatches that look like AI failures but are scope errors."
+      },
+      {
+        "type": "paragraph",
+        "text": "The workflow is repeatable every Monday on fresh exports."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio's integrated file workflow keeps AI as a verified layer—not a magic black box."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "AI & Data",
+  "tags": [
+    "Datilio",
+    "Workflow",
+    "Upload",
+    "AI Layer"
+  ],
+  "is_published": true,
+  "meta_description": "Datilio is built as upload → preview → filter → chart → Talk to Data—not AI first.",
+  "meta_keywords": "Datilio, Workflow, Upload, AI Layer"
+}

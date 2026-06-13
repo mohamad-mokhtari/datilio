@@ -1,0 +1,72 @@
+{
+  "title": "Build Filter Rules for Repeatable Analysis",
+  "slug": "build-filter-rules-repeat-analysis",
+  "summary": "Save filter combinations as rules you reapply on every new upload.",
+  "featured_image_url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Save filter combinations as rules you reapply on every new upload.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "One-off filters waste time when you analyze the same slice every week. Saved rules encode your intent permanently. Apply filters for date range, status equals Active, region in your list. Confirm row count and chart match expectations before saving."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+        "alt": "Data visualization on a modern display",
+        "caption": "Data visualization on a modern display. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Define rule logic"
+      },
+      {
+        "type": "paragraph",
+        "text": "Apply filters for date range, status equals Active, region in your list. Confirm row count and chart match expectations before saving."
+      },
+      {
+        "type": "paragraph",
+        "text": "Give the rule a descriptive name and note what decision it supports—board deck, ops review, compliance sample."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Stack filters narrow scope; verify each step's row count.",
+          "Document excluded values in the rule name or team wiki.",
+          "Test rules on a prior month's file before trusting automation."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Reapply on new uploads"
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload next week's CSV and apply the saved rule in one click. Charts and Talk to Data respect the same subset automatically."
+      },
+      {
+        "type": "paragraph",
+        "text": "When business logic changes, edit the rule once—not every analyst's desktop copy."
+      },
+      {
+        "type": "paragraph",
+        "text": "Filter rules turn Datilio from exploratory toy into operational workflow infrastructure."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Tutorials",
+  "tags": [
+    "Filter Rules",
+    "Automation",
+    "Tutorial",
+    "Repeatability"
+  ],
+  "is_published": true,
+  "meta_description": "Save filter combinations as rules you reapply on every new upload.",
+  "meta_keywords": "Filter Rules, Automation, Tutorial, Repeatability"
+}

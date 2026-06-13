@@ -1,0 +1,72 @@
+{
+  "title": "Preview Your File Before Asking AI Any Questions",
+  "slug": "preview-before-ai-questions",
+  "summary": "Thirty seconds in preview prevents thirty minutes explaining wrong AI answers in a meeting.",
+  "featured_image_url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Thirty seconds in preview prevents thirty minutes explaining wrong AI answers in a meeting.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "AI reads what you uploaded literally—garbled headers become garbled logic. Row count jumps or drops versus last week. New columns appear. Dates import as text."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&fm=jpg&fit=crop",
+        "alt": "Abstract visualization representing AI and data",
+        "caption": "Abstract visualization representing AI and data. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "What preview reveals"
+      },
+      {
+        "type": "paragraph",
+        "text": "Row count jumps or drops versus last week. New columns appear. Dates import as text. Currency columns include symbols that block sums."
+      },
+      {
+        "type": "paragraph",
+        "text": "Fix upstream or adjust filters before any Talk to Data session so questions target clean fields."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Compare row count to prior upload before asking totals.",
+          "Confirm amount columns are numeric in preview.",
+          "Scan sample rows for duplicate keys."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Preview as gate"
+      },
+      {
+        "type": "paragraph",
+        "text": "Make preview mandatory in team playbooks—the same way you would not pivot a sheet you have not opened."
+      },
+      {
+        "type": "paragraph",
+        "text": "Preview discipline compounds: fewer mismatches, faster trust in AI assists."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio's preview-first UX is the gate that makes file-grounded AI reliable."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "AI & Data",
+  "tags": [
+    "Preview",
+    "Upload",
+    "AI Readiness",
+    "Best Practice"
+  ],
+  "is_published": true,
+  "meta_description": "Thirty seconds in preview prevents thirty minutes explaining wrong AI answers in a meeting.",
+  "meta_keywords": "Preview, Upload, AI Readiness, Best Practice"
+}

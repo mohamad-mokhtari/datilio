@@ -1,0 +1,72 @@
+{
+  "title": "Visualize Skewed Revenue Data Without Misleading Averages",
+  "slug": "visualize-skewed-revenue-data",
+  "summary": "Revenue distributions are almost always right-skewed. Show the shape, not just the mean.",
+  "featured_image_url": "https://images.unsplash.com/photo-1533750343818-4149482b1375?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Revenue distributions are almost always right-skewed. Show the shape, not just the mean.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "A single average bar hides whether typical deals are small with rare whales. Use binned bar charts or sorted deal bars. Mark median and selected percentiles if tool supports. Filter test accounts before plotting so skew reflects real business."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1533750343818-4149482b1375?w=1200&fm=jpg&fit=crop",
+        "alt": "Charts and graphs for business reporting",
+        "caption": "Charts and graphs for business reporting. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Show distribution shape"
+      },
+      {
+        "type": "paragraph",
+        "text": "Use binned bar charts or sorted deal bars. Mark median and selected percentiles if tool supports."
+      },
+      {
+        "type": "paragraph",
+        "text": "Filter test accounts before plotting so skew reflects real business."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Pair mean total with median typical deal charts.",
+          "Call out top-N contribution separately.",
+          "Avoid linear scales that squash the long tail unreadably."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Narrate honestly"
+      },
+      {
+        "type": "paragraph",
+        "text": "Executives decide differently when they see concentration risk in top accounts."
+      },
+      {
+        "type": "paragraph",
+        "text": "Saved rules keep skew views consistent export to export."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio charts reveal skew that summary statistics hide."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Data Science",
+  "tags": [
+    "Skew",
+    "Revenue",
+    "Visualization",
+    "Statistics"
+  ],
+  "is_published": true,
+  "meta_description": "Revenue distributions are almost always right-skewed. Show the shape, not just the mean.",
+  "meta_keywords": "Skew, Revenue, Visualization, Statistics"
+}

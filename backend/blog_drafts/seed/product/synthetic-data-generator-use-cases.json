@@ -1,0 +1,72 @@
+{
+  "title": "Synthetic Data Generator Use Cases in Datilio",
+  "slug": "synthetic-data-generator-use-cases",
+  "summary": "Datilio's synthetic data generator creates realistic stand-ins for demos, training, and privacy-safe tests.",
+  "featured_image_url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Datilio's synthetic data generator creates realistic stand-ins for demos, training, and privacy-safe tests.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Real data is too sensitive for screenshots; synthetic data mirrors schema without risk. Sales demos with believable charts, onboarding exercises, filter-rule testing, Talk to Data practice. Generate columns with types and distributions that look real in preview and bar charts."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+        "alt": "Data visualization on a modern display",
+        "caption": "Data visualization on a modern display. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Common use cases"
+      },
+      {
+        "type": "paragraph",
+        "text": "Sales demos with believable charts, onboarding exercises, filter-rule testing, Talk to Data practice."
+      },
+      {
+        "type": "paragraph",
+        "text": "Generate columns with types and distributions that look real in preview and bar charts."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Mirror production column names for workflow tests.",
+          "Label files SYNTHETIC in filenames.",
+          "Never present generated KPIs as real externally."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Workflow fit"
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload synthetic CSV through the same preview-filter-chart path as production."
+      },
+      {
+        "type": "paragraph",
+        "text": "Refresh generated sets monthly for varied training scenarios."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio synthetic data separates public demo brilliance from production trust."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Product",
+  "tags": [
+    "Synthetic Data",
+    "Datilio",
+    "Generator",
+    "Use Cases"
+  ],
+  "is_published": true,
+  "meta_description": "Datilio's synthetic data generator creates realistic stand-ins for demos, training, and privacy-safe tests.",
+  "meta_keywords": "Synthetic Data, Datilio, Generator, Use Cases"
+}

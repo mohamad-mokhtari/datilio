@@ -1,0 +1,72 @@
+{
+  "title": "The Datilio File-First Philosophy Explained",
+  "slug": "datilio-file-first-philosophy",
+  "summary": "Datilio starts where your data already lives—in files—not in a six-month warehouse project.",
+  "featured_image_url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Datilio starts where your data already lives—in files—not in a six-month warehouse project.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Your Monday CSV is the hero object, not an afterthought to a connector catalog. Upload CSV, Excel, or JSON and get immediate schema preview, row counts, and charts. Governance layers—filters, rules, exports, Talk to Data—attach to that upload instead of requiring migration first."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&fm=jpg&fit=crop",
+        "alt": "Analytics dashboard with charts on a laptop screen",
+        "caption": "Analytics dashboard with charts on a laptop screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Files as first-class citizens"
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload CSV, Excel, or JSON and get immediate schema preview, row counts, and charts."
+      },
+      {
+        "type": "paragraph",
+        "text": "Governance layers—filters, rules, exports, Talk to Data—attach to that upload instead of requiring migration first."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "No mandatory warehouse to see first chart.",
+          "Repeatable rules survive weekly re-uploads.",
+          "AI scopes to the file you verified."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Who it serves"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ops, finance, marketing, and founders who live in exports but need more than spreadsheet friction."
+      },
+      {
+        "type": "paragraph",
+        "text": "File-first does not mean file-only—it means meet teams today while they modernize."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio's product bets on file-first because that is how most business decisions actually start."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Product",
+  "tags": [
+    "Datilio",
+    "File-First",
+    "Philosophy",
+    "Product"
+  ],
+  "is_published": true,
+  "meta_description": "Datilio starts where your data already lives—in files—not in a six-month warehouse project.",
+  "meta_keywords": "Datilio, File-First, Philosophy, Product"
+}

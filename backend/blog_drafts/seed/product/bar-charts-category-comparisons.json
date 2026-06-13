@@ -1,0 +1,72 @@
+{
+  "title": "Bar Charts for Category Comparisons in Datilio",
+  "slug": "bar-charts-category-comparisons",
+  "summary": "Bar charts are Datilio's fastest path from upload to 'who contributed most?'",
+  "featured_image_url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Bar charts are Datilio's fastest path from upload to 'who contributed most?'",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Category comparisons anchor weekly standups and regional reviews. Pick category dimension and numeric measure. Sort descending. Filter long tails via rules when SKU count explodes."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&fm=jpg&fit=crop",
+        "alt": "Professional reviewing business charts on a laptop",
+        "caption": "Professional reviewing business charts on a laptop. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Configure effectively"
+      },
+      {
+        "type": "paragraph",
+        "text": "Pick category dimension and numeric measure. Sort descending. Filter long tails via rules when SKU count explodes."
+      },
+      {
+        "type": "paragraph",
+        "text": "Cross-check bar totals with filtered sums before sharing."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Watch for null categories as blank bars.",
+          "Avoid over-coloring that hides magnitude.",
+          "Save filter context with the chart view."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Repeat weekly"
+      },
+      {
+        "type": "paragraph",
+        "text": "Same bar configuration on fresh upload with saved rules—no rebuild from scratch."
+      },
+      {
+        "type": "paragraph",
+        "text": "Pair with Talk to Data to confirm top-N rankings verbally and visually."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio bar charts are the workhorse of file-first category analysis."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Product",
+  "tags": [
+    "Bar Charts",
+    "Datilio",
+    "Categories",
+    "Visualization"
+  ],
+  "is_published": true,
+  "meta_description": "Bar charts are Datilio's fastest path from upload to 'who contributed most?'",
+  "meta_keywords": "Bar Charts, Datilio, Categories, Visualization"
+}

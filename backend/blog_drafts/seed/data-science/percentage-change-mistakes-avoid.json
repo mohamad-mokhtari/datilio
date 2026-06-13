@@ -1,0 +1,72 @@
+{
+  "title": "Percentage Change Mistakes That Skew Business Reports",
+  "slug": "percentage-change-mistakes-avoid",
+  "summary": "Month-over-month percent change is simple until divides-by-zero, small bases, and calendar effects appear.",
+  "featured_image_url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Month-over-month percent change is simple until divides-by-zero, small bases, and calendar effects appear.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "A 200% jump from one to three units is mathematically true and practically meaningless. Dividing by last period when it was zero or near-zero creates absurd percentages. Partial months compare unfairly to full months. Mixing filtered subsets—this month all regions, last month one region—distorts deltas."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+        "alt": "Data visualization on a modern display",
+        "caption": "Data visualization on a modern display. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "paragraph",
+        "text": "Dividing by last period when it was zero or near-zero creates absurd percentages. Partial months compare unfairly to full months."
+      },
+      {
+        "type": "paragraph",
+        "text": "Mixing filtered subsets—this month all regions, last month one region—distorts deltas."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Require minimum base volume before showing percent change.",
+          "Compare aligned date windows only.",
+          "Show absolute delta alongside percentage."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Safer comparisons"
+      },
+      {
+        "type": "paragraph",
+        "text": "Use saved rules for consistent scope both periods. Chart absolute values when bases are tiny."
+      },
+      {
+        "type": "paragraph",
+        "text": "Finance partners appreciate absolute numbers with context over flashy percentages."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio filters and side-by-side period charts reduce percent-change errors."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Data Science",
+  "tags": [
+    "Percentage Change",
+    "Reporting",
+    "Errors",
+    "Finance"
+  ],
+  "is_published": true,
+  "meta_description": "Month-over-month percent change is simple until divides-by-zero, small bases, and calendar effects appear.",
+  "meta_keywords": "Percentage Change, Reporting, Errors, Finance"
+}

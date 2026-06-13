@@ -1,0 +1,72 @@
+{
+  "title": "Using Synthetic Data to Train Teams on AI Safely",
+  "slug": "synthetic-data-ai-training-safely",
+  "summary": "Teams need practice verifying AI without touching production PII. Synthetic files fill the gap.",
+  "featured_image_url": "https://images.unsplash.com/photo-1504868580729-ff25987587a3?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Teams need practice verifying AI without touching production PII. Synthetic files fill the gap.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Training on real customer rows in a workshop is a compliance incident waiting to happen. Generate columns that mirror production schema with fake values. Plant intentional issues—nulls, outliers, duplicate IDs—for learners to catch. Run full upload-preview-filter-chart-Talk to Data exercises on synthetic CSVs until verification is muscle memory."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1504868580729-ff25987587a3?w=1200&fm=jpg&fit=crop",
+        "alt": "Person working with spreadsheets and notes",
+        "caption": "Person working with spreadsheets and notes. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Design teaching datasets"
+      },
+      {
+        "type": "paragraph",
+        "text": "Generate columns that mirror production schema with fake values. Plant intentional issues—nulls, outliers, duplicate IDs—for learners to catch."
+      },
+      {
+        "type": "paragraph",
+        "text": "Run full upload-preview-filter-chart-Talk to Data exercises on synthetic CSVs until verification is muscle memory."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Label synthetic filenames clearly.",
+          "Include traps: one duplicate key, one mis-typed region.",
+          "Reset exercises monthly with fresh generated rows."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Graduate to production"
+      },
+      {
+        "type": "paragraph",
+        "text": "Move learners to sanitized subsets under supervision only after synthetic drills pass."
+      },
+      {
+        "type": "paragraph",
+        "text": "Synthetic practice reduces both privacy risk and hallucination panic—learners know how to chart-check."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio's synthetic generator plus Talk to Data creates safe AI training sandboxes."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "AI & Data",
+  "tags": [
+    "Synthetic Data",
+    "Training",
+    "Privacy",
+    "AI"
+  ],
+  "is_published": true,
+  "meta_description": "Teams need practice verifying AI without touching production PII. Synthetic files fill the gap.",
+  "meta_keywords": "Synthetic Data, Training, Privacy, AI"
+}

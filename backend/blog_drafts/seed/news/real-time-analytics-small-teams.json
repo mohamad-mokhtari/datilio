@@ -1,0 +1,72 @@
+{
+  "title": "Real-Time Analytics Becomes Accessible to Small Teams",
+  "slug": "real-time-analytics-small-teams",
+  "summary": "Streaming analytics is not just for hyperscalers. Smaller teams now expect near-real-time refreshes on operational exports.",
+  "featured_image_url": "https://images.unsplash.com/photo-1518186285589-2f7639f5915c?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Streaming analytics is not just for hyperscalers. Smaller teams now expect near-real-time refreshes on operational exports.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Batch reporting once meant Monday morning dashboards. Operations teams now ask for hourly or intraday views from the same tools they use for monthly files. API exports and scheduled CSV drops blur the line between batch and streaming. Tools that re-upload or sync frequently deliver 'good enough' real-time for many SMB use cases."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1518186285589-2f7639f5915c?w=1200&fm=jpg&fit=crop",
+        "alt": "Calculator and financial data analysis",
+        "caption": "Calculator and financial data analysis. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Refresh expectations change"
+      },
+      {
+        "type": "paragraph",
+        "text": "API exports and scheduled CSV drops blur the line between batch and streaming. Tools that re-upload or sync frequently deliver 'good enough' real-time for many SMB use cases."
+      },
+      {
+        "type": "paragraph",
+        "text": "Warehouse-free teams achieve freshness through automation: webhook to file, automatic reload, saved rules re-applied."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Sub-hour latency satisfies many retail and support teams.",
+          "File reload plus saved filters beats custom streaming pipelines.",
+          "Alerts on rule violations complement live charts."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Cost and complexity tradeoffs"
+      },
+      {
+        "type": "paragraph",
+        "text": "True stream processing still demands engineering headcount. File-refresh workflows cover a wide middle ground at lower cost."
+      },
+      {
+        "type": "paragraph",
+        "text": "Buyers evaluate how quickly a refreshed file propagates through charts and AI without manual rework."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio's repeatable rules help teams re-run the same analysis each time a fresh export lands."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "News",
+  "tags": [
+    "Real-Time Analytics",
+    "Small Business",
+    "Streaming",
+    "Trends"
+  ],
+  "is_published": true,
+  "meta_description": "Streaming analytics is not just for hyperscalers. Smaller teams now expect near-real-time refreshes on operational exports.",
+  "meta_keywords": "Real-Time Analytics, Small Business, Streaming, Trends"
+}

@@ -1,0 +1,72 @@
+{
+  "title": "Build a Repeatable Weekly Report in Datilio",
+  "slug": "repeatable-weekly-report-datilio",
+  "summary": "Weekly reports become fast when upload, saved rules, charts, and export follow the same script.",
+  "featured_image_url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Weekly reports become fast when upload, saved rules, charts, and export follow the same script.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Heroics every Friday burn out analysts. Repeatability scales. Upload new export. Apply named rules."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&fm=jpg&fit=crop",
+        "alt": "Business planning with documents and laptop",
+        "caption": "Business planning with documents and laptop. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Weekly script"
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload new export. Apply named rules. Refresh bar and line charts. Sanity-check totals. Export filtered CSV."
+      },
+      {
+        "type": "paragraph",
+        "text": "Optional Talk to Data executive summary draft—verified last."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Track row count week over week.",
+          "Version rules when definitions shift.",
+          "Archive export date with slide deck."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Continuous improvement"
+      },
+      {
+        "type": "paragraph",
+        "text": "Note friction each week—one new column? update preview checklist."
+      },
+      {
+        "type": "paragraph",
+        "text": "Minutes saved compound across quarters."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio exists to make weekly file reports boringly reliable."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Product",
+  "tags": [
+    "Weekly Report",
+    "Datilio",
+    "Automation",
+    "Workflow"
+  ],
+  "is_published": true,
+  "meta_description": "Weekly reports become fast when upload, saved rules, charts, and export follow the same script.",
+  "meta_keywords": "Weekly Report, Datilio, Automation, Workflow"
+}

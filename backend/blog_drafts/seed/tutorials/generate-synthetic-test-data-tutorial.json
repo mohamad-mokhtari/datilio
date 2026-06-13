@@ -1,0 +1,72 @@
+{
+  "title": "Generate Synthetic Test Data for Demos and Training",
+  "slug": "generate-synthetic-test-data-tutorial",
+  "summary": "Create training datasets with the synthetic generator, then walk through full Datilio workflows.",
+  "featured_image_url": "https://images.unsplash.com/photo-1533750343818-4149482b1375?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Create training datasets with the synthetic generator, then walk through full Datilio workflows.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Training on production data risks leaks. Synthetic files let teams practice upload-through-export safely. Mirror production column names and types without real values. Generate thousands of rows with realistic distributions."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1533750343818-4149482b1375?w=1200&fm=jpg&fit=crop",
+        "alt": "Charts and graphs for business reporting",
+        "caption": "Charts and graphs for business reporting. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Design training schema"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mirror production column names and types without real values. Generate thousands of rows with realistic distributions."
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload synthetic CSV through preview, build charts, save rules, and run Talk to Data exercises on fake but structurally real data."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Label synthetic files clearly in filenames.",
+          "Include intentional quality issues for teaching detection.",
+          "Reset exercises monthly with fresh generated data."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Run the full workflow"
+      },
+      {
+        "type": "paragraph",
+        "text": "Practice end-to-end: upload, missing-value check, filter, chart, verify AI, export. Time each step for onboarding benchmarks."
+      },
+      {
+        "type": "paragraph",
+        "text": "Graduate learners to sanitized production subsets under supervision."
+      },
+      {
+        "type": "paragraph",
+        "text": "Synthetic test data makes Datilio onboarding scalable without compliance nightmares."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Tutorials",
+  "tags": [
+    "Synthetic Data",
+    "Testing",
+    "Tutorial",
+    "Training"
+  ],
+  "is_published": true,
+  "meta_description": "Create training datasets with the synthetic generator, then walk through full Datilio workflows.",
+  "meta_keywords": "Synthetic Data, Testing, Tutorial, Training"
+}

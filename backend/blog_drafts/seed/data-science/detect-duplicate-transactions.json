@@ -1,0 +1,72 @@
+{
+  "title": "Detect Duplicate Transactions Before Reporting Totals",
+  "slug": "detect-duplicate-transactions",
+  "summary": "Duplicate transaction rows double revenue in careless sums.",
+  "featured_image_url": "https://images.unsplash.com/photo-1518186285589-2f7639f5915c?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Duplicate transaction rows double revenue in careless sums.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Payment retries and ETL bugs create twins that charts magnify. After upload, sort by transaction_id or composite key. Filter duplicates via counts if export includes them. Chart daily totals and spot days with impossible spikes relative to volume."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1518186285589-2f7639f5915c?w=1200&fm=jpg&fit=crop",
+        "alt": "Calculator and financial data analysis",
+        "caption": "Calculator and financial data analysis. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Detection steps"
+      },
+      {
+        "type": "paragraph",
+        "text": "After upload, sort by transaction_id or composite key. Filter duplicates via counts if export includes them."
+      },
+      {
+        "type": "paragraph",
+        "text": "Chart daily totals and spot days with impossible spikes relative to volume."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Define primary key with finance before trusting totals.",
+          "Exclude known duplicate import batches via rules.",
+          "Reconcile sums to control reports early."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Fix and prevent"
+      },
+      {
+        "type": "paragraph",
+        "text": "Push ETL fixes when duplicates are systematic."
+      },
+      {
+        "type": "paragraph",
+        "text": "Archive deduped filter version with each monthly close."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio filters and preview catch many duplicate issues before executive reporting."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Data Science",
+  "tags": [
+    "Duplicates",
+    "Transactions",
+    "Finance",
+    "Quality"
+  ],
+  "is_published": true,
+  "meta_description": "Duplicate transaction rows double revenue in careless sums.",
+  "meta_keywords": "Duplicates, Transactions, Finance, Quality"
+}

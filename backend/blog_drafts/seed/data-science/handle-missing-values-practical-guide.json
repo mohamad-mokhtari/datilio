@@ -1,0 +1,72 @@
+{
+  "title": "A Practical Guide to Handling Missing Values in CSV Exports",
+  "slug": "handle-missing-values-practical-guide",
+  "summary": "Blank cells and nulls silently shrink denominators and break filters. Handle them deliberately, not accidentally.",
+  "featured_image_url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Blank cells and nulls silently shrink denominators and break filters. Handle them deliberately, not accidentally.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Missing data is a decision: exclude, impute, or flag—not something Excel auto-skips without telling you. Filter for null in key columns after upload. Count affected rows. Chart missingness by category if gaps cluster."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&fm=jpg&fit=crop",
+        "alt": "Abstract visualization representing AI and data",
+        "caption": "Abstract visualization representing AI and data. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Assess missingness"
+      },
+      {
+        "type": "paragraph",
+        "text": "Filter for null in key columns after upload. Count affected rows. Chart missingness by category if gaps cluster."
+      },
+      {
+        "type": "paragraph",
+        "text": "Decide policy with domain owners—exclude incomplete records for revenue totals or impute defaults for operational counts."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Never average without knowing null denominator.",
+          "Document excluded row counts in report footnotes.",
+          "Fix upstream exports when IDs are systematically missing."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Apply consistently"
+      },
+      {
+        "type": "paragraph",
+        "text": "Save rules that exclude null IDs or zero amounts so weekly reports stay comparable."
+      },
+      {
+        "type": "paragraph",
+        "text": "Talk to Data questions should mention whether nulls are in scope."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio preview and filters expose missing values before they distort charts."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Data Science",
+  "tags": [
+    "Missing Values",
+    "Data Cleaning",
+    "CSV",
+    "Quality"
+  ],
+  "is_published": true,
+  "meta_description": "Blank cells and nulls silently shrink denominators and break filters. Handle them deliberately, not accidentally.",
+  "meta_keywords": "Missing Values, Data Cleaning, CSV, Quality"
+}

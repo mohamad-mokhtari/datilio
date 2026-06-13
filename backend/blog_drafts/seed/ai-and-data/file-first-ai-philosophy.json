@@ -1,0 +1,72 @@
+{
+  "title": "The File-First AI Philosophy: Analyze Before You Automate",
+  "slug": "file-first-ai-philosophy",
+  "summary": "AI belongs after you understand the file—not as a substitute for preview and filters.",
+  "featured_image_url": "https://images.unsplash.com/photo-1533750343818-4149482b1375?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "AI belongs after you understand the file—not as a substitute for preview and filters.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Automating confusion just produces faster wrong answers. Upload, inspect schema, chart distributions, save filters for your business slice. Only then ask Talk to Data to narrate or explore follow-ups. This order ensures you know which columns matter and which rows are excluded before language models enter."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1533750343818-4149482b1375?w=1200&fm=jpg&fit=crop",
+        "alt": "Charts and graphs for business reporting",
+        "caption": "Charts and graphs for business reporting. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Analyze first"
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload, inspect schema, chart distributions, save filters for your business slice. Only then ask Talk to Data to narrate or explore follow-ups."
+      },
+      {
+        "type": "paragraph",
+        "text": "This order ensures you know which columns matter and which rows are excluded before language models enter."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Preview catches header shifts between exports.",
+          "Charts reveal outliers AI might over-weight in prose.",
+          "Saved rules define the population AI should respect."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Automate second"
+      },
+      {
+        "type": "paragraph",
+        "text": "Repeat the same grounded questions weekly on fresh uploads—automation with verification built in."
+      },
+      {
+        "type": "paragraph",
+        "text": "File-first AI is not anti-AI; it is pro-trust."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio embodies file-first AI: the upload is the contract every feature—including Talk to Data—must honor."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "AI & Data",
+  "tags": [
+    "File-First",
+    "AI Philosophy",
+    "Workflow",
+    "Datilio"
+  ],
+  "is_published": true,
+  "meta_description": "AI belongs after you understand the file—not as a substitute for preview and filters.",
+  "meta_keywords": "File-First, AI Philosophy, Workflow, Datilio"
+}

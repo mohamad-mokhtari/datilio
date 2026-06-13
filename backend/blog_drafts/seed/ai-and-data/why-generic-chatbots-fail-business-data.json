@@ -1,0 +1,72 @@
+{
+  "title": "Why Generic Chatbots Fail on Business Data Questions",
+  "slug": "why-generic-chatbots-fail-business-data",
+  "summary": "Public chatbots answer confidently from training data, not from your quarterly export. That gap causes wrong decisions.",
+  "featured_image_url": "https://images.unsplash.com/photo-1555949963-aa79d162c599?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Public chatbots answer confidently from training data, not from your quarterly export. That gap causes wrong decisions.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Paste a CSV into a general chat tab and you may get plausible prose with invented totals. General models optimize for fluent language across billions of documents. They were not present when your finance team closed last month. Without file grounding, the model fills gaps with patterns from unrelated domains—similar-sounding metrics, round numbers, generic trends."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1555949963-aa79d162c599?w=1200&fm=jpg&fit=crop",
+        "alt": "Team collaborating around data on a screen",
+        "caption": "Team collaborating around data on a screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Training data is not your ledger"
+      },
+      {
+        "type": "paragraph",
+        "text": "General models optimize for fluent language across billions of documents. They were not present when your finance team closed last month."
+      },
+      {
+        "type": "paragraph",
+        "text": "Without file grounding, the model fills gaps with patterns from unrelated domains—similar-sounding metrics, round numbers, generic trends."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Pasted rows may exceed context limits silently.",
+          "No persistent link between answer and source file version.",
+          "Compliance teams cannot audit what left the building."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "The file-grounded alternative"
+      },
+      {
+        "type": "paragraph",
+        "text": "Analytics products that scope AI to uploaded columns keep answers tied to inspectable data."
+      },
+      {
+        "type": "paragraph",
+        "text": "Users still verify, but verification happens against the same dataset—not against guesswork."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio keeps business questions inside the product on your file instead of leaking rows to generic chatbots."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "AI & Data",
+  "tags": [
+    "Generic AI",
+    "Business Data",
+    "Risk",
+    "Grounding"
+  ],
+  "is_published": true,
+  "meta_description": "Public chatbots answer confidently from training data, not from your quarterly export. That gap causes wrong decisions.",
+  "meta_keywords": "Generic AI, Business Data, Risk, Grounding"
+}

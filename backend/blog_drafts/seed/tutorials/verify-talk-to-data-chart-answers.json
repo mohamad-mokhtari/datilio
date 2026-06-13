@@ -1,0 +1,72 @@
+{
+  "title": "Verify Talk to Data Answers Against Charts",
+  "slug": "verify-talk-to-data-chart-answers",
+  "summary": "Cross-check AI responses with charts and filters before acting on insights.",
+  "featured_image_url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Cross-check AI responses with charts and filters before acting on insights.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Talk to Data is fast; charts are ground truth you control. Verification connects both. For every AI total or ranking, build the equivalent chart with same filters applied. Mismatch triggers column or filter review."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&fm=jpg&fit=crop",
+        "alt": "Business planning with documents and laptop",
+        "caption": "Business planning with documents and laptop. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Build verification habit"
+      },
+      {
+        "type": "paragraph",
+        "text": "For every AI total or ranking, build the equivalent chart with same filters applied. Mismatch triggers column or filter review."
+      },
+      {
+        "type": "paragraph",
+        "text": "Start with simple numeric questions before complex correlations—build trust incrementally."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Apply saved rules before asking and before charting.",
+          "Screenshot chart and AI answer together for audit trails.",
+          "Escalate recurring mismatches to column naming fixes."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "When to trust"
+      },
+      {
+        "type": "paragraph",
+        "text": "Trust AI answers when chart, filter, and preview row counts align three ways. Document verified prompts as team templates."
+      },
+      {
+        "type": "paragraph",
+        "text": "Teach new users verification before advanced Talk to Data features—culture beats settings."
+      },
+      {
+        "type": "paragraph",
+        "text": "Verification turns Datilio AI from novelty into dependable workflow—always chart-check before the slide deck."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Tutorials",
+  "tags": [
+    "Verification",
+    "Talk to Data",
+    "Tutorial",
+    "Trust"
+  ],
+  "is_published": true,
+  "meta_description": "Cross-check AI responses with charts and filters before acting on insights.",
+  "meta_keywords": "Verification, Talk to Data, Tutorial, Trust"
+}

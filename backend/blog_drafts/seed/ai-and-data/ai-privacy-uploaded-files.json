@@ -1,0 +1,72 @@
+{
+  "title": "AI Privacy for Uploaded Files: Keep Analysis In-Product",
+  "slug": "ai-privacy-uploaded-files",
+  "summary": "Copying rows into public AI tools duplicates breach surface area. In-product AI keeps data in boundary.",
+  "featured_image_url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Copying rows into public AI tools duplicates breach surface area. In-product AI keeps data in boundary.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Your CSV contains salaries, health IDs, or customer emails—treat Talk to Data like any other SaaS processor. Analyze within Datilio on the upload you already approved for analytics use. Avoid pasting tables into general chatbots that train on inputs or lack your DPA."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&fm=jpg&fit=crop",
+        "alt": "Business planning with documents and laptop",
+        "caption": "Business planning with documents and laptop. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Boundary control"
+      },
+      {
+        "type": "paragraph",
+        "text": "Analyze within Datilio on the upload you already approved for analytics use."
+      },
+      {
+        "type": "paragraph",
+        "text": "Avoid pasting tables into general chatbots that train on inputs or lack your DPA."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Minimize columns at upload to what analysis needs.",
+          "Use synthetic data for demos and external training.",
+          "Ensure vendor DPAs cover AI features explicitly."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Partner with legal early"
+      },
+      {
+        "type": "paragraph",
+        "text": "Document which tools are approved for which data classes. File-grounded in-product AI simplifies that list."
+      },
+      {
+        "type": "paragraph",
+        "text": "Privacy and trust reinforce each other—users verify more when data stays controlled."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio keeps Talk to Data on your uploaded file inside the product boundary."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "AI & Data",
+  "tags": [
+    "Privacy",
+    "Uploaded Files",
+    "AI Security",
+    "Compliance"
+  ],
+  "is_published": true,
+  "meta_description": "Copying rows into public AI tools duplicates breach surface area. In-product AI keeps data in boundary.",
+  "meta_keywords": "Privacy, Uploaded Files, AI Security, Compliance"
+}

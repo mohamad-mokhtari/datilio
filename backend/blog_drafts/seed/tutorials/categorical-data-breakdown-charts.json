@@ -1,0 +1,72 @@
+{
+  "title": "Break Down Categorical Data With Charts",
+  "slug": "categorical-data-breakdown-charts",
+  "summary": "Visualize category distributions and concentrations from uploaded tabular data.",
+  "featured_image_url": "https://images.unsplash.com/photo-1555949963-aa79d162c599?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Visualize category distributions and concentrations from uploaded tabular data.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Categorical columns—status, tier, channel—answer composition questions. Charts make skew obvious fast. Upload and preview unique value counts mentally or via filters. Chart frequency by category with bar charts sorted by volume."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1555949963-aa79d162c599?w=1200&fm=jpg&fit=crop",
+        "alt": "Team collaborating around data on a screen",
+        "caption": "Team collaborating around data on a screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Explore categories"
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload and preview unique value counts mentally or via filters. Chart frequency by category with bar charts sorted by volume."
+      },
+      {
+        "type": "paragraph",
+        "text": "Filter out deprecated labels so charts reflect current taxonomy, not legacy CRM values."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Combine rare categories only when business allows.",
+          "Watch for typos creating duplicate categories.",
+          "Pair counts with revenue-weighted charts when mix matters."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Interpret responsibly"
+      },
+      {
+        "type": "paragraph",
+        "text": "High count does not mean high value—weigh by revenue column in a second chart. Confirm with Talk to Data using explicit metrics."
+      },
+      {
+        "type": "paragraph",
+        "text": "Save taxonomy filters in rules when finance defines approved category lists."
+      },
+      {
+        "type": "paragraph",
+        "text": "Categorical breakdowns are weekly staples—Datilio makes them repeatable on every new export."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Tutorials",
+  "tags": [
+    "Categorical",
+    "Charts",
+    "Tutorial",
+    "Breakdown"
+  ],
+  "is_published": true,
+  "meta_description": "Visualize category distributions and concentrations from uploaded tabular data.",
+  "meta_keywords": "Categorical, Charts, Tutorial, Breakdown"
+}

@@ -1,0 +1,72 @@
+{
+  "title": "Spot Data Quality Issues in Preview Before Charting",
+  "slug": "spot-data-quality-issues-preview",
+  "summary": "Most quality issues are visible in the first fifty rows if you know what to scan for.",
+  "featured_image_url": "https://images.unsplash.com/photo-1504868580729-ff25987587a3?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Most quality issues are visible in the first fifty rows if you know what to scan for.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Charting dirty data wastes time and credibility. Headers consistent? Dates parse? Amounts numeric?"
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1504868580729-ff25987587a3?w=1200&fm=jpg&fit=crop",
+        "alt": "Person working with spreadsheets and notes",
+        "caption": "Person working with spreadsheets and notes. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Preview scan checklist"
+      },
+      {
+        "type": "paragraph",
+        "text": "Headers consistent? Dates parse? Amounts numeric? Duplicate keys? Unexpected null spikes? Region codes mixed EN and DE?"
+      },
+      {
+        "type": "paragraph",
+        "text": "Compare row count to prior export—large deltas warrant investigation before analysis."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Type mismatches show as text in numeric columns.",
+          "Duplicate keys inflate counts in bar charts.",
+          "Trailing spaces in categories split bars falsely."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Fix or filter"
+      },
+      {
+        "type": "paragraph",
+        "text": "Fix source when possible. Otherwise save exclusion rules and note impact on totals."
+      },
+      {
+        "type": "paragraph",
+        "text": "Quality preview becomes thirty-second habit that prevents deck disasters."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio preview is built for this scan-before-chart discipline."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Data Science",
+  "tags": [
+    "Data Quality",
+    "Preview",
+    "Validation",
+    "CSV"
+  ],
+  "is_published": true,
+  "meta_description": "Most quality issues are visible in the first fifty rows if you know what to scan for.",
+  "meta_keywords": "Data Quality, Preview, Validation, CSV"
+}

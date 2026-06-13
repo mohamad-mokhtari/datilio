@@ -1,0 +1,72 @@
+{
+  "title": "Data Governance Trends Shaping Analytics in 2026",
+  "slug": "data-governance-trends-2026",
+  "summary": "Governance is no longer only for regulated industries. Everyday analytics teams are adopting lineage, access control, and metric definitions.",
+  "featured_image_url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Governance is no longer only for regulated industries. Everyday analytics teams are adopting lineage, access control, and metric definitions.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Governance used to mean quarterly audits and dedicated stewards. Today it also means knowing which export powered last week's revenue slide. Organizations are documenting which CSV snapshots feed which reports, even when no central warehouse exists. Lightweight lineage—file name, upload date, filter rules applied—is becoming standard."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&fm=jpg&fit=crop",
+        "alt": "Professional reviewing business charts on a laptop",
+        "caption": "Professional reviewing business charts on a laptop. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Governance moves closer to the file"
+      },
+      {
+        "type": "paragraph",
+        "text": "Organizations are documenting which CSV snapshots feed which reports, even when no central warehouse exists. Lightweight lineage—file name, upload date, filter rules applied—is becoming standard."
+      },
+      {
+        "type": "paragraph",
+        "text": "Privacy regulations and customer contracts push teams to justify metrics with traceable sources rather than anecdotal spreadsheet tabs."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Metric definitions are shared in plain language, not only in SQL.",
+          "Access to sensitive columns is restricted at upload or filter time.",
+          "Audit trails for AI queries join traditional BI change logs."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Practical adoption patterns"
+      },
+      {
+        "type": "paragraph",
+        "text": "Large enterprises still build semantic layers; smaller teams adopt checklist governance: validate schema, save rules, review AI answers against charts."
+      },
+      {
+        "type": "paragraph",
+        "text": "The gap between policy documents and daily work closes when governance is embedded in the upload-and-preview step."
+      },
+      {
+        "type": "paragraph",
+        "text": "Tools like Datilio emphasize file-grounded workflows so teams can show exactly which dataset supported a decision."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "News",
+  "tags": [
+    "Data Governance",
+    "Compliance",
+    "Analytics",
+    "Trends"
+  ],
+  "is_published": true,
+  "meta_description": "Governance is no longer only for regulated industries. Everyday analytics teams are adopting lineage, access control, and metric definitions.",
+  "meta_keywords": "Data Governance, Compliance, Analytics, Trends"
+}

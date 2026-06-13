@@ -1,0 +1,72 @@
+{
+  "title": "End-to-End Sales Report Workflow in Datilio",
+  "slug": "end-to-end-sales-report-workflow",
+  "summary": "Complete sales reporting: upload, quality check, filters, charts, AI summary, export.",
+  "featured_image_url": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Complete sales reporting: upload, quality check, filters, charts, AI summary, export.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Monthly sales reporting deserves a checklist, not heroics. Datilio supports every step on one file. Upload the latest sales export. Preview columns, check row count vs prior month, filter null IDs and test accounts."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&fm=jpg&fit=crop",
+        "alt": "Team meeting with presentation screen",
+        "caption": "Team meeting with presentation screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Monday upload ritual"
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload the latest sales export. Preview columns, check row count vs prior month, filter null IDs and test accounts."
+      },
+      {
+        "type": "paragraph",
+        "text": "Apply saved region and date rules. Build bar charts for revenue by region and line charts for weekly trend."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Compare totals to finance control numbers early.",
+          "Document filter exclusions in rule names.",
+          "Run Talk to Data for executive summary drafts last."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Close the report"
+      },
+      {
+        "type": "paragraph",
+        "text": "Verify AI narrative against charts. Export filtered CSV for regional leads and archive upload date with rule version."
+      },
+      {
+        "type": "paragraph",
+        "text": "Next month repeats the same path—upload, rules, charts, verify, export—minutes instead of hours."
+      },
+      {
+        "type": "paragraph",
+        "text": "This end-to-end Datilio workflow is how spreadsheet-native sales ops teams modernize without a warehouse project."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Tutorials",
+  "tags": [
+    "Sales Reporting",
+    "Workflow",
+    "Tutorial",
+    "End to End"
+  ],
+  "is_published": true,
+  "meta_description": "Complete sales reporting: upload, quality check, filters, charts, AI summary, export.",
+  "meta_keywords": "Sales Reporting, Workflow, Tutorial, End to End"
+}

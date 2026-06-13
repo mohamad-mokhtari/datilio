@@ -1,0 +1,72 @@
+{
+  "title": "Embedded Analytics Becomes a SaaS Table Stakes Feature",
+  "slug": "embedded-analytics-saas-table-stakes",
+  "summary": "B2B SaaS buyers expect charts inside the products they pay for. Embedded analytics vendors grow—but so do export-and-analyze workflows.",
+  "featured_image_url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "B2B SaaS buyers expect charts inside the products they pay for. Embedded analytics vendors grow—but so do export-and-analyze workflows.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Every vertical SaaS pitch includes dashboards. Customers also want raw exports for deeper questions vendors did not anticipate. Embedded widgets cover eighty percent of questions inside the app. Power users export CSV for filters, custom charts, and AI follow-ups the embed cannot support."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&fm=jpg&fit=crop",
+        "alt": "Professional reviewing business charts on a laptop",
+        "caption": "Professional reviewing business charts on a laptop. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Two paths to insight"
+      },
+      {
+        "type": "paragraph",
+        "text": "Embedded widgets cover eighty percent of questions inside the app. Power users export CSV for filters, custom charts, and AI follow-ups the embed cannot support."
+      },
+      {
+        "type": "paragraph",
+        "text": "Platform teams negotiate API export quality knowing customers will analyze files elsewhere."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Embeds handle KPI monitoring inside the product.",
+          "Exports power ad hoc investigation and board prep.",
+          "Consistent column names between embed and export reduce friction."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Market impact"
+      },
+      {
+        "type": "paragraph",
+        "text": "Embedded analytics vendors grow in ARR; file-first tools grow among power users unsatisfied with canned reports."
+      },
+      {
+        "type": "paragraph",
+        "text": "Best-in-class SaaS vendors document export schemas and refresh schedules openly."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio complements embedded dashboards when you need full control over filters, rules, and Talk to Data on exported files."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "News",
+  "tags": [
+    "Embedded Analytics",
+    "SaaS",
+    "Product Trends",
+    "BI"
+  ],
+  "is_published": true,
+  "meta_description": "B2B SaaS buyers expect charts inside the products they pay for. Embedded analytics vendors grow—but so do export-and-analyze workflows.",
+  "meta_keywords": "Embedded Analytics, SaaS, Product Trends, BI"
+}

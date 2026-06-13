@@ -1,0 +1,72 @@
+{
+  "title": "Teaching Teams Verification Habits for AI-Assisted Analysis",
+  "slug": "building-team-verification-habits-ai",
+  "summary": "AI adoption fails when only enthusiasts verify answers. Build verification into onboarding, not optional docs.",
+  "featured_image_url": "https://images.unsplash.com/photo-1518186285589-2f7639f5915c?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "AI adoption fails when only enthusiasts verify answers. Build verification into onboarding, not optional docs.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Habits beat policies: people verify when peers and managers visibly chart-check every time. New users ask for one sum or count, build the matching chart, and share both in Slack. Celebrate catches—'AI said 2M, chart shows 1.8M, fixed date filter'—as quality wins, not model failures."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1518186285589-2f7639f5915c?w=1200&fm=jpg&fit=crop",
+        "alt": "Calculator and financial data analysis",
+        "caption": "Calculator and financial data analysis. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Start with simple totals"
+      },
+      {
+        "type": "paragraph",
+        "text": "New users ask for one sum or count, build the matching chart, and share both in Slack."
+      },
+      {
+        "type": "paragraph",
+        "text": "Celebrate catches—'AI said 2M, chart shows 1.8M, fixed date filter'—as quality wins, not model failures."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Managers model chart-checks in live reviews.",
+          "Onboarding includes a synthetic file exercise with intentional traps.",
+          "Unverified AI numbers do not go on executive slides—period."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Sustain over months"
+      },
+      {
+        "type": "paragraph",
+        "text": "Refresh templates when columns change. Pair citizens with analyst office hours for edge cases."
+      },
+      {
+        "type": "paragraph",
+        "text": "Verification culture makes Talk to Data a copilot teams rely on, not a lottery."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio's side-by-side preview, charts, and Talk to Data support teaching verification by doing."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "AI & Data",
+  "tags": [
+    "Team Training",
+    "Verification",
+    "AI Adoption",
+    "Culture"
+  ],
+  "is_published": true,
+  "meta_description": "AI adoption fails when only enthusiasts verify answers. Build verification into onboarding, not optional docs.",
+  "meta_keywords": "Team Training, Verification, AI Adoption, Culture"
+}

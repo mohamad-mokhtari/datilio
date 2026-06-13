@@ -1,0 +1,72 @@
+{
+  "title": "Upload and Preview: Your First Line of Defense in Datilio",
+  "slug": "upload-preview-before-analysis",
+  "summary": "Every Datilio analysis begins with upload and preview—skipping them invites silent errors.",
+  "featured_image_url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Every Datilio analysis begins with upload and preview—skipping them invites silent errors.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Preview is not bureaucracy; it is the fastest quality gate in the product. Column names, inferred types, sample rows, and total count appear seconds after upload. Catch header renames, blank columns, and type mismatches before filters, charts, or AI."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&fm=jpg&fit=crop",
+        "alt": "Professional reviewing business charts on a laptop",
+        "caption": "Professional reviewing business charts on a laptop. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "What preview delivers"
+      },
+      {
+        "type": "paragraph",
+        "text": "Column names, inferred types, sample rows, and total count appear seconds after upload."
+      },
+      {
+        "type": "paragraph",
+        "text": "Catch header renames, blank columns, and type mismatches before filters, charts, or AI."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Supports CSV, Excel, and JSON workflows.",
+          "Re-upload after fixing source when types look wrong.",
+          "Compare row count to prior exports immediately."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Build the habit"
+      },
+      {
+        "type": "paragraph",
+        "text": "Teams that preview first spend less time explaining wrong charts later."
+      },
+      {
+        "type": "paragraph",
+        "text": "Preview screenshots attach well to audit trails for recurring reports."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio preview is the non-negotiable first step in the file-first workflow."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Product",
+  "tags": [
+    "Upload",
+    "Preview",
+    "Datilio",
+    "Getting Started"
+  ],
+  "is_published": true,
+  "meta_description": "Every Datilio analysis begins with upload and preview—skipping them invites silent errors.",
+  "meta_keywords": "Upload, Preview, Datilio, Getting Started"
+}

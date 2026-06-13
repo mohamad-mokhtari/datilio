@@ -1,0 +1,72 @@
+{
+  "title": "Metrics Layer Standardization Gains Momentum",
+  "slug": "metrics-layer-standardization-momentum",
+  "summary": "Shared metric definitions—revenue, active users, churn—are spreading from enterprises to growth-stage companies.",
+  "featured_image_url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Shared metric definitions—revenue, active users, churn—are spreading from enterprises to growth-stage companies.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "When two departments report different 'active user' counts, executives lose trust. Metric layers fix definitions—but heavy platforms intimidate small teams. Growth companies document metrics in shared sheets and enforce them through saved filter rules and named exports. Full semantic layers remain ideal at scale; pragmatic teams start with agreed column mappings on recurring CSV uploads."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+        "alt": "Data visualization on a modern display",
+        "caption": "Data visualization on a modern display. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Lightweight standardization"
+      },
+      {
+        "type": "paragraph",
+        "text": "Growth companies document metrics in shared sheets and enforce them through saved filter rules and named exports."
+      },
+      {
+        "type": "paragraph",
+        "text": "Full semantic layers remain ideal at scale; pragmatic teams start with agreed column mappings on recurring CSV uploads."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Documented definitions accompany every monthly export.",
+          "Saved rules encode approved filters for each KPI.",
+          "AI queries reference defined columns by name."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Industry direction"
+      },
+      {
+        "type": "paragraph",
+        "text": "Vendors market 'metrics without a warehouse' for teams whose definitions live in operational files."
+      },
+      {
+        "type": "paragraph",
+        "text": "Standardization and speed need not conflict when tools capture rule logic visually."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio's saved rules help teams enforce consistent metric subsets across months of uploads."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "News",
+  "tags": [
+    "Metrics Layer",
+    "Semantic Layer",
+    "KPIs",
+    "Standardization"
+  ],
+  "is_published": true,
+  "meta_description": "Shared metric definitions—revenue, active users, churn—are spreading from enterprises to growth-stage companies.",
+  "meta_keywords": "Metrics Layer, Semantic Layer, KPIs, Standardization"
+}

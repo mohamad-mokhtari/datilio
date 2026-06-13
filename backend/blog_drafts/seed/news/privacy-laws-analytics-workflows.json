@@ -1,0 +1,72 @@
+{
+  "title": "Privacy Laws Reshape Everyday Analytics Workflows",
+  "slug": "privacy-laws-analytics-workflows",
+  "summary": "Privacy rules affect how files are shared, filtered, and queried—not only how databases are architected.",
+  "featured_image_url": "https://images.unsplash.com/photo-1533750343818-4149482b1375?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Privacy rules affect how files are shared, filtered, and queried—not only how databases are architected.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "PII in a spreadsheet is still PII. 2026 privacy programs extend to analytics uploads, AI questions, and exported charts. Teams redact or hash identifiers before upload, use column-level filters to limit who sees what, and avoid pasting customer data into generic AI tools. Data processing agreements now cover analytics SaaS the same way they cover CRM systems."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1533750343818-4149482b1375?w=1200&fm=jpg&fit=crop",
+        "alt": "Charts and graphs for business reporting",
+        "caption": "Charts and graphs for business reporting. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Workflow changes on the ground"
+      },
+      {
+        "type": "paragraph",
+        "text": "Teams redact or hash identifiers before upload, use column-level filters to limit who sees what, and avoid pasting customer data into generic AI tools."
+      },
+      {
+        "type": "paragraph",
+        "text": "Data processing agreements now cover analytics SaaS the same way they cover CRM systems."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Minimize columns uploaded to what analysis requires.",
+          "Use role-based access when tools support it.",
+          "Prefer file-grounded AI over copying rows into public chatbots."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Balancing insight and compliance"
+      },
+      {
+        "type": "paragraph",
+        "text": "Over-restriction blocks legitimate analysis; under-restriction creates breach risk. Filter rules that exclude sensitive fields become standard practice."
+      },
+      {
+        "type": "paragraph",
+        "text": "Documented workflows—upload checklist, approved tools—help legal teams sign off faster."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio keeps analysis on your uploaded file inside a controlled product rather than leaking rows to general-purpose AI."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "News",
+  "tags": [
+    "Privacy",
+    "GDPR",
+    "Data Protection",
+    "Analytics"
+  ],
+  "is_published": true,
+  "meta_description": "Privacy rules affect how files are shared, filtered, and queried—not only how databases are architected.",
+  "meta_keywords": "Privacy, GDPR, Data Protection, Analytics"
+}

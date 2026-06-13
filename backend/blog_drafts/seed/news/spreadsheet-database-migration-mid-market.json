@@ -1,0 +1,72 @@
+{
+  "title": "Mid-Market Spreadsheet-to-Database Migration Trends",
+  "slug": "spreadsheet-database-migration-mid-market",
+  "summary": "Mid-market companies migrate critical spreadsheets to databases—but keep files for speed. Both patterns coexist.",
+  "featured_image_url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Mid-market companies migrate critical spreadsheets to databases—but keep files for speed. Both patterns coexist.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Migration projects promised single sources of truth. Reality: spreadsheets persist for agility while databases handle scale. Finance may warehouse GL data while regional managers still analyze CSV exports daily. Tools must serve the file track without pretending migrations finished overnight."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&fm=jpg&fit=crop",
+        "alt": "Analytics dashboard with charts on a laptop screen",
+        "caption": "Analytics dashboard with charts on a laptop screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Dual-track data estates"
+      },
+      {
+        "type": "paragraph",
+        "text": "Finance may warehouse GL data while regional managers still analyze CSV exports daily. Tools must serve the file track without pretending migrations finished overnight."
+      },
+      {
+        "type": "paragraph",
+        "text": "Successful migrations leave escape hatches—export to CSV, analyze in a file-first tool—so teams are not blocked on warehouse queries."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Critical metrics move to modeled layers over years.",
+          "Operational questions still start from fresh exports.",
+          "Analytics tools bridge both without duplicate work."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Planning implications"
+      },
+      {
+        "type": "paragraph",
+        "text": "IT roadmaps include file-first analytics for teams not yet on the warehouse, reducing shadow tool sprawl."
+      },
+      {
+        "type": "paragraph",
+        "text": "Executives measure migration success by metric consistency, not spreadsheet elimination."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio serves teams wherever their data lives today—often as a file on someone's laptop."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "News",
+  "tags": [
+    "Migration",
+    "Spreadsheets",
+    "Databases",
+    "Mid-Market"
+  ],
+  "is_published": true,
+  "meta_description": "Mid-market companies migrate critical spreadsheets to databases—but keep files for speed. Both patterns coexist.",
+  "meta_keywords": "Migration, Spreadsheets, Databases, Mid-Market"
+}

@@ -1,0 +1,72 @@
+{
+  "title": "When to Trust AI Summaries—and When to Chart-Check First",
+  "slug": "when-to-trust-ai-summaries",
+  "summary": "Not every question deserves the same trust level. Match verification depth to decision stakes.",
+  "featured_image_url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Not every question deserves the same trust level. Match verification depth to decision stakes.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Trust is contextual: a directional brainstorm differs from a revenue figure in a 10-K filing. Early in analysis, AI summaries help you notice patterns—seasonality hints, category concentration—before you invest in rigorous charts. Treat these as hypotheses. Follow with filters and visuals before mentioning them in email."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&fm=jpg&fit=crop",
+        "alt": "Analytics dashboard with charts on a laptop screen",
+        "caption": "Analytics dashboard with charts on a laptop screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Low-stakes exploration"
+      },
+      {
+        "type": "paragraph",
+        "text": "Early in analysis, AI summaries help you notice patterns—seasonality hints, category concentration—before you invest in rigorous charts."
+      },
+      {
+        "type": "paragraph",
+        "text": "Treat these as hypotheses. Follow with filters and visuals before mentioning them in email."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Hypothesis stage: AI suggests, humans confirm.",
+          "Operational reports: chart-check every numeric claim.",
+          "Regulated metrics: dual human review plus archived screenshots."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "High-stakes decisions"
+      },
+      {
+        "type": "paragraph",
+        "text": "For board metrics, reconciliation to finance systems is mandatory regardless of AI fluency."
+      },
+      {
+        "type": "paragraph",
+        "text": "Build a tiered policy so teams know when Talk to Data output is draft versus approved."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio supports tiered trust: explore fast, verify with charts on the same upload before sharing."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "AI & Data",
+  "tags": [
+    "AI Summaries",
+    "Trust",
+    "Charts",
+    "Judgment"
+  ],
+  "is_published": true,
+  "meta_description": "Not every question deserves the same trust level. Match verification depth to decision stakes.",
+  "meta_keywords": "AI Summaries, Trust, Charts, Judgment"
+}

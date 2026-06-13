@@ -1,0 +1,72 @@
+{
+  "title": "Turn an Excel Upload Into Charts in Five Minutes",
+  "slug": "excel-to-chart-five-minute-tutorial",
+  "summary": "Upload Excel, validate sheet structure, and build your first chart quickly in Datilio.",
+  "featured_image_url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Upload Excel, validate sheet structure, and build your first chart quickly in Datilio.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Excel remains the lingua franca of business data. Datilio reads your workbook so you can chart without re-export gymnastics. Use a single header row and avoid merged cells in the data table. Upload the .xlsx file and select the correct sheet if multiple exist."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&fm=jpg&fit=crop",
+        "alt": "Professional reviewing business charts on a laptop",
+        "caption": "Professional reviewing business charts on a laptop. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Prepare your workbook"
+      },
+      {
+        "type": "paragraph",
+        "text": "Use a single header row and avoid merged cells in the data table. Upload the .xlsx file and select the correct sheet if multiple exist."
+      },
+      {
+        "type": "paragraph",
+        "text": "Preview highlights columns that imported as text instead of numbers—common when currency symbols embed in cells."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Remove subtotal rows from the data range before upload.",
+          "Standardize date formats in Excel first for cleaner charts.",
+          "Name sheets clearly if you upload multi-tab files often."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Build charts fast"
+      },
+      {
+        "type": "paragraph",
+        "text": "Choose line charts for time series columns or bar charts for category comparisons. Apply a date filter to focus on the last quarter."
+      },
+      {
+        "type": "paragraph",
+        "text": "Export a screenshot or filtered CSV for your slide deck. Saved rules let you drop next month's file into the same analysis path."
+      },
+      {
+        "type": "paragraph",
+        "text": "Excel-heavy teams use this five-minute loop weekly—upload, preview, chart, filter—before escalating to deeper Talk to Data questions."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Tutorials",
+  "tags": [
+    "Excel",
+    "Charts",
+    "Tutorial",
+    "Quick Start"
+  ],
+  "is_published": true,
+  "meta_description": "Upload Excel, validate sheet structure, and build your first chart quickly in Datilio.",
+  "meta_keywords": "Excel, Charts, Tutorial, Quick Start"
+}

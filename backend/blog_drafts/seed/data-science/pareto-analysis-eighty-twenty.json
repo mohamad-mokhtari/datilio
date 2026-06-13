@@ -1,0 +1,72 @@
+{
+  "title": "Pareto Analysis: Find the Vital Few in Your Data",
+  "slug": "pareto-analysis-eighty-twenty",
+  "summary": "Most revenue often comes from a minority of customers or SKUs. Pareto thinking focuses effort.",
+  "featured_image_url": "https://images.unsplash.com/photo-1555949963-aa79d162c599?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Most revenue often comes from a minority of customers or SKUs. Pareto thinking focuses effort.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "The eighty-twenty rule is a heuristic, not a law—but it prioritizes where to look first. Bar chart categories sorted descending by revenue. Note cumulative share at top five, top ten. Filter out noise categories with saved rules before ranking."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1555949963-aa79d162c599?w=1200&fm=jpg&fit=crop",
+        "alt": "Team collaborating around data on a screen",
+        "caption": "Team collaborating around data on a screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Build a Pareto view"
+      },
+      {
+        "type": "paragraph",
+        "text": "Bar chart categories sorted descending by revenue. Note cumulative share at top five, top ten."
+      },
+      {
+        "type": "paragraph",
+        "text": "Filter out noise categories with saved rules before ranking."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Sort by value, not alphabetically.",
+          "Combine long tail only when finance allows.",
+          "Re-run monthly—vital few shifts with product mix."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Turn insight into action"
+      },
+      {
+        "type": "paragraph",
+        "text": "Account teams focus on top cohort; ops fixes issues in high-volume small-deal segments separately."
+      },
+      {
+        "type": "paragraph",
+        "text": "Document which slice the Pareto chart uses."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio sorted bar charts make Pareto passes a five-minute Monday habit."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Data Science",
+  "tags": [
+    "Pareto",
+    "80/20",
+    "Prioritization",
+    "Analysis"
+  ],
+  "is_published": true,
+  "meta_description": "Most revenue often comes from a minority of customers or SKUs. Pareto thinking focuses effort.",
+  "meta_keywords": "Pareto, 80/20, Prioritization, Analysis"
+}

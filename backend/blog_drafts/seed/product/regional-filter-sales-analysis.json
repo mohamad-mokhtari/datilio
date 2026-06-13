@@ -1,0 +1,72 @@
+{
+  "title": "Regional Sales Analysis With Datilio Filters",
+  "slug": "regional-filter-sales-analysis",
+  "summary": "Regional reviews in Datilio start with territory filters applied to the latest sales export.",
+  "featured_image_url": "https://images.unsplash.com/photo-1555949963-aa79d162c599?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Regional reviews in Datilio start with territory filters applied to the latest sales export.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Territory performance questions should not require a BI ticket every Monday. Upload sales CSV, preview region column, apply single or multi-region filters. Chart revenue and units side by side for the selected geography."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1555949963-aa79d162c599?w=1200&fm=jpg&fit=crop",
+        "alt": "Team collaborating around data on a screen",
+        "caption": "Team collaborating around data on a screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Filter by region"
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload sales CSV, preview region column, apply single or multi-region filters."
+      },
+      {
+        "type": "paragraph",
+        "text": "Chart revenue and units side by side for the selected geography."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Combine region and date filters for quarter reviews.",
+          "Save rules per territory manager.",
+          "Export filtered subsets for regional leads."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Compare fairly"
+      },
+      {
+        "type": "paragraph",
+        "text": "Use identical saved rules when comparing regions—only the region dimension changes."
+      },
+      {
+        "type": "paragraph",
+        "text": "Talk to Data answers regional totals within active filter scope."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio regional filters make territory reporting repeatable on weekly files."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Product",
+  "tags": [
+    "Regional Analysis",
+    "Sales",
+    "Filters",
+    "Datilio"
+  ],
+  "is_published": true,
+  "meta_description": "Regional reviews in Datilio start with territory filters applied to the latest sales export.",
+  "meta_keywords": "Regional Analysis, Sales, Filters, Datilio"
+}

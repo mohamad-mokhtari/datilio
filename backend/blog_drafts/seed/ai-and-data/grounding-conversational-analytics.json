@@ -1,0 +1,72 @@
+{
+  "title": "Grounding Conversational Analytics in Uploaded Datasets",
+  "slug": "grounding-conversational-analytics",
+  "summary": "Conversational analytics earns production use when every utterance resolves to SQL-like logic on your table—not the open web.",
+  "featured_image_url": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Conversational analytics earns production use when every utterance resolves to SQL-like logic on your table—not the open web.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Demos impress with vague questions; production demands column-level grounding. The system parses intent, maps entities to column names, applies active filters, computes aggregates, and returns results tied to that path. Users see which columns and filters participated—transparency beats black-box insight buttons."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&fm=jpg&fit=crop",
+        "alt": "Team meeting with presentation screen",
+        "caption": "Team meeting with presentation screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "How grounding works in practice"
+      },
+      {
+        "type": "paragraph",
+        "text": "The system parses intent, maps entities to column names, applies active filters, computes aggregates, and returns results tied to that path."
+      },
+      {
+        "type": "paragraph",
+        "text": "Users see which columns and filters participated—transparency beats black-box insight buttons."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Plain language still resolves to named fields.",
+          "Active filter rules shrink the row set consistently.",
+          "Follow-up questions inherit the same grounded context."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Production rollout tips"
+      },
+      {
+        "type": "paragraph",
+        "text": "Pilot with one department and one recurring export. Document verified questions that match finance control totals."
+      },
+      {
+        "type": "paragraph",
+        "text": "Expand when audit samples pass, not when demo applause peaks."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio grounds Talk to Data in the dataset you uploaded and filtered—not in generic knowledge."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "AI & Data",
+  "tags": [
+    "Conversational Analytics",
+    "Grounding",
+    "Upload",
+    "Trust"
+  ],
+  "is_published": true,
+  "meta_description": "Conversational analytics earns production use when every utterance resolves to SQL-like logic on your table—not the open web.",
+  "meta_keywords": "Conversational Analytics, Grounding, Upload, Trust"
+}

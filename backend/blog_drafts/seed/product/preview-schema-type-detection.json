@@ -1,0 +1,72 @@
+{
+  "title": "Schema Preview and Type Detection in Datilio",
+  "slug": "preview-schema-type-detection",
+  "summary": "Datilio infers column types on upload so you spot text-formatted numbers before they break sums.",
+  "featured_image_url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Datilio infers column types on upload so you spot text-formatted numbers before they break sums.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Type detection is silent QA—wrong types are the root of many chart surprises. Numeric, date, and text badges appear per column. Scroll sample rows for currency symbols and mixed formats. Fix source exports when types disagree with business meaning."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&fm=jpg&fit=crop",
+        "alt": "Analytics dashboard with charts on a laptop screen",
+        "caption": "Analytics dashboard with charts on a laptop screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Read the preview"
+      },
+      {
+        "type": "paragraph",
+        "text": "Numeric, date, and text badges appear per column. Scroll sample rows for currency symbols and mixed formats."
+      },
+      {
+        "type": "paragraph",
+        "text": "Fix source exports when types disagree with business meaning."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Dates as text block time-series charts.",
+          "IDs as numbers lose leading zeros—prefer text keys.",
+          "Empty columns can be ignored in analysis."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Act before charting"
+      },
+      {
+        "type": "paragraph",
+        "text": "Thirty seconds in preview saves incorrect AI and chart totals."
+      },
+      {
+        "type": "paragraph",
+        "text": "Document type assumptions in team export standards."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio schema preview is the technical foundation of file-first trust."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Product",
+  "tags": [
+    "Preview",
+    "Schema",
+    "Type Detection",
+    "Datilio"
+  ],
+  "is_published": true,
+  "meta_description": "Datilio infers column types on upload so you spot text-formatted numbers before they break sums.",
+  "meta_keywords": "Preview, Schema, Type Detection, Datilio"
+}

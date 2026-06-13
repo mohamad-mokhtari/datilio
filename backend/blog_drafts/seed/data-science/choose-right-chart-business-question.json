@@ -1,0 +1,72 @@
+{
+  "title": "Choosing the Right Chart for Your Business Question",
+  "slug": "choose-right-chart-business-question",
+  "summary": "Wrong chart types confuse more than bad data. Match visual form to the question you ask.",
+  "featured_image_url": "https://images.unsplash.com/photo-1555949963-aa79d162c599?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Wrong chart types confuse more than bad data. Match visual form to the question you ask.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Trend over time needs lines; composition needs bars; relationship exploration needs scatter—not interchangeable widgets. How much by category? Sorted bar chart. How did we trend weekly?"
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1555949963-aa79d162c599?w=1200&fm=jpg&fit=crop",
+        "alt": "Team collaborating around data on a screen",
+        "caption": "Team collaborating around data on a screen. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Question-to-chart map"
+      },
+      {
+        "type": "paragraph",
+        "text": "How much by category? Sorted bar chart. How did we trend weekly? Line chart on date axis. What share of total? Stacked bar or simple percent table."
+      },
+      {
+        "type": "paragraph",
+        "text": "Avoid pie charts with twelve slices and dual-axis charts that imply false correlations."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Line charts for continuous time series.",
+          "Bar charts for categorical comparisons.",
+          "Limit categories for readability—filter long tails."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Iterate in minutes"
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload, preview types, try chart, adjust filters. Wrong visual often signals wrong grain or filter scope."
+      },
+      {
+        "type": "paragraph",
+        "text": "Right chart plus saved rules makes monthly reviews predictable."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio chart picker supports business questions without a design degree."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Data Science",
+  "tags": [
+    "Charts",
+    "Visualization",
+    "Decision Guide",
+    "Best Practices"
+  ],
+  "is_published": true,
+  "meta_description": "Wrong chart types confuse more than bad data. Match visual form to the question you ask.",
+  "meta_keywords": "Charts, Visualization, Decision Guide, Best Practices"
+}

@@ -1,0 +1,72 @@
+{
+  "title": "Finding Seasonal Patterns in Weekly Exports",
+  "slug": "seasonal-patterns-weekly-exports",
+  "summary": "Seasonality hides in weekly CSV pulls until you chart enough history with consistent filters.",
+  "featured_image_url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Seasonality hides in weekly CSV pulls until you chart enough history with consistent filters.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "One bad week is not a crisis; four aligned weeks might be seasonality. Upload twelve or more weeks with same saved rule. Line chart weekly totals and compare year-ago if available. Note holidays, fiscal calendars, and promo windows that explain spikes."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&fm=jpg&fit=crop",
+        "alt": "Abstract visualization representing AI and data",
+        "caption": "Abstract visualization representing AI and data. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Chart enough history"
+      },
+      {
+        "type": "paragraph",
+        "text": "Upload twelve or more weeks with same saved rule. Line chart weekly totals and compare year-ago if available."
+      },
+      {
+        "type": "paragraph",
+        "text": "Note holidays, fiscal calendars, and promo windows that explain spikes."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Use consistent week-start definitions.",
+          "Separate one-off events from recurring seasonal lifts.",
+          "Document promo calendars alongside charts."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Act on patterns"
+      },
+      {
+        "type": "paragraph",
+        "text": "Staffing and inventory plans use seasonal baselines—not last week alone."
+      },
+      {
+        "type": "paragraph",
+        "text": "Refresh charts when fresh export lands; rules keep scope stable."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio line charts on filtered weekly uploads reveal seasonality without a data science team."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Data Science",
+  "tags": [
+    "Seasonality",
+    "Time Series",
+    "Trends",
+    "Operations"
+  ],
+  "is_published": true,
+  "meta_description": "Seasonality hides in weekly CSV pulls until you chart enough history with consistent filters.",
+  "meta_keywords": "Seasonality, Time Series, Trends, Operations"
+}

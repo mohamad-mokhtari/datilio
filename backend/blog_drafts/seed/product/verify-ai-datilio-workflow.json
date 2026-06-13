@@ -1,0 +1,72 @@
+{
+  "title": "Verify AI Answers in the Datilio Workflow",
+  "slug": "verify-ai-datilio-workflow",
+  "summary": "Datilio places Talk to Data beside charts so verification is one click, not a separate tool.",
+  "featured_image_url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Datilio places Talk to Data beside charts so verification is one click, not a separate tool.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Products that hide verification guarantee it will not happen. Apply rules, ask AI, build matching chart, compare, export or escalate mismatch. Archive pairs for samples until habit is automatic."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&fm=jpg&fit=crop",
+        "alt": "Data visualization on a modern display",
+        "caption": "Data visualization on a modern display. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Built-in loop"
+      },
+      {
+        "type": "paragraph",
+        "text": "Apply rules, ask AI, build matching chart, compare, export or escalate mismatch."
+      },
+      {
+        "type": "paragraph",
+        "text": "Archive pairs for samples until habit is automatic."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Same filters for AI and charts always.",
+          "Start with simple totals before complex asks.",
+          "Teach verification before advanced AI features."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Team rollout"
+      },
+      {
+        "type": "paragraph",
+        "text": "Managers demo live chart-checks in reviews to normalize behavior."
+      },
+      {
+        "type": "paragraph",
+        "text": "Verified prompt templates accumulate as team assets."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio's layout makes verify-AI-on-chart the default path, not the exception."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Product",
+  "tags": [
+    "Verification",
+    "Talk to Data",
+    "Datilio",
+    "Trust"
+  ],
+  "is_published": true,
+  "meta_description": "Datilio places Talk to Data beside charts so verification is one click, not a separate tool.",
+  "meta_keywords": "Verification, Talk to Data, Datilio, Trust"
+}

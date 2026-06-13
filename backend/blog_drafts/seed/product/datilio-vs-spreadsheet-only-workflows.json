@@ -1,0 +1,72 @@
+{
+  "title": "Datilio vs Spreadsheet-Only Workflows",
+  "slug": "datilio-vs-spreadsheet-only-workflows",
+  "summary": "Spreadsheets excel at editing; Datilio excels at repeatable analysis, rules, charts, and grounded AI on uploads.",
+  "featured_image_url": "https://images.unsplash.com/photo-1533750343818-4149482b1375?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Spreadsheets excel at editing; Datilio excels at repeatable analysis, rules, charts, and grounded AI on uploads.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "The question is not either-or—it is where each tool wins. Spreadsheets handle ad hoc edits, quick cell tweaks, and personal scratchpad work well. Datilio adds schema preview, saved filter rules, shareable charts, Talk to Data on verified subsets, and export with traceability."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1533750343818-4149482b1375?w=1200&fm=jpg&fit=crop",
+        "alt": "Charts and graphs for business reporting",
+        "caption": "Charts and graphs for business reporting. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Where each tool wins"
+      },
+      {
+        "type": "paragraph",
+        "text": "Spreadsheets handle ad hoc edits, quick cell tweaks, and personal scratchpad work well."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio adds schema preview, saved filter rules, shareable charts, Talk to Data on verified subsets, and export with traceability."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Keep editing in sheets; analyze recurring exports in Datilio.",
+          "Replace fragile pivot macros with saved rules.",
+          "Reduce pasting rows into generic AI tabs."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Hybrid habit"
+      },
+      {
+        "type": "paragraph",
+        "text": "Export from systems to CSV, analyze in Datilio, push insights back to slides."
+      },
+      {
+        "type": "paragraph",
+        "text": "Teams keep spreadsheet speed without spreadsheet audit chaos."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio complements spreadsheets for the analysis loop files need every week."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "Product",
+  "tags": [
+    "Datilio",
+    "Spreadsheets",
+    "Comparison",
+    "Workflow"
+  ],
+  "is_published": true,
+  "meta_description": "Spreadsheets excel at editing; Datilio excels at repeatable analysis, rules, charts, and grounded AI on uploads.",
+  "meta_keywords": "Datilio, Spreadsheets, Comparison, Workflow"
+}

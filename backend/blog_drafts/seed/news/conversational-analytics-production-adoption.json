@@ -1,0 +1,72 @@
+{
+  "title": "Conversational Analytics Moves From Pilot to Production",
+  "slug": "conversational-analytics-production-adoption",
+  "summary": "Natural-language analytics is graduating from demos to weekly use—when answers can be verified against the same dataset.",
+  "featured_image_url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&fm=jpg&fit=crop",
+  "content": {
+    "summary": "Natural-language analytics is graduating from demos to weekly use—when answers can be verified against the same dataset.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Ask-a-question interfaces dominated 2025 conference stages. In 2026, procurement teams ask harder questions about accuracy and auditability. Pilots failed when chatbots answered from training data instead of the user's file. Production rollouts require grounding: every response tied to columns and rows the user uploaded."
+      },
+      {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&fm=jpg&fit=crop",
+        "alt": "Abstract visualization representing AI and data",
+        "caption": "Abstract visualization representing AI and data. Photo: Unsplash"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Production requirements emerge"
+      },
+      {
+        "type": "paragraph",
+        "text": "Pilots failed when chatbots answered from training data instead of the user's file. Production rollouts require grounding: every response tied to columns and rows the user uploaded."
+      },
+      {
+        "type": "paragraph",
+        "text": "Teams that pair conversational queries with visual confirmation—charts, filters, row previews—report higher trust and fewer escalations to central BI."
+      },
+      {
+        "type": "list",
+        "style": "unordered",
+        "items": [
+          "Plain-language questions must map to explicit column names.",
+          "Saved filter rules make recurring questions consistent.",
+          "Human review stays mandatory for high-stakes metrics."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Integration with existing habits"
+      },
+      {
+        "type": "paragraph",
+        "text": "Conversational layers attach to spreadsheets and exports rather than replacing them overnight. Users ask follow-ups after seeing a chart that looks wrong."
+      },
+      {
+        "type": "paragraph",
+        "text": "Vendors winning production deals offer transparent reasoning: which filters were applied, which aggregates were computed."
+      },
+      {
+        "type": "paragraph",
+        "text": "Datilio's Talk to Data follows this pattern—questions run on the file you already inspected, not on generic web knowledge."
+      }
+    ]
+  },
+  "author_name": "Datilio Team",
+  "author_email": "team@datilio.com",
+  "category": "News",
+  "tags": [
+    "Conversational Analytics",
+    "Natural Language",
+    "BI",
+    "2026"
+  ],
+  "is_published": true,
+  "meta_description": "Natural-language analytics is graduating from demos to weekly use—when answers can be verified against the same dataset.",
+  "meta_keywords": "Conversational Analytics, Natural Language, BI, 2026"
+}
