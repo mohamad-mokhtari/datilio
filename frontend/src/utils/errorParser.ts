@@ -26,6 +26,40 @@ export const DEFAULT_NETWORK_ERROR_MESSAGE =
 export const DEFAULT_CHART_ERROR_MESSAGE =
   'Unable to load this chart. Please try again.';
 
+/**
+ * Extract a user-facing message from an API error response body.
+ */
+export const extractApiErrorMessage = (
+  data: unknown,
+  fallback: string = DEFAULT_USER_ERROR_MESSAGE
+): string => {
+  if (!data || typeof data !== 'object') {
+    return fallback;
+  }
+
+  const body = data as Record<string, unknown>;
+  const detail = body.detail;
+
+  if (detail && typeof detail === 'object' && detail !== null && 'message' in detail) {
+    return String((detail as { message: unknown }).message);
+  }
+
+  if (typeof detail === 'string') {
+    return sanitizeRawMessage(detail, fallback);
+  }
+
+  if (typeof body.message === 'string') {
+    return sanitizeRawMessage(body.message, fallback);
+  }
+
+  const nested = body.error;
+  if (nested && typeof nested === 'object' && nested !== null && 'message' in nested) {
+    return String((nested as { message: unknown }).message);
+  }
+
+  return fallback;
+};
+
 const TECHNICAL_MESSAGE_PATTERNS: RegExp[] = [
   /sqlalchemy/i,
   /integrityerror/i,

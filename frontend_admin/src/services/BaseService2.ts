@@ -2,6 +2,7 @@ import appConfig from '@/configs/app.config'
 import { TOKEN_TYPE, REQUEST_HEADER_AUTH_KEY } from '@/constants/api.constant'
 import { PERSIST_STORE_NAME } from '@/constants/app.constant'
 import deepParseJson from '@/utils/deepParseJson'
+import { extractApiErrorMessage } from '@/utils/errorParser'
 import { getApiV1BaseUrl } from '@/utils/apiUrl'
 import store, { signOutSuccess } from '../store'
 
@@ -119,32 +120,10 @@ const BaseService2 = {
 
             // Check for error responses
             if (!response.ok) {
-                // Create a proper error object with extracted message
-                let errorMessage = 'Request failed';
-                
-                // Handle different error response formats
-                if ((data as any)?.error_code && (data as any)?.message) {
-                    // New format: {error_code: "INVALID_FILE_TYPE", message: "...", extra: {...}}
-                    const errorData = data as any;
-                    errorMessage = JSON.stringify({
-                        error_code: errorData.error_code,
-                        message: errorData.message,
-                        extra: errorData.extra
-                    });
-                } else if ((data as any)?.detail) {
-                    // Legacy format: {detail: "message"}
-                    if (typeof (data as any).detail === 'object' && (data as any).detail?.message) {
-                        errorMessage = (data as any).detail.message;
-                    } else if (typeof (data as any).detail === 'string') {
-                        errorMessage = (data as any).detail;
-                    }
-                } else if ((data as any)?.message) {
-                    // Simple format: {message: "..."}
-                    errorMessage = (data as any).message;
-                } else {
-                    // Fallback to status text
-                    errorMessage = response.statusText || 'Request failed';
-                }
+                const errorMessage = extractApiErrorMessage(
+                    data,
+                    response.statusText || 'Something went wrong. Please try again.'
+                );
 
                 const error = new Error(errorMessage);
 

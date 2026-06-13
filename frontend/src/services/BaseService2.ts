@@ -2,6 +2,7 @@ import appConfig from '@/configs/app.config'
 import { TOKEN_TYPE, REQUEST_HEADER_AUTH_KEY } from '@/constants/api.constant'
 import { PERSIST_STORE_NAME } from '@/constants/app.constant'
 import deepParseJson from '@/utils/deepParseJson'
+import { extractApiErrorMessage } from '@/utils/errorParser'
 import { getApiBaseUrl } from '@/utils/apiBaseUrl'
 import store, { signOutSuccess } from '../store'
 
@@ -119,47 +120,10 @@ const BaseService2 = {
 
             // Check for error responses
             if (!response.ok) {
-                // Create a proper error object with extracted message
-                let errorMessage = 'Request failed';
-                
-                // Handle different error response formats
-                if ((data as any)?.error_code && (data as any)?.message) {
-                    // New format: {error_code: "INVALID_FILE_TYPE", message: "...", extra: {...}}
-                    const errorData = data as any;
-                    errorMessage = JSON.stringify({
-                        error_code: errorData.error_code,
-                        message: errorData.message,
-                        extra: errorData.extra
-                    });
-                } else if ((data as any)?.error?.code && (data as any)?.error?.message) {
-                    const errorData = (data as any).error;
-                    errorMessage = JSON.stringify({
-                        error_code: errorData.code,
-                        message: errorData.message,
-                        extra: errorData.details,
-                    });
-                } else if ((data as any)?.detail) {
-                    const detail = (data as any).detail;
-                    if (typeof detail === 'object' && detail?.message) {
-                        if (detail.error_code) {
-                            errorMessage = JSON.stringify({
-                                error_code: detail.error_code,
-                                message: detail.message,
-                                extra: detail.extra,
-                            });
-                        } else {
-                            errorMessage = detail.message;
-                        }
-                    } else if (typeof detail === 'string') {
-                        errorMessage = detail;
-                    }
-                } else if ((data as any)?.message) {
-                    // Simple format: {message: "..."}
-                    errorMessage = (data as any).message;
-                } else {
-                    // Fallback to status text
-                    errorMessage = response.statusText || 'Something went wrong. Please try again.';
-                }
+                const errorMessage = extractApiErrorMessage(
+                    data,
+                    response.statusText || 'Something went wrong. Please try again.'
+                );
 
                 const error = new Error(errorMessage);
 

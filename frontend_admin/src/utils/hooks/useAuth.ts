@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import useQuery from './useQuery'
 import type { SignInCredential, SignUpCredential } from '@/@types/auth'
 import { fetchAllEnums } from '@/store/slices/enum/enumSlice'
+import { getUserFacingMessage } from '@/utils/errorParser'
 
 type Status = 'success' | 'failed'
 
@@ -85,7 +86,10 @@ function useAuth() {
         } catch (errors: any) {
             return {
                 status: 'failed',
-                message: errors?.response?.data?.message || errors.toString(),
+                message: getUserFacingMessage(
+                    errors,
+                    'Incorrect email or password. Please try again.'
+                ),
             }
         }
     }
@@ -129,7 +133,10 @@ function useAuth() {
         } catch (errors: any) {
             return {
                 status: 'failed',
-                message: errors?.response?.data?.message || errors.toString(),
+                message: getUserFacingMessage(
+                    errors,
+                    'Unable to create your account. Please try again.'
+                ),
             }
         }
     }

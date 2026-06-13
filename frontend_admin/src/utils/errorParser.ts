@@ -15,6 +15,64 @@ export interface ParsedError {
   extra?: any;
 }
 
+export const DEFAULT_USER_ERROR_MESSAGE =
+  'Something went wrong. Please try again.';
+
+/**
+ * Extract a user-facing message from an API error response body.
+ */
+export const extractApiErrorMessage = (
+  data: unknown,
+  fallback: string = DEFAULT_USER_ERROR_MESSAGE
+): string => {
+  if (!data || typeof data !== 'object') {
+    return fallback;
+  }
+
+  const body = data as Record<string, unknown>;
+  const detail = body.detail;
+
+  if (detail && typeof detail === 'object' && detail !== null && 'message' in detail) {
+    return String((detail as { message: unknown }).message);
+  }
+
+  if (typeof detail === 'string') {
+    return detail;
+  }
+
+  if (typeof body.message === 'string') {
+    return body.message;
+  }
+
+  const nested = body.error;
+  if (nested && typeof nested === 'object' && nested !== null && 'message' in nested) {
+    return String((nested as { message: unknown }).message);
+  }
+
+  return fallback;
+};
+
+/**
+ * Turn any caught error into user-safe text.
+ */
+export const getUserFacingMessage = (
+  error: unknown,
+  fallback: string = DEFAULT_USER_ERROR_MESSAGE
+): string => {
+  const parsed = parseBackendError(error);
+
+  if (parsed.errorCode && parsed.message) {
+    return parsed.message;
+  }
+
+  const message = parsed.message?.trim();
+  if (message && message !== 'An error occurred') {
+    return message;
+  }
+
+  return fallback;
+};
+
 /**
  * Parse error from backend response
  * Handles multiple error formats:
@@ -29,15 +87,21 @@ export const parseBackendError = (error: any): ParsedError => {
   let errorCode: string | undefined;
   let extra: any;
 
-  // Handle new error format: error.data.detail
-  if (error?.data?.detail?.error_code && error?.data?.detail?.message) {
-    const errorDetail = error.data.detail;
-    errorCode = errorDetail.error_code;
-    message = errorDetail.message;
-    extra = errorDetail.extra;
+  // Handle new error format: error.data.detail or error.response.data.detail
+  const detailFromData =
+    error?.data?.detail ??
+    error?.response?.data?.detail;
+  if (
+    detailFromData &&
+    typeof detailFromData === 'object' &&
+    detailFromData?.error_code &&
+    detailFromData?.message
+  ) {
+    errorCode = detailFromData.error_code;
+    message = detailFromData.message;
+    extra = detailFromData.extra;
     title = getErrorTitle(errorCode || 'UNKNOWN_ERROR');
-    
-    // Add extra information to message if available
+
     if (extra && errorCode) {
       message = enhanceErrorMessage(message, errorCode, extra);
     }
@@ -87,8 +151,18 @@ export const parseBackendError = (error: any): ParsedError => {
 
   // Handle legacy format
   if (error?.response?.data?.detail) {
-    message = error.response.data.detail;
-    return { title, message };
+    const detail = error.response.data.detail;
+    if (typeof detail === 'object' && detail?.error_code && detail?.message) {
+      errorCode = detail.error_code;
+      message = detail.message;
+      extra = detail.extra;
+      title = getErrorTitle(errorCode || 'UNKNOWN_ERROR');
+      return { title, message, errorCode, extra };
+    }
+    if (typeof detail === 'string') {
+      message = detail;
+      return { title, message };
+    }
   }
 
   // Handle simple message format
