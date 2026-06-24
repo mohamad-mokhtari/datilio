@@ -26,6 +26,7 @@ import { ChevronDown, ChevronUp, Settings } from 'lucide-react';
 import toast from '@/components/ui/toast';
 import Notification from '@/components/ui/Notification';
 import { parseBackendError, getUserFacingMessage } from '@/utils/errorParser';
+import { useNavigate } from 'react-router-dom';
 
 const { Tr, Th, Td, THead, TBody } = Table;
 
@@ -44,6 +45,7 @@ interface PaginatedResponse<T> {
 
 const ShowData = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState<DataFile | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [columnsInfo, setColumnsInfo] = useState<DetailedColumnInfo[]>([]);
@@ -429,8 +431,7 @@ const ShowData = () => {
   };
 
   const handlePreprocessClick = (file: DataFile) => {
-    // Navigate to preprocessing page with file ID
-    window.location.href = `/preprocessing/${file.file_id}`;
+    navigate(`/preprocessing/${file.file_id}`);
   };
 
   const handleDownload = async (file: DataFile, format: FileType) => {

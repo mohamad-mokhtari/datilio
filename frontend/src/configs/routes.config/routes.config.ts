@@ -128,7 +128,7 @@ export const protectedRoutes = [
         authority: [],
     },
     {
-        key: 'preprocessingFile',
+        key: 'preprocessing',
         path: '/preprocessing/:fileId',
         component: lazy(() => import('@/components/preprocessing/PreprocessingPage')),
         authority: [],

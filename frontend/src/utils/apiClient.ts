@@ -1,7 +1,8 @@
 import { extractError, getErrorMessage, isCriticalError, formatValidationErrors, createEnhancedError, ApiError } from './errorHandler';
-import { getApiBaseUrl, getApiOrigin } from './apiBaseUrl';
+import { getApiBaseUrl, getApiOrigin, getStaticAssetUrl } from './apiBaseUrl';
 
 export const getBackendBaseUrl = (): string => getApiOrigin();
+export { getStaticAssetUrl };
 
 // Get auth token from localStorage
 const getAuthToken = (): string | null => {

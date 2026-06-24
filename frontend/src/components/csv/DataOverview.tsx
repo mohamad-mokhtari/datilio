@@ -1,5 +1,7 @@
 import React from 'react';
-import { DataInfo } from '@/@types/dataInfo';
+import { DataInfo, DataTypeGroup, DataTypesSummary } from '@/@types/dataInfo';
+import ContextualHelp from '@/components/shared/ContextualHelp';
+import { DataQualityHelpContent } from '@/constants/helpContent';
 import { 
   HiChartBar, 
   HiDatabase, 
@@ -14,7 +16,40 @@ interface DataOverviewProps {
   primaryColor: string;
 }
 
+const emptyGroup = (): DataTypeGroup => ({ count: 0, columns: [] });
+
+const getDataTypeGroups = (dataTypes: DataTypesSummary) => {
+  if (dataTypes.groups) {
+    return dataTypes.groups;
+  }
+
+  const summary = dataTypes.summary ?? {};
+  const integerCount =
+    (summary.int64 ?? 0) +
+    (summary.int32 ?? 0) +
+    (summary.Int64 ?? 0) +
+    (summary.Int32 ?? 0);
+  const floatCount = (summary.float64 ?? 0) + (summary.float32 ?? 0);
+  const textCount = dataTypes.categorical_columns.length;
+
+  return {
+    integer: { count: integerCount, columns: [] as string[] },
+    text: { count: textCount, columns: dataTypes.categorical_columns },
+    float: { count: floatCount, columns: [] as string[] },
+    date: { count: dataTypes.date_columns.length, columns: dataTypes.date_columns },
+  };
+};
+
+const formatColumnPreview = (columns: string[]) => {
+  if (columns.length === 0) {
+    return null;
+  }
+  const preview = columns.slice(0, 3).join(', ');
+  return columns.length > 3 ? `${preview}, ...` : preview;
+};
+
 const DataOverview: React.FC<DataOverviewProps> = ({ dataInfo, primaryColor }) => {
+  const typeGroups = getDataTypeGroups(dataInfo.data_types);
   // Helper function to get quality score color
   const getQualityScoreColor = (score: number | null) => {
     if (score === null || score === undefined) return 'text-gray-600 bg-gray-50';
@@ -74,7 +109,16 @@ const DataOverview: React.FC<DataOverviewProps> = ({ dataInfo, primaryColor }) =
         <div className={`p-4 rounded-lg border ${getQualityScoreColor(dataInfo.dataset_overview.data_quality_score)}`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium">Data Quality</p>
+              <div className="flex items-center gap-1">
+                <p className="text-sm font-medium">Data Quality</p>
+                <ContextualHelp
+                  title="Data Quality"
+                  subtitle="How this score is calculated"
+                  tooltip="What is Data Quality?"
+                >
+                  <DataQualityHelpContent />
+                </ContextualHelp>
+              </div>
               <p className="text-xl font-bold">{dataInfo.dataset_overview.data_quality_score !== null && dataInfo.dataset_overview.data_quality_score !== undefined ? dataInfo.dataset_overview.data_quality_score : 'N/A'}%</p>
             </div>
             <div className="p-2 rounded-lg bg-white/50">
@@ -91,26 +135,37 @@ const DataOverview: React.FC<DataOverviewProps> = ({ dataInfo, primaryColor }) =
           Data Types Distribution
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600 mb-1">{dataInfo.data_types.summary.int64 !== null && dataInfo.data_types.summary.int64 !== undefined ? dataInfo.data_types.summary.int64 : 'N/A'}</div>
-            <p className="text-sm text-gray-600">Integer Columns</p>
-            <div className="mt-1 text-xs text-gray-500">
-              {dataInfo.data_types.numeric_columns.slice(0, 3).join(', ')}
-              {dataInfo.data_types.numeric_columns.length > 3 && '...'}
-            </div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-green-600 mb-1">{dataInfo.data_types.summary.object !== null && dataInfo.data_types.summary.object !== undefined ? dataInfo.data_types.summary.object : 'N/A'}</div>
-            <p className="text-sm text-gray-600">Text Columns</p>
-            <div className="mt-1 text-xs text-gray-500">
-              {dataInfo.data_types.categorical_columns.slice(0, 3).join(', ')}
-              {dataInfo.data_types.categorical_columns.length > 3 && '...'}
-            </div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-purple-600 mb-1">{dataInfo.data_types.summary.float64 !== null && dataInfo.data_types.summary.float64 !== undefined ? dataInfo.data_types.summary.float64 : 'N/A'}</div>
-            <p className="text-sm text-gray-600">Float Columns</p>
-          </div>
+          {([
+            {
+              key: 'integer',
+              label: 'Integer Columns',
+              countClass: 'text-blue-600',
+              group: typeGroups.integer ?? emptyGroup(),
+            },
+            {
+              key: 'text',
+              label: 'Text Columns',
+              countClass: 'text-green-600',
+              group: typeGroups.text ?? emptyGroup(),
+            },
+            {
+              key: 'float',
+              label: 'Float Columns',
+              countClass: 'text-purple-600',
+              group: typeGroups.float ?? emptyGroup(),
+            },
+          ] as const).map(({ key, label, countClass, group }) => {
+            const columnPreview = formatColumnPreview(group.columns);
+            return (
+              <div key={key} className="text-center">
+                <div className={`text-2xl font-bold ${countClass} mb-1`}>{group.count}</div>
+                <p className="text-sm text-gray-600">{label}</p>
+                {columnPreview && (
+                  <div className="mt-1 text-xs text-gray-500">{columnPreview}</div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -176,7 +231,16 @@ const DataOverview: React.FC<DataOverviewProps> = ({ dataInfo, primaryColor }) =
             </div>
             <div className="mt-4 pt-4 border-t">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Overall Quality Score</span>
+                <div className="flex items-center gap-1">
+                  <span className="text-sm text-gray-600">Overall Quality Score</span>
+                  <ContextualHelp
+                    title="Data Quality"
+                    subtitle="How this score is calculated"
+                    tooltip="What is Data Quality?"
+                  >
+                    <DataQualityHelpContent />
+                  </ContextualHelp>
+                </div>
                 <div className={`px-3 py-1 rounded-full text-sm font-medium ${getQualityScoreColor(dataInfo.dataset_overview.data_quality_score)}`}>
                   {dataInfo.dataset_overview.data_quality_score}%
                 </div>

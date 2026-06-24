@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import Menu from '@/components/ui/Menu'
 import AuthorityCheck from '@/components/shared/AuthorityCheck'
 import VerticalSingleMenuItem from './VerticalSingleMenuItem'
@@ -40,16 +39,10 @@ const VerticalMenuContent = (props: VerticalMenuContentProps) => {
 
     const { t } = useTranslation()
 
-    const [defaulExpandKey, setDefaulExpandKey] = useState<string[]>([])
-
     const { activedRoute } = useMenuActive(navigationTree, routeKey)
 
-    useEffect(() => {
-        if (defaulExpandKey.length === 0 && activedRoute?.parentKey) {
-            setDefaulExpandKey([activedRoute?.parentKey])
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activedRoute?.parentKey])
+    const activeKeys = activedRoute?.key ? [activedRoute.key] : []
+    const expandedKeys = activedRoute?.parentKey ? [activedRoute.parentKey] : []
 
     const handleLinkClick = () => {
         onMenuItemClick?.()
@@ -129,11 +122,12 @@ const VerticalMenuContent = (props: VerticalMenuContentProps) => {
 
     return (
         <Menu
+            key={routeKey}
             className="px-4 pb-4"
             variant={navMode}
             sideCollapsed={collapsed}
-            defaultActiveKeys={activedRoute?.key ? [activedRoute.key] : []}
-            defaultExpandedKeys={defaulExpandKey}
+            defaultActiveKeys={activeKeys}
+            defaultExpandedKeys={expandedKeys}
         >
             {navigationTree.map((nav) => getNavItem(nav))}
         </Menu>

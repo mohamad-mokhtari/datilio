@@ -11,7 +11,7 @@ import type { Feedback, FeedbackMessage, FeedbackStatus, FeedbackType } from '@/
 import { HiOutlineX, HiOutlineChat, HiOutlineCheck, HiOutlinePhotograph } from 'react-icons/hi';
 import { formatDistanceToNow } from 'date-fns';
 import { useConfig } from '@/components/ui/ConfigProvider';
-import { getBackendBaseUrl } from '@/utils/apiClient';
+import { getStaticAssetUrl } from '@/utils/apiClient';
 
 interface FeedbackDetailModalProps {
   feedback: Feedback | null;
@@ -85,25 +85,8 @@ const FeedbackDetailModal = ({ feedback, isOpen, onClose }: FeedbackDetailModalP
     }
   };
 
-  // Helper function to convert local file path to backend URL
   const getImageUrl = (imagePath: string) => {
-    if (!imagePath) return '';
-    
-    // If it's already a URL, return as is
-    if (imagePath.startsWith('http')) {
-      return imagePath;
-    }
-    
-    // Convert local file path to backend URL
-    // Extract the relative path from the full local path
-    const pathParts = imagePath.split('users_data_files');
-    if (pathParts.length > 1) {
-      const relativePath = pathParts[1].replace(/\\/g, '/'); // Convert backslashes to forward slashes
-      const backendUrl = getBackendBaseUrl();
-      return `${backendUrl}/static/users_data_files${relativePath}`;
-    }
-    
-    return imagePath; // Fallback to original path
+    return getStaticAssetUrl(imagePath) || '';
   };
 
   useEffect(() => {

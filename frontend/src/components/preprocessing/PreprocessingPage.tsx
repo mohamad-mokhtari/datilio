@@ -527,7 +527,7 @@ const PreprocessingPage: React.FC<PreprocessingPageProps> = ({ fileId: propFileI
               <Button
                 variant="twoTone"
                 size="sm"
-                onClick={() => window.location.href = '/preprocessing'}
+                onClick={() => navigate('/preprocessing')}
                 className="view-all-button"
               >
                 View All Preprocessed Files

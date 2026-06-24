@@ -148,11 +148,23 @@ class Settings(BaseSettings):
     CONTACT_EMAIL: str = config("CONTACT_EMAIL", default="datilio@gmail.com")
     # Legacy support - use FRONTEND_BASE_URL if FRONTEND_URL is not set
     FRONTEND_URL: str = config("FRONTEND_URL", default="")
+    # Public API origin for absolute static asset URLs (feedback images, etc.)
+    BACKEND_BASE_URL: str = config("BACKEND_BASE_URL", default="")
     
     @property
     def _frontend_url(self) -> str:
         """Get frontend URL, falling back to FRONTEND_BASE_URL if FRONTEND_URL is not set"""
         return self.FRONTEND_URL if self.FRONTEND_URL else self.FRONTEND_BASE_URL
+
+    @property
+    def backend_base_url(self) -> str:
+        """Origin used to build public URLs for /static/* assets."""
+        explicit = (self.BACKEND_BASE_URL or "").strip().rstrip("/")
+        if explicit:
+            return explicit
+        if "datilio.com" in self.FRONTEND_BASE_URL or "datilio.com" in self.ADMIN_FRONTEND_BASE_URL:
+            return "https://datilio.com"
+        return "http://localhost:8000"
     
     # Donation Configuration
     BUYMEACOFFEE_URL: str = config("BUYMEACOFFEE_URL", default="https://buymeacoffee.com/datilio")

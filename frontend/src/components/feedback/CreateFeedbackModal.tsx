@@ -73,8 +73,8 @@ const CreateFeedbackModal = ({ isOpen, onClose, onSuccess }: CreateFeedbackModal
 
     if (!formData.title.trim()) {
       newErrors.title = 'Title is required';
-    } else if (formData.title.length < 5) {
-      newErrors.title = 'Title must be at least 5 characters';
+    } else if (formData.title.trim().length < 3) {
+      newErrors.title = 'Title must be at least 3 characters';
     }
 
     if (!formData.message.trim()) {
@@ -223,9 +223,17 @@ const CreateFeedbackModal = ({ isOpen, onClose, onSuccess }: CreateFeedbackModal
           <Input
             placeholder="Brief description of your feedback"
             value={formData.title}
-            onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+            onChange={(e) => {
+              setFormData(prev => ({ ...prev, title: e.target.value }));
+              if (errors.title) {
+                setErrors(prev => ({ ...prev, title: '' }));
+              }
+            }}
             invalid={!!errors.title}
           />
+          {errors.title && (
+            <p className="mt-1 text-sm text-red-600">{errors.title}</p>
+          )}
         </div>
 
         <div>
@@ -245,11 +253,18 @@ const CreateFeedbackModal = ({ isOpen, onClose, onSuccess }: CreateFeedbackModal
             Message *
           </label>
           <textarea
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none ${
+              errors.message ? 'border-red-500' : 'border-gray-300'
+            }`}
             rows={4}
             placeholder="Please provide detailed information about your feedback..."
             value={formData.message}
-            onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+            onChange={(e) => {
+              setFormData(prev => ({ ...prev, message: e.target.value }));
+              if (errors.message) {
+                setErrors(prev => ({ ...prev, message: '' }));
+              }
+            }}
           />
           {errors.message && (
             <p className="mt-1 text-sm text-red-600">{errors.message}</p>

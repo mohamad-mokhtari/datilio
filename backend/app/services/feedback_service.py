@@ -11,6 +11,7 @@ from datetime import datetime
 from app.models.feedback_model import Feedback, FeedbackMessage, FeedbackType, FeedbackStatus
 from app.schemas.feedback_schemas import FeedbackCreate, FeedbackMessageCreate
 from app.helpers.storage_helpers import StorageManager
+from app.core.config import settings
 from pathlib import Path
 from app.utils.http_exceptions import (
     not_found_error, bad_request_error, forbidden_error, 
@@ -52,20 +53,21 @@ class FeedbackService:
         """Convert image path to URL for frontend access"""
         if not image_path:
             return None
-        
-        # If it's already a URL, return as is
-        if image_path.startswith('http'):
+
+        base_url = settings.backend_base_url.rstrip("/")
+
+        if image_path.startswith("http://") or image_path.startswith("https://"):
+            for local_origin in ("http://localhost:8000", "http://127.0.0.1:8000"):
+                if image_path.startswith(local_origin):
+                    return f"{base_url}{image_path[len(local_origin):]}"
             return image_path
-        
-        # Convert local path to URL
-        # Extract relative path from the full path
-        if 'user_images' in image_path:
-            # Find the user_images part and everything after it
-            user_images_index = image_path.find('user_images')
+
+        if "user_images" in image_path:
+            user_images_index = image_path.find("user_images")
             if user_images_index != -1:
-                relative_path = image_path[user_images_index:]
-                return f"http://localhost:8000/static/{relative_path.replace(os.sep, '/')}"
-        
+                relative_path = image_path[user_images_index:].replace("\\", "/").replace(os.sep, "/")
+                return f"{base_url}/static/{relative_path}"
+
         return None
 
     @staticmethod

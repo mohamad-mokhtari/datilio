@@ -20,13 +20,15 @@ interface SignUpFormSchema {
 const validationSchema = Yup.object().shape({
     username: Yup.string()
         .required('Username is required')
-        .min(3, 'Username must be at least 3 characters'),
+        .min(5, 'Username must be at least 5 characters')
+        .max(50, 'Username must be at most 50 characters'),
     email: Yup.string()
         .email('Invalid email address')
         .required('Email is required'),
     password: Yup.string()
         .required('Password is required')
-        .min(6, 'Password must be at least 6 characters'),
+        .min(5, 'Password must be at least 5 characters')
+        .max(24, 'Password must be at most 24 characters'),
 });
 
 const SignUpForm = () => {

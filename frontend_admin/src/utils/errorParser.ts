@@ -18,6 +18,74 @@ export interface ParsedError {
 export const DEFAULT_USER_ERROR_MESSAGE =
   'Something went wrong. Please try again.';
 
+interface FastApiValidationItem {
+  type?: string;
+  loc?: (string | number)[];
+  msg?: string;
+  ctx?: Record<string, unknown>;
+}
+
+const FIELD_LABELS: Record<string, string> = {
+  username: 'Username',
+  email: 'Email',
+  password: 'Password',
+  first_name: 'First name',
+  last_name: 'Last name',
+};
+
+const getFieldLabel = (field: string): string =>
+  FIELD_LABELS[field] ??
+  field.replace(/_/g, ' ').replace(/^\w/, (char) => char.toUpperCase());
+
+const getFieldFromLoc = (loc: (string | number)[] | undefined): string | undefined => {
+  if (!Array.isArray(loc)) {
+    return undefined;
+  }
+  const skip = new Set(['body', 'query', 'path', 'header', 'cookie']);
+  const parts = loc.map(String).filter((part) => !skip.has(part));
+  return parts[parts.length - 1];
+};
+
+export const formatFastApiValidationItem = (item: FastApiValidationItem): string => {
+  const field = getFieldFromLoc(item.loc);
+  const label = field ? getFieldLabel(field) : 'This field';
+  const type = item.type ?? '';
+  const ctx = item.ctx ?? {};
+  const msg = item.msg ?? '';
+
+  if (type === 'string_too_short' && typeof ctx.min_length === 'number') {
+    return `${label} should have at least ${ctx.min_length} characters.`;
+  }
+  if (type === 'string_too_long' && typeof ctx.max_length === 'number') {
+    return `${label} should be at most ${ctx.max_length} characters.`;
+  }
+  if (type === 'value_error.missing' || type === 'missing') {
+    return `${label} is required.`;
+  }
+  if (type === 'value_error.email' || (field === 'email' && msg.toLowerCase().includes('email'))) {
+    return 'Please enter a valid email address.';
+  }
+  if (type === 'value_error.any_str.min_length' && typeof ctx.limit_value === 'number') {
+    return `${label} should have at least ${ctx.limit_value} characters.`;
+  }
+
+  if (msg && field && !msg.toLowerCase().includes(field.toLowerCase())) {
+    return `${label}: ${msg}`;
+  }
+
+  return msg || `${label} is invalid.`;
+};
+
+export const formatFastApiValidationDetail = (detail: unknown): string | null => {
+  if (!Array.isArray(detail) || detail.length === 0) {
+    return null;
+  }
+
+  return detail
+    .map((item) => formatFastApiValidationItem(item as FastApiValidationItem))
+    .join(' ');
+};
+
 /**
  * Extract a user-facing message from an API error response body.
  */
@@ -31,6 +99,13 @@ export const extractApiErrorMessage = (
 
   const body = data as Record<string, unknown>;
   const detail = body.detail;
+
+  if (Array.isArray(detail)) {
+    const formatted = formatFastApiValidationDetail(detail);
+    if (formatted) {
+      return formatted;
+    }
+  }
 
   if (detail && typeof detail === 'object' && detail !== null && 'message' in detail) {
     return String((detail as { message: unknown }).message);
@@ -87,10 +162,22 @@ export const parseBackendError = (error: any): ParsedError => {
   let errorCode: string | undefined;
   let extra: any;
 
-  // Handle new error format: error.data.detail or error.response.data.detail
+  // Handle FastAPI validation errors: { detail: [{ loc, msg, type, ctx }] }
   const detailFromData =
     error?.data?.detail ??
     error?.response?.data?.detail;
+  if (Array.isArray(detailFromData)) {
+    const formatted = formatFastApiValidationDetail(detailFromData);
+    if (formatted) {
+      return {
+        title: 'Check Your Input',
+        message: formatted,
+        errorCode: 'VALIDATION_ERROR',
+      };
+    }
+  }
+
+  // Handle new error format: error.data.detail or error.response.data.detail
   if (
     detailFromData &&
     typeof detailFromData === 'object' &&

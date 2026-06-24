@@ -5,11 +5,18 @@ export interface DatasetOverview {
   data_quality_score: number | null;
 }
 
+export interface DataTypeGroup {
+  count: number;
+  columns: string[];
+}
+
 export interface DataTypesSummary {
-  summary: {
-    int64: number | null;
-    object: number | null;
-    float64: number | null;
+  summary: Record<string, number>;
+  groups?: {
+    integer: DataTypeGroup;
+    text: DataTypeGroup;
+    float: DataTypeGroup;
+    date: DataTypeGroup;
   };
   numeric_columns: string[];
   categorical_columns: string[];

@@ -52,3 +52,32 @@ export function getApiOrigin(): string {
 export function getApiBaseUrl(): string {
   return `${getApiOrigin()}/api/v1`
 }
+
+/** Resolve feedback/static image paths to a browser-loadable URL. */
+export function getStaticAssetUrl(pathOrUrl: string | undefined | null): string | undefined {
+  if (!pathOrUrl) {
+    return undefined
+  }
+
+  const backend = getApiOrigin()
+
+  if (
+    pathOrUrl.startsWith('http://localhost:8000') ||
+    pathOrUrl.startsWith('http://127.0.0.1:8000')
+  ) {
+    return pathOrUrl.replace(/^http:\/\/(localhost|127\.0\.0\.1):8000/, backend)
+  }
+
+  if (pathOrUrl.startsWith('http://') || pathOrUrl.startsWith('https://')) {
+    return pathOrUrl
+  }
+
+  const marker = 'user_images'
+  const idx = pathOrUrl.indexOf(marker)
+  if (idx !== -1) {
+    const relative = pathOrUrl.slice(idx).replace(/\\/g, '/')
+    return `${backend}/static/${relative}`
+  }
+
+  return pathOrUrl
+}

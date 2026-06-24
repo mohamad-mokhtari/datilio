@@ -6,6 +6,7 @@ import Card from '@/components/ui/Card';
 import Dialog from '@/components/ui/Dialog';
 import { HiRefresh, HiX, HiCheckCircle, HiExclamation } from 'react-icons/hi';
 import { useConfig } from '@/components/ui/ConfigProvider';
+import { PLAN_CANCELLATION_ENABLED } from '@/constants/app.constant';
 
 interface SubscriptionManagerProps {
     subscriptionId: string;
@@ -145,15 +146,17 @@ const SubscriptionManager: React.FC<SubscriptionManagerProps> = ({
                             Change Plan
                         </Button>
                         
-                        <Button
-                            variant="outline"
-                            color="red"
-                            onClick={() => setShowCancelDialog(true)}
-                            icon={<HiX />}
-                            disabled={loading}
-                        >
-                            Cancel Subscription
-                        </Button>
+                        {PLAN_CANCELLATION_ENABLED && (
+                            <Button
+                                variant="outline"
+                                color="red"
+                                onClick={() => setShowCancelDialog(true)}
+                                icon={<HiX />}
+                                disabled={loading}
+                            >
+                                Cancel Subscription
+                            </Button>
+                        )}
                     </div>
 
                     {error && (
@@ -270,6 +273,7 @@ const SubscriptionManager: React.FC<SubscriptionManagerProps> = ({
             </Dialog>
 
             {/* Cancel Subscription Dialog */}
+            {PLAN_CANCELLATION_ENABLED && (
             <Dialog
                 isOpen={showCancelDialog}
                 onClose={() => setShowCancelDialog(false)}
@@ -348,6 +352,7 @@ const SubscriptionManager: React.FC<SubscriptionManagerProps> = ({
                     </div>
                 </div>
             </Dialog>
+            )}
         </div>
     );
 };

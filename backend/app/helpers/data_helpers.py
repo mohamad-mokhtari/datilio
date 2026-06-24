@@ -323,6 +323,24 @@ def convert_to_datetime_if_majority_matches(df, threshold=0.5):
 
     return df
 
+def classify_column_type_groups(df: pd.DataFrame) -> dict:
+    """Group DataFrame columns into user-facing type buckets for the data overview UI."""
+    integer_columns = df.select_dtypes(include=["integer"]).columns.tolist()
+    float_columns = df.select_dtypes(include=["floating"]).columns.tolist()
+    text_columns = df.select_dtypes(include=["object", "category", "string"]).columns.tolist()
+    date_columns = df.select_dtypes(include=["datetime", "datetime64"]).columns.tolist()
+
+    def _group(columns: list) -> dict:
+        return {"count": len(columns), "columns": columns}
+
+    return {
+        "integer": _group(integer_columns),
+        "text": _group(text_columns),
+        "float": _group(float_columns),
+        "date": _group(date_columns),
+    }
+
+
 def clean_data(data):
     if isinstance(data, list):
         return [clean_data(item) for item in data]

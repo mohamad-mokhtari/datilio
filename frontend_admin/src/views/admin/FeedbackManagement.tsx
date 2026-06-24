@@ -11,6 +11,7 @@ import {
     FeedbackMessageCreate
 } from '@/@types/feedback'
 import ConfirmModal from '@/components/shared/ConfirmModal'
+import { getStaticAssetUrl } from '@/utils/apiUrl'
 
 const FeedbackManagement = () => {
     const [feedback, setFeedback] = useState<FeedbackListResponse[]>([])
@@ -546,7 +547,7 @@ const FeedbackManagement = () => {
                                     <div className="mt-4">
                                         <label className="block text-sm font-medium text-gray-700">Image</label>
                                         <img 
-                                            src={selectedFeedback.image_path} 
+                                            src={getStaticAssetUrl(selectedFeedback.image_path)} 
                                             alt="Feedback image" 
                                             className="mt-2 max-w-xs rounded-lg shadow-sm"
                                         />
@@ -588,7 +589,7 @@ const FeedbackManagement = () => {
                                                 <p className="text-sm text-gray-900 whitespace-pre-wrap">{message.message}</p>
                                                 {message.image_path && (
                                                     <img 
-                                                        src={message.image_path} 
+                                                        src={getStaticAssetUrl(message.image_path)} 
                                                         alt="Message image" 
                                                         className="mt-2 max-w-xs rounded-lg shadow-sm"
                                                     />

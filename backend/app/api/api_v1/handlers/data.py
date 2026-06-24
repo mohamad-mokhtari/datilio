@@ -441,8 +441,9 @@ async def get_file_data_info(
                     "q75": round(float(numeric_stats.loc['75%', col]), 4)
                 }
         
-        # Categorical columns analysis
-        categorical_columns = df.select_dtypes(include=['object', 'category']).columns.tolist()
+        # Categorical / text columns analysis
+        categorical_columns = df.select_dtypes(include=['object', 'category', 'string']).columns.tolist()
+        type_groups = data_helpers.classify_column_type_groups(df)
         categorical_summary = {}
         
         for col in categorical_columns:
@@ -489,6 +490,7 @@ async def get_file_data_info(
             },
             "data_types": {
                 "summary": dtype_summary,
+                "groups": type_groups,
                 "numeric_columns": numeric_columns,
                 "categorical_columns": categorical_columns,
                 "date_columns": date_columns

@@ -15,9 +15,10 @@ import {
     fetchUsageSummary, 
     fetchUsageHistory, 
     fetchPaymentHistory,
+    fetchMainPlans,
     cancelUserPlan,
-    fetchMainPlans
 } from '@/store/slices/pricing/pricingSlice';
+import { PLAN_CANCELLATION_ENABLED } from '@/constants/app.constant';
 import SubscriptionManager from '@/components/pricing/SubscriptionManager';
 import { formatCurrency, formatDate, formatDateTime } from '@/utils/format';
 import { HiCheck, HiX, HiExclamation, HiCreditCard, HiCalendar, HiDownload, HiSparkles, HiClock } from 'react-icons/hi';
@@ -167,13 +168,15 @@ const BillingDashboard: React.FC = () => {
                         >
                             Change Plan
                         </Button>
-                        <Button 
-                            variant="default" 
-                            color="red"
-                            onClick={() => setShowCancelConfirm(true)}
-                        >
-                            Cancel Plan
-                        </Button>
+                        {PLAN_CANCELLATION_ENABLED && (
+                            <Button 
+                                variant="default" 
+                                color="red"
+                                onClick={() => setShowCancelConfirm(true)}
+                            >
+                                Cancel Plan
+                            </Button>
+                        )}
                     </div>
                 </div>
             </Card>
@@ -434,8 +437,7 @@ const BillingDashboard: React.FC = () => {
                     </TabContent>
                 </div>
 
-                {/* Cancel Confirmation Modal */}
-                {showCancelConfirm && (
+                {PLAN_CANCELLATION_ENABLED && showCancelConfirm && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                         <Card className="w-full max-w-md mx-4">
                             <div className="p-6">
